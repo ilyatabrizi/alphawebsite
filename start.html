@@ -1,0 +1,97 @@
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>شروع ساخت سایت | آلفا وب‌سایت</title>
+<link rel="stylesheet" href="assets/fonts.css"><link rel="stylesheet" href="assets/app.css"><script src="assets/preview-shim.js"></script>
+</head>
+<body><div dir="ltr" lang="en" style="background:#FFCC00;color:#111;font:500 13px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:center;text-align:center"><b style="letter-spacing:.08em">PREVIEW</b><span>Layouts are live demos (island, glass bar, cart, chat with simulated replies). Saving and payment need the real server.</span><span style="display:inline-flex;gap:12px"><a href="index.html" style="color:#111">Store</a><a href="panel.html" style="color:#111">Owner panel</a><a href="panel-thread.html" style="color:#111">Chat inbox</a><a href="admin.html" style="color:#111">Admin</a></span></div>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html"><img src="assets/alpha-white.png" alt="" width="40" height="30"><b>وب‌<i>سایت</i></b><small>by Alpha Agency</small></a>
+  <nav><a href="index.html#layouts" class="">قالب‌ها</a><a href="index.html#signature" class="">امضای آلفا</a><a href="index.html#pricing" class="">قیمت‌ها</a><a href="index.html#faq" class="">سؤالات</a><a href="panel.html" class="">ورود به پنل</a></nav>
+</div></header>
+<div class="wrap"><main class="page">
+  <section class="sec">
+    <div class="eyebrow">ساخت سایت · حدود ۳ دقیقه</div>
+    <h2>سایتت را بساز</h2>
+        <form class="form card" method="post" action="/start" novalidate>
+      <input type="hidden" name="csrf" value="744e5e9818e7e9ec8c55887ae6a9e518">      <fieldset class="fs"><legend>قالب</legend>
+        <div class="radios">
+                  <label class="radio"><input type="radio" name="layout" value="bolour" checked><span><b>«بلور»<span class="badge-sig">امضای آلفا</span></b><em>کافه و بیکری · اپ‌مانند، نوار شیشه‌ای</em></span></label>
+                  <label class="radio"><input type="radio" name="layout" value="mahtab" ><span><b>«مهتاب»<span class="badge-sig">امضای آلفا</span></b><em>رستوران و فست‌فود · شب‌رنگ، نوار شیشه‌ای</em></span></label>
+                  <label class="radio"><input type="radio" name="layout" value="ayneh" ><span><b>«آینه»<span class="badge-sig">امضای آلفا</span></b><em>فروشگاه آنلاین · فروشگاه اپ‌مانند با گفتگو</em></span></label>
+                  <label class="radio"><input type="radio" name="layout" value="noon" ><span><b>«نون»</b><em>کافه و بیکری · روشن و گرم</em></span></label>
+                  <label class="radio"><input type="radio" name="layout" value="shab" ><span><b>«شب»</b><em>کافه و بیکری · تیره و جسور</em></span></label>
+                  <label class="radio"><input type="radio" name="layout" value="sofreh" ><span><b>«سفره»</b><em>رستوران و فست‌فود · رسمی و دلنشین</em></span></label>
+                  <label class="radio"><input type="radio" name="layout" value="vitrin" ><span><b>«ویترین»</b><em>فروشگاه آنلاین · کاتالوگ محصول</em></span></label>
+                </div>
+      </fieldset>
+
+      <fieldset class="fs"><legend>کسب‌وکار و آدرس سایت</legend>
+        <div class="grid2">
+          <label class="f">نام کسب‌وکار<input name="name" value="" required maxlength="60"></label>
+          <label class="f">لینک موقت سایت<small>فقط حروف انگلیسی کوچک، عدد و خط تیره</small>
+            <div class="domainrow"><input class="ltr" name="slug" id="slug" value="" required maxlength="30" placeholder="kaicoffee"><span class="suffix">/s/</span></div></label>
+        </div>
+        <label class="f">دامنه .ir دلخواه<small>به نام خودتان ثبت می‌شود. نام شهر و استان مجاز نیست.</small>
+          <div class="domainrow"><input class="ltr" name="domain" id="domain" value="" maxlength="63" placeholder="kaicoffee"><span class="suffix">.ir</span><button class="btn sm ghost" type="button" id="dcheck">بررسی</button></div>
+          <span class="dstate" id="dstate" aria-live="polite"></span></label>
+      </fieldset>
+
+      <fieldset class="fs"><legend>پلن</legend>
+        <div class="radios">
+                  <label class="radio"><input type="radio" name="tier" value="menu" data-price="2900000" ><span><b>منو · 2,900,000 تومان/ماه</b><em>سایت یک‌صفحه‌ای: منو یا کاتالوگ، سفارش در واتساپ، نقشه و ساعت کاری</em></span></label>
+                  <label class="radio"><input type="radio" name="tier" value="business" data-price="4900000" checked><span><b>کسب‌وکار · 4,900,000 تومان/ماه</b><em>تا ۱۵۰ آیتم، صفحه درباره ما، گزارش ماهانه بازدید و سفارش</em></span></label>
+                  <label class="radio"><input type="radio" name="tier" value="shop" data-price="7900000" ><span><b>فروشگاه · 7,900,000 تومان/ماه</b><em>تا ۱۰۰۰ محصول، جستجو، سبد خرید و ارسال سفارش به واتساپ</em></span></label>
+                </div>
+        <div class="radios">
+          <label class="radio"><input type="radio" name="billing" value="monthly" checked><span><b>ماهانه</b><em>پرداخت اول: راه‌اندازی + ماه اول</em></span></label>
+          <label class="radio"><input type="radio" name="billing" value="yearly" ><span><b>سالانه</b><em>۱۰ ماه پرداخت برای ۱۲ ماه، بدون هزینه راه‌اندازی</em></span></label>
+        </div>
+        <div class="total"><span>مبلغ پرداخت اول</span><b id="total">—</b></div>
+      </fieldset>
+
+      <fieldset class="fs"><legend>مالک سایت</legend>
+        <div class="grid2">
+          <label class="f">نام و نام خانوادگی<input name="owner_name" value="" required autocomplete="name"></label>
+          <label class="f">موبایل<small>نام کاربری ورود به پنل</small><input class="ltr" name="owner_mobile" value="" required inputmode="tel" autocomplete="tel" placeholder="09121234567"></label>
+          <label class="f">ایمیل<small>برای رسید و یادآوری‌ها</small><input class="ltr" type="email" name="owner_email" value="" required autocomplete="email"></label>
+          <label class="f">کد ملی<small>برای ثبت دامنه به نام خودتان</small><input class="ltr" name="national_id" value="" required inputmode="numeric" maxlength="10"></label>
+          <label class="f">شناسه ایرنیک (اختیاری)<small>ندارید؟ بعد از پرداخت راهنمایی‌تان می‌کنیم.</small><input class="ltr" name="irnic_handle" value="" placeholder="ab1234-irnic"></label>
+          <label class="f">رمز ورود به پنل<small>حداقل ۸ حرف</small><input type="password" name="password" required minlength="8" autocomplete="new-password"></label>
+        </div>
+        <label class="check"><input type="checkbox" name="terms" value="1" > <span>شرایط سرویس را خواندم: اشتراک با پرداخت تمدید می‌شود، ۱۰ روز بعد از سررسید سایت موقتاً غیرفعال می‌شود و دامنه همیشه مال من است.</span></label>
+      </fieldset>
+      <button class="btn y" type="submit">ادامه و پرداخت</button>
+    </form>
+  </section>
+</main></div>
+<script>
+(function(){
+  var fa=function(n){return Number(n).toLocaleString('fa-IR');};
+  function total(){
+    var t=document.querySelector('input[name=tier]:checked'),b=document.querySelector('input[name=billing]:checked');
+    if(!t||!b)return; var p=Number(t.dataset.price);
+    document.getElementById('total').textContent=fa(b.value==='yearly'?p*10:p*2)+' تومان';
+  }
+  document.querySelectorAll('input[name=tier],input[name=billing]').forEach(function(i){i.addEventListener('change',total);}); total();
+  var slug=document.getElementById('slug'),dom=document.getElementById('domain');
+  slug.addEventListener('input',function(){ if(!dom.dataset.touched) dom.value=slug.value; });
+  dom.addEventListener('input',function(){dom.dataset.touched='1';});
+  document.getElementById('dcheck').addEventListener('click',function(){
+    var s=document.getElementById('dstate'); s.className='dstate'; s.textContent='در حال بررسی…';
+    fetch('/api/domain?l='+encodeURIComponent(dom.value.trim().toLowerCase())).then(function(r){return r.json();}).then(function(j){
+      s.className='dstate '+j.status;
+      s.textContent={free:'آزاد است ✓',taken:'قبلاً ثبت شده؛ نام دیگری امتحان کنید',unknown:'الان قابل بررسی نیست؛ بعد از ثبت سفارش بررسی می‌کنیم',invalid:'نام معتبر نیست'}[j.status]||'';
+    }).catch(function(){s.className='dstate unknown';s.textContent='الان قابل بررسی نیست';});
+  });
+})();
+</script>
+<footer class="foot"><div class="wrap">
+  <a class="powered" href="https://alphaa.agency" target="_blank" rel="noopener" dir="ltr" lang="en"><img src="assets/alpha-white.png" alt="Alpha Agency" width="53" height="40"><span><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a>
+  <span>پشتیبانی: <a class="ltr" href="mailto:info@alphaa.agency">info@alphaa.agency</a></span>
+  <span class="trust">جای نماد اعتماد الکترونیکی</span>
+</div></footer>
+<script>
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.getAttribute('data-copy');try{navigator.clipboard.writeText(t);b.textContent='کپی شد';}catch(e){}
+});});
+</script>
+</body></html>

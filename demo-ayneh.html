@@ -12,6 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="چرم آینه">
+<link rel="preload" href="assets/fonts/IRANYekanXVFaNumVF.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/glass.css">
 <link rel="stylesheet" href="assets/alpha.css">
@@ -20,11 +21,11 @@
 <body class="glass" style="--bg:#F2F3F7;--surface:#FFFFFF;--ink:#111218;--muted:#6B6F7B;--line:#E1E3EA;--accent:#7A4BC4;--onaccent:#FFFFFF;--glass:rgba(242,243,247,0.72);--glass-strong:rgba(255,255,255,0.86);--glass-line:rgba(17,18,24,0.1);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px rgba(17,18,24,0.16),0 3px 10px rgba(17,18,24,0.08);--pill-on:rgba(17,18,24,0.09);">
 <script>try{if(window.top===window&&!sessionStorage.getItem('seen-demo-ayneh'))document.body.classList.add('splashing')}catch(e){}</script>
 <div id="splash" aria-hidden="true"><span class="splash-logo mono" aria-hidden="true">چ</span><div class="splash-bar"><i></i></div></div>
-<div class="demo-bar">پیش‌نمایش قالب «آینه» — <a href="index.html#layouts" target="_top">همه قالب‌ها</a></div><div class="island is-closed" id="island" data-open="10:00" data-close="21:00" data-off="-1">
+<div class="demo-bar">پیش‌نمایش قالب «آینه» — <a href="index.html#layouts" target="_top">همه قالب‌ها</a></div><div class="island is-open" id="island" data-open="10:00" data-close="21:00" data-off="-1">
   <button class="isl-pill" type="button" aria-expanded="false" aria-controls="islPanel">
-    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">بسته است؛ فردا از ۱۰:۰۰</span>    <span class="isl-news">ارسال رایگان برای خرید بالای ۲ میلیون</span>  </button>
+    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">باز است تا ۲۱:۰۰</span>    <span class="isl-news">ارسال رایگان برای خرید بالای ۲ میلیون</span>  </button>
   <div class="isl-panel" id="islPanel" hidden>
-    <div class="isl-head"><span class="isl-logo mono" aria-hidden="true">چ</span><div><b>چرم آینه</b><span class="isl-status">بسته است؛ فردا از ۱۰:۰۰</span></div>
+    <div class="isl-head"><span class="isl-logo mono" aria-hidden="true">چ</span><div><b>چرم آینه</b><span class="isl-status">باز است تا ۲۱:۰۰</span></div>
       <button class="isl-x" type="button" aria-label="بستن">×</button></div>
     <p class="isl-ann">ارسال رایگان برای خرید بالای ۲ میلیون</p>    <p class="isl-meta">هر روز ۱۰:۰۰ تا ۲۱:۰۰، تبریز، خیابان ولیعصر</p>    <div class="isl-acts">
       <a href="tel:09120000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>تماس</span></a>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>مسیریابی</span></a>      <button type="button" data-act="chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span></button>      <button type="button" data-act="install" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg><span>نصب اپ</span></button>
@@ -53,7 +54,7 @@
   <img src="uploads/3/sample-0.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کیف دوشی چرم</h3>
     <p>چرم طبیعی، سه رنگ</p>    <div class="row">
-      <span class="price">۲,۸۵۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۲٬۸۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="15" data-name="کیف دوشی چرم" data-price="2850000" aria-label="افزودن کیف دوشی چرم">+</button>    </div>
   </div>
 </article>
@@ -61,7 +62,7 @@
   <img src="uploads/3/sample-1.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کیف پول</h3>
     <p>جای کارت و اسکناس</p>    <div class="row">
-      <span class="price">۹۸۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۹۸۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="16" data-name="کیف پول" data-price="980000" aria-label="افزودن کیف پول">+</button>    </div>
   </div>
 </article>
@@ -69,7 +70,7 @@
   <img src="uploads/3/sample-2.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کمربند</h3>
     <p>سگک فلزی</p>    <div class="row">
-      <span class="price">۱,۲۵۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۱٬۲۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="17" data-name="کمربند" data-price="1250000" aria-label="افزودن کمربند">+</button>    </div>
   </div>
 </article>
@@ -77,7 +78,7 @@
   <img src="uploads/3/sample-3.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کوله‌پشتی</h3>
     <p>مناسب لپ‌تاپ ۱۵ اینچ</p>    <div class="row">
-      <span class="price">۳,۶۵۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۳٬۶۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="18" data-name="کوله‌پشتی" data-price="3650000" aria-label="افزودن کوله‌پشتی">+</button>    </div>
   </div>
 </article>
@@ -85,7 +86,7 @@
   <img src="uploads/3/sample-4.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>جاکلیدی</h3>
     <p>چرم دست‌دوز</p>    <div class="row">
-      <span class="price">۴۲۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۴۲۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="19" data-name="جاکلیدی" data-price="420000" aria-label="افزودن جاکلیدی">+</button>    </div>
   </div>
 </article>
@@ -109,7 +110,7 @@
   <img src="uploads/3/sample-0.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کیف دوشی چرم</h3>
     <p>چرم طبیعی، سه رنگ</p>    <div class="row">
-      <span class="price">۲,۸۵۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۲٬۸۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="15" data-name="کیف دوشی چرم" data-price="2850000" aria-label="افزودن کیف دوشی چرم">+</button>    </div>
   </div>
 </article>
@@ -117,7 +118,7 @@
   <img src="uploads/3/sample-1.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کیف پول</h3>
     <p>جای کارت و اسکناس</p>    <div class="row">
-      <span class="price">۹۸۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۹۸۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="16" data-name="کیف پول" data-price="980000" aria-label="افزودن کیف پول">+</button>    </div>
   </div>
 </article>
@@ -125,7 +126,7 @@
   <img src="uploads/3/sample-2.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کمربند</h3>
     <p>سگک فلزی</p>    <div class="row">
-      <span class="price">۱,۲۵۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۱٬۲۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="17" data-name="کمربند" data-price="1250000" aria-label="افزودن کمربند">+</button>    </div>
   </div>
 </article>
@@ -137,7 +138,7 @@
   <img src="uploads/3/sample-3.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کوله‌پشتی</h3>
     <p>مناسب لپ‌تاپ ۱۵ اینچ</p>    <div class="row">
-      <span class="price">۳,۶۵۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۳٬۶۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="18" data-name="کوله‌پشتی" data-price="3650000" aria-label="افزودن کوله‌پشتی">+</button>    </div>
   </div>
 </article>
@@ -145,7 +146,7 @@
   <img src="uploads/3/sample-4.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>جاکلیدی</h3>
     <p>چرم دست‌دوز</p>    <div class="row">
-      <span class="price">۴۲۰,۰۰۰ <small>تومان</small></span>
+      <span class="price">۴۲۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="19" data-name="جاکلیدی" data-price="420000" aria-label="افزودن جاکلیدی">+</button>    </div>
   </div>
 </article>
@@ -215,5 +216,5 @@
       <button type="button" data-tab="info" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
   </nav>
 
-<script>window.SITE={"slug":"demo-ayneh","name":"چرم آینه","base":"/s/demo-ayneh","chat":true,"glass":true,"demo":true,"v":"2026.10.04-2"};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
+<script>window.SITE={"slug":"demo-ayneh","name":"چرم آینه","base":"/s/demo-ayneh","chat":true,"glass":true,"demo":true,"v":"2026.10.05-1"};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
 </html>

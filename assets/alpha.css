@@ -19,12 +19,12 @@
 @keyframes islIn{from{opacity:0;transform:translateY(-10px) scale(.9)}to{opacity:1;transform:none}}
 .isl-head{display:flex;align-items:center;gap:12px}
 .isl-head>div{flex:1;display:grid;line-height:1.45}
-.isl-head b{font-size:17px;font-weight:900}
+.isl-head b{font-size:17px;font-weight:800}
 .isl-head .isl-status{font-size:13px;color:var(--muted);font-weight:500}
 .island.is-open .isl-head .isl-status{color:#1E8C4D}
 .dark .island.is-open .isl-head .isl-status,.island.dark .isl-head .isl-status{color:#5BD08A}
 .isl-logo{width:46px;height:46px;border-radius:15px;object-fit:cover;flex:none}
-.isl-logo.mono,.chat-av.mono,.g-logo.mono,.splash-logo.mono{display:grid;place-items:center;background:var(--accent);color:var(--onaccent);font-weight:900;font-size:22px}
+.isl-logo.mono,.chat-av.mono,.g-logo.mono,.splash-logo.mono{display:grid;place-items:center;background:var(--accent);color:var(--onaccent);font-weight:800;font-size:22px}
 .isl-x{width:32px;height:32px;border-radius:50%;border:0;background:var(--pill-on);color:var(--ink);font-size:20px;line-height:1;cursor:pointer}
 .isl-ann{margin:0;padding:10px 12px;border-radius:16px;background:var(--accent);color:var(--onaccent);font-weight:700;font-size:14.5px}
 .isl-meta{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
@@ -50,7 +50,7 @@ html.scrolled .scrim{opacity:1}
 .chat{display:flex;flex-direction:column;gap:12px}
 .chat-head{display:flex;align-items:center;gap:12px}
 .chat-head>div{display:grid;line-height:1.45}
-.chat-head b{font-size:16px;font-weight:900}
+.chat-head b{font-size:16px;font-weight:800}
 .chat-head small{font-size:12.5px;color:var(--muted)}
 .chat-head small.on{color:#1E8C4D}
 .dark .chat-head small.on{color:#5BD08A}

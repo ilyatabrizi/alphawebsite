@@ -5,6 +5,8 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var fa = function (s) { return String(s).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); };
   var framed = window.top !== window;
+  /* inside the store's phone frames a demo shows as the client's own site would: no demo bar */
+  if (framed) { var demoBar = $('.demo-bar'); if (demoBar) demoBar.parentNode.removeChild(demoBar); }
 
   /* ---------- splash: once per visit, never inside the store's preview frames ---------- */
   var splash = $('#splash');

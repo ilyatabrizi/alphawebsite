@@ -12,17 +12,18 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="کافه شب">
+<link rel="preload" href="assets/fonts/IRANYekanXVFaNumVF.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/site.css">
 <link rel="stylesheet" href="assets/alpha.css">
 <script src="assets/preview-shim.js"></script>
 </head>
 <body class="hero-banner menu-grid has-island" style="--bg:#111111;--surface:#1C1C1B;--ink:#F4F1EA;--muted:#A39E94;--line:#2D2C2A;--accent:#FFCC00;--onaccent:#111111;--glass:rgba(28,28,27,0.64);--glass-strong:rgba(28,28,27,0.82);--glass-line:rgba(255,255,255,.10);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3);--pill-on:rgba(255,255,255,.12);">
-<div class="demo-bar">پیش‌نمایش قالب «شب» — <a href="index.html#layouts" target="_top">همه قالب‌ها</a></div><div class="island is-open" id="island" data-open="16:00" data-close="00:30" data-off="-1">
+<div class="demo-bar">پیش‌نمایش قالب «شب» — <a href="index.html#layouts" target="_top">همه قالب‌ها</a></div><div class="island is-closed" id="island" data-open="16:00" data-close="00:30" data-off="-1">
   <button class="isl-pill" type="button" aria-expanded="false" aria-controls="islPanel">
-    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">باز است تا ۰:۳۰</span>      </button>
+    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">بسته است؛ از ۱۶:۰۰ باز می‌شود</span>      </button>
   <div class="isl-panel" id="islPanel" hidden>
-    <div class="isl-head"><span class="isl-logo mono" aria-hidden="true">ک</span><div><b>کافه شب</b><span class="isl-status">باز است تا ۰:۳۰</span></div>
+    <div class="isl-head"><span class="isl-logo mono" aria-hidden="true">ک</span><div><b>کافه شب</b><span class="isl-status">بسته است؛ از ۱۶:۰۰ باز می‌شود</span></div>
       <button class="isl-x" type="button" aria-label="بستن">×</button></div>
         <p class="isl-meta">هر روز ۱۶:۰۰ تا ۰:۳۰، تبریز، خیابان ولیعصر</p>    <div class="isl-acts">
       <a href="tel:09120000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>تماس</span></a>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>مسیریابی</span></a>            <button type="button" data-act="install" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg><span>نصب اپ</span></button>
@@ -55,7 +56,7 @@
         <img src="uploads/5/sample-0.webp" alt="" loading="lazy">        <div class="item-body">
           <h3>اسپرسو</h3>
           <p>دابل‌شات، دانه عربیکا</p>          <div class="row">
-            <span class="price">۹۵,۰۰۰ <small>تومان</small></span>
+            <span class="price">۹۵٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="27" data-name="اسپرسو" data-price="95000" aria-label="افزودن اسپرسو">+</button>
                       </div>
         </div>
@@ -64,7 +65,7 @@
         <img src="uploads/5/sample-1.webp" alt="" loading="lazy">        <div class="item-body">
           <h3>لاته</h3>
           <p>شیر بخارداده و اسپرسو</p>          <div class="row">
-            <span class="price">۱۳۵,۰۰۰ <small>تومان</small></span>
+            <span class="price">۱۳۵٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="28" data-name="لاته" data-price="135000" aria-label="افزودن لاته">+</button>
                       </div>
         </div>
@@ -73,7 +74,7 @@
         <img src="uploads/5/sample-2.webp" alt="" loading="lazy">        <div class="item-body">
           <h3>کاپوچینو</h3>
           <p>فوم غلیظ و دارچین</p>          <div class="row">
-            <span class="price">۱۳۰,۰۰۰ <small>تومان</small></span>
+            <span class="price">۱۳۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="29" data-name="کاپوچینو" data-price="130000" aria-label="افزودن کاپوچینو">+</button>
                       </div>
         </div>
@@ -87,7 +88,7 @@
         <img src="uploads/5/sample-3.webp" alt="" loading="lazy">        <div class="item-body">
           <h3>آیس لاته</h3>
           <p>روی یخ، شیرین به انتخاب شما</p>          <div class="row">
-            <span class="price">۱۴۵,۰۰۰ <small>تومان</small></span>
+            <span class="price">۱۴۵٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="30" data-name="آیس لاته" data-price="145000" aria-label="افزودن آیس لاته">+</button>
                       </div>
         </div>
@@ -96,7 +97,7 @@
         <img src="uploads/5/sample-4.webp" alt="" loading="lazy">        <div class="item-body">
           <h3>کلدبرو</h3>
           <p>۱۸ ساعت دم‌کشیده</p>          <div class="row">
-            <span class="price">۱۵۰,۰۰۰ <small>تومان</small></span>
+            <span class="price">۱۵۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="31" data-name="کلدبرو" data-price="150000" aria-label="افزودن کلدبرو">+</button>
                       </div>
         </div>
@@ -110,7 +111,7 @@
         <img src="uploads/5/sample-5.webp" alt="" loading="lazy">        <div class="item-body">
           <h3>چیزکیک</h3>
           <p>نیویورکی با سس توت‌فرنگی</p>          <div class="row">
-            <span class="price">۲۱۰,۰۰۰ <small>تومان</small></span>
+            <span class="price">۲۱۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="32" data-name="چیزکیک" data-price="210000" aria-label="افزودن چیزکیک">+</button>
                       </div>
         </div>
@@ -119,7 +120,7 @@
         <img src="uploads/5/sample-6.webp" alt="" loading="lazy">        <div class="item-body">
           <h3>براونی</h3>
           <p>شکلات تلخ و گردو</p>          <div class="row">
-            <span class="price">۱۶۵,۰۰۰ <small>تومان</small></span>
+            <span class="price">۱۶۵٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="33" data-name="براونی" data-price="165000" aria-label="افزودن براونی">+</button>
                       </div>
         </div>
@@ -158,5 +159,5 @@
 </dialog>
 
 
-<script>window.SITE={"slug":"demo-shab","name":"کافه شب","base":"/s/demo-shab","chat":false,"glass":false,"demo":true,"v":"2026.10.04-2"};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script></body>
+<script>window.SITE={"slug":"demo-shab","name":"کافه شب","base":"/s/demo-shab","chat":false,"glass":false,"demo":true,"v":"2026.10.05-1"};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script></body>
 </html>

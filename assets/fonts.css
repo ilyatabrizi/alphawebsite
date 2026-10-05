@@ -1,0 +1,11 @@
+/* IRANYekanX by FontIran: a commercial font, used under Alpha's licence (see fonts/FontLicense.txt).
+   Served from our own host so it loads during internet restrictions.
+   The FaNum cut draws typed Latin digits as Persian ones by itself: never convert digits in JS for display.
+   One variable file carries every weight from 100 to 900. */
+@font-face{font-family:"IRANYekanX FaNum";src:url(fonts/IRANYekanXVFaNumVF.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+
+/* Latin digits for web addresses, e-mails and handles (class .lat). Only the ten digits come from these files,
+   so a browser fetches one only on a page that really shows such digits. */
+@font-face{font-family:"IRANYekanX Digits";src:url(fonts/IRANYekanX-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0030-0039}
+@font-face{font-family:"IRANYekanX Digits";src:url(fonts/IRANYekanX-Medium.woff2) format("woff2");font-weight:500 600;font-style:normal;font-display:swap;unicode-range:U+0030-0039}
+@font-face{font-family:"IRANYekanX Digits";src:url(fonts/IRANYekanX-Bold.woff2) format("woff2");font-weight:700 900;font-style:normal;font-display:swap;unicode-range:U+0030-0039}

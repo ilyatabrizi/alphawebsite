@@ -10,7 +10,7 @@
   <nav aria-label="بخش‌ها"><a href="index.html" class="">آلفا وب‌سایت</a><a href="index.html" class="">خروج</a></nav>
   </div></header>
 <div class="wrap"><div class="shell"><nav class="side" aria-label="پنل"><a href="panel.html" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>داشبورد</span></a><a href="panel-chat.html" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگوها</span><b class="nb" id="navChat">۱</b></a><a href="panel-orders.html" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>سفارش‌ها</span></a><a href="panel-menu.html" class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>منو و محصولات</span></a><a href="panel-info.html" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>اطلاعات و جزیره آلفا</span></a><a href="panel-look.html" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.1 0 1.8-.8 1.8-1.8 0-1-.9-1.5-.9-2.6 0-1 .8-1.7 1.8-1.7h2a3.8 3.8 0 0 0 3.8-3.8A8.5 8.5 0 0 0 12 3.5Z"/><circle cx="8.4" cy="10.4" r=".7"/><circle cx="12" cy="7.8" r=".7"/><circle cx="15.6" cy="10.4" r=".7"/></svg><span>ظاهر سایت</span></a><a class="ext" href="site-tabrizcharm.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7h8v8"/><path d="M17 7 7 17"/></svg><span>دیدن سایت</span></a></nav><div class="content">  <h1>منو و محصولات</h1>
-  <form class="card form" method="post" action="/panel/item" enctype="multipart/form-data"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2">    <h2>آیتم جدید</h2>
+  <form class="card form" method="post" action="/panel/item" enctype="multipart/form-data"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d">    <h2>آیتم جدید</h2>
     <div class="grid2">
       <label class="f">نام<input name="name" required maxlength="80"></label>
       <label class="f">قیمت (تومان)<input class="ltr" name="price" inputmode="numeric" required></label>
@@ -21,49 +21,49 @@
     <button class="btn" type="submit">افزودن به سایت</button>
   </form>
 
-  <form class="card" method="post" action="/panel/category" style="display:flex;gap:8px;flex-wrap:wrap;align-items:end"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2">    <label class="f" style="flex:1;min-width:180px">دسته جدید<input name="name" required maxlength="40"></label>
+  <form class="card" method="post" action="/panel/category" style="display:flex;gap:8px;flex-wrap:wrap;align-items:end"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d">    <label class="f" style="flex:1;min-width:180px">دسته جدید<input name="name" required maxlength="40"></label>
     <button class="btn" type="submit">ساخت دسته</button>
   </form>
 
       <div class="cathead"><h2>پرفروش‌ها</h2>
-      <form method="post" action="/panel/category/20/delete" class="inline"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2"><button class="btn sm danger" type="submit">حذف دسته</button></form></div>
+      <form method="post" action="/panel/category/20/delete" class="inline"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d"><button class="btn sm danger" type="submit">حذف دسته</button></form></div>
     <div class="list">
           <div class="mi">
         <img src="uploads/8/sample-0.webp" alt="">        <div><h3>کیف دوشی چرم </h3><p>2٬850٬000 تومان</p></div>
         <div class="acts">
-          <form method="post" action="/panel/item/46/toggle" class="inline"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
+          <form method="post" action="/panel/item/46/toggle" class="inline"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
           <a class="btn sm ghost" href="#">ویرایش</a>
         </div>
       </div>
           <div class="mi">
         <img src="uploads/8/sample-1.webp" alt="">        <div><h3>کیف پول </h3><p>980٬000 تومان</p></div>
         <div class="acts">
-          <form method="post" action="/panel/item/47/toggle" class="inline"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
+          <form method="post" action="/panel/item/47/toggle" class="inline"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
           <a class="btn sm ghost" href="#">ویرایش</a>
         </div>
       </div>
           <div class="mi">
         <img src="uploads/8/sample-2.webp" alt="">        <div><h3>کمربند </h3><p>1٬250٬000 تومان</p></div>
         <div class="acts">
-          <form method="post" action="/panel/item/48/toggle" class="inline"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
+          <form method="post" action="/panel/item/48/toggle" class="inline"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
           <a class="btn sm ghost" href="#">ویرایش</a>
         </div>
       </div>
             </div>
       <div class="cathead"><h2>جدیدها</h2>
-      <form method="post" action="/panel/category/21/delete" class="inline"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2"><button class="btn sm danger" type="submit">حذف دسته</button></form></div>
+      <form method="post" action="/panel/category/21/delete" class="inline"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d"><button class="btn sm danger" type="submit">حذف دسته</button></form></div>
     <div class="list">
           <div class="mi">
         <img src="uploads/8/sample-3.webp" alt="">        <div><h3>کوله‌پشتی </h3><p>3٬650٬000 تومان</p></div>
         <div class="acts">
-          <form method="post" action="/panel/item/49/toggle" class="inline"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
+          <form method="post" action="/panel/item/49/toggle" class="inline"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
           <a class="btn sm ghost" href="#">ویرایش</a>
         </div>
       </div>
           <div class="mi">
         <img src="uploads/8/sample-4.webp" alt="">        <div><h3>جاکلیدی </h3><p>420٬000 تومان</p></div>
         <div class="acts">
-          <form method="post" action="/panel/item/50/toggle" class="inline"><input type="hidden" name="csrf" value="11d683636a77f23ff455654c5c7bf9a2"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
+          <form method="post" action="/panel/item/50/toggle" class="inline"><input type="hidden" name="csrf" value="02d284c4749741a3ae36015e0887e29d"><button class="btn sm ghost" type="submit">ناموجود کن</button></form>
           <a class="btn sm ghost" href="#">ویرایش</a>
         </div>
       </div>

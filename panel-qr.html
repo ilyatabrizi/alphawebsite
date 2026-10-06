@@ -20,7 +20,7 @@
   <div class="qr-page">
     <form class="card form qr-opts" onsubmit="return false">
       <label class="f">متن بالای کارت<input id="qrHead" value="برای دیدن محصولات و سفارش اسکن کنید" maxlength="60"></label>
-      <label class="f">شماره میز<small>اختیاری؛ خالی بماند روی کارت نمی‌آید</small><input id="qrTable" inputmode="numeric" maxlength="4" placeholder="مثلاً ۱۲"></label>
+      <label class="f">شماره میز<small>اختیاری. با شماره میز، سفارشی که از این کارت می‌آید خودش «میز ۱۲» را دارد؛ برای هر میز یک کارت چاپ کن.</small><input id="qrTable" inputmode="numeric" maxlength="4" placeholder="مثلاً ۱۲"></label>
       <fieldset class="fs"><legend>رنگ کارت</legend><div class="seg-r">
         <label><input type="radio" name="qrTheme" value="light" checked> <span>روشن</span></label>
         <label><input type="radio" name="qrTheme" value="dark"> <span>تیره</span></label></div></fieldset>
@@ -29,7 +29,7 @@
     </form>
     <div class="qr-stage">
       <div class="qr-card light" id="qrCard" data-url="https://alphawebsite.ir/s/tabrizcharm">
-        <div class="qc-top"><img src="uploads/8/53fd5f0c9601ebe4.webp" alt="" width="56" height="56"><b>چرم تبریز</b></div>
+        <div class="qc-top"><img src="uploads/7/ec5120be53b002b2.webp" alt="" width="56" height="56"><b>چرم تبریز</b></div>
         <p class="qc-head" id="qcHead">برای دیدن محصولات و سفارش اسکن کنید</p>
         <div class="qc-code" id="qcCode" role="img" aria-label="کد QR سایت چرم تبریز"></div>
         <p class="qc-url lat" dir="ltr">alphawebsite.ir/s/tabrizcharm</p>
@@ -42,14 +42,22 @@
   <script>
   (function(){
     var card=document.getElementById('qrCard'),url=card.getAttribute('data-url'),box=document.getElementById('qcCode');
-    var qr=qrcode(0,'M'); qr.addData(url); qr.make();
-    var n=qr.getModuleCount(),m=4,size=n+m*2,d='';
-    for(var r=0;r<n;r++)for(var c=0;c<n;c++)if(qr.isDark(r,c))d+='M'+(c+m)+' '+(r+m)+'h1v1h-1z';
-    box.innerHTML='<svg viewBox="0 0 '+size+' '+size+'" shape-rendering="crispEdges"><rect width="'+size+'" height="'+size+'" fill="#fff"/><path d="'+d+'" fill="#000"/></svg>';
+    var qr;
+    /* With a table number the code opens the site with ?t=12, and the order form fills in «میز ۱۲» by itself. */
+    function draw(u){
+      qr=qrcode(0,'M'); qr.addData(u); qr.make();
+      var n=qr.getModuleCount(),m=4,size=n+m*2,d='';
+      for(var r=0;r<n;r++)for(var c=0;c<n;c++)if(qr.isDark(r,c))d+='M'+(c+m)+' '+(r+m)+'h1v1h-1z';
+      box.innerHTML='<svg viewBox="0 0 '+size+' '+size+'" shape-rendering="crispEdges"><rect width="'+size+'" height="'+size+'" fill="#fff"/><path d="'+d+'" fill="#000"/></svg>';
+    }
+    draw(url);
     var fa=function(s){return String(s).replace(/\d/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'[x];});};
     var h=document.getElementById('qrHead'),t=document.getElementById('qrTable');
     h.addEventListener('input',function(){document.getElementById('qcHead').textContent=h.value;});
-    t.addEventListener('input',function(){var v=t.value.trim(),el=document.getElementById('qcTable');el.hidden=!v;el.textContent='میز '+fa(v);});
+    t.addEventListener('input',function(){
+      var v=t.value.replace(/[۰-۹]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x);}).replace(/\D/g,'').slice(0,4),el=document.getElementById('qcTable');
+      el.hidden=!v; el.textContent='میز '+fa(v); draw(v?url+(url.indexOf('?')<0?'?':'&')+'t='+v:url);
+    });
     document.querySelectorAll('input[name=qrTheme]').forEach(function(r){r.addEventListener('change',function(){card.className='qr-card '+r.value;});});
     document.getElementById('qrPrint').addEventListener('click',function(){window.print();});
     document.getElementById('qrPng').addEventListener('click',function(){

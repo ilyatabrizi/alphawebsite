@@ -6,6 +6,15 @@
   var $ = function (id) { return document.getElementById(id); };
   var sheet = $('sheet');
 
+  /* Opened from a table's QR card (?t=12): the order already says which table. Kept for the visit. */
+  (function () {
+    var t = '';
+    try { t = (new URLSearchParams(location.search).get('t') || '').replace(/\D/g, '').slice(0, 4); } catch (e) {}
+    try { if (t) sessionStorage.setItem('aw-table', t); else t = sessionStorage.getItem('aw-table') || ''; } catch (e) {}
+    var note = $('cNote');
+    if (t && note && !note.value) note.value = 'میز ' + Number(t).toLocaleString('fa-IR', { useGrouping: false });
+  })();
+
   function totals() {
     var count = 0, sum = 0;
     Object.keys(cart).forEach(function (k) { count += cart[k].q; sum += cart[k].q * cart[k].p; });

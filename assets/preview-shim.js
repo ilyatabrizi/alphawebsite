@@ -2,6 +2,7 @@
    (orders, site chat, panel inbox) are answered here in the browser. Forms that would save to the
    server show a short note instead. */
 (function () {
+  window.AW_STATIC = true;   // store.js: demos are demo-<id>.html files here, not /s/demo-<id>
   try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf('alpha-chat-') === 0) localStorage.removeItem(k); }); } catch (e) {}
   var realFetch = window.fetch ? window.fetch.bind(window) : null;
   var msgs = [], seq = 0, replies = 0;

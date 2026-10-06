@@ -9,3 +9,10 @@
 @font-face{font-family:"IRANYekanX Digits";src:url(fonts/IRANYekanX-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0030-0039}
 @font-face{font-family:"IRANYekanX Digits";src:url(fonts/IRANYekanX-Medium.woff2) format("woff2");font-weight:500 600;font-style:normal;font-display:swap;unicode-range:U+0030-0039}
 @font-face{font-family:"IRANYekanX Digits";src:url(fonts/IRANYekanX-Bold.woff2) format("woff2");font-weight:700 900;font-style:normal;font-display:swap;unicode-range:U+0030-0039}
+
+/* Space Grotesk (SIL Open Font License 1.1, fonts/OFL-SpaceGrotesk.txt): Alpha Agency's Latin face.
+   "AW Grotesk" covers Latin LETTERS only, so it can sit first in the Persian stack without touching digits
+   (IRANYekanX FaNum keeps drawing them as Persian). "AW Grotesk Full" covers the whole Latin range,
+   digits included, for English labels and for .lat values (addresses, e-mails, codes). */
+@font-face{font-family:"AW Grotesk";src:url(fonts/SpaceGrotesk-VF.woff2) format("woff2");font-weight:300 700;font-style:normal;font-display:swap;unicode-range:U+0041-005A,U+0061-007A}
+@font-face{font-family:"AW Grotesk Full";src:url(fonts/SpaceGrotesk-VF.woff2) format("woff2");font-weight:300 700;font-style:normal;font-display:swap;unicode-range:U+0020-007E,U+00A0,U+00B7,U+2019,U+2192}

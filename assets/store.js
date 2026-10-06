@@ -104,6 +104,18 @@
     inp.addEventListener('change', function () { nm.textContent = inp.files && inp.files.length ? inp.files[0].name : 'فایلی انتخاب نشده'; });
   });
 
+  /* panel → look: try a layout or colour in the live phone before saving */
+  var lf = d.getElementById('lookForm'), pf = d.getElementById('pvFrame');
+  if (lf && pf && /^\/s\//.test(pf.getAttribute('src') || '')) {   // (the static preview has no server to render a layout)
+    lf.addEventListener('change', function () {
+      var l = lf.querySelector('input[name=layout]:checked'), a = lf.querySelector('input[name=accent]:checked');
+      var u = '/s/' + lf.getAttribute('data-slug') + '?pv=1' + (l ? '&layout=' + l.value : '') + (a ? '&accent=' + encodeURIComponent(a.value) : '');
+      var ph = pf.closest('.phone'); if (ph && l && l.getAttribute('data-stage')) ph.style.setProperty('--stage', l.getAttribute('data-stage'));
+      pf.classList.remove('ready'); pf.src = u;
+      var o = d.getElementById('pvOpen'); if (o) o.href = u;
+    });
+  }
+
   /* ready-made replies fill the ticket box */
   $$('[data-fill]').forEach(function (b) {
     b.addEventListener('click', function () { var t = d.getElementById('replyBody'); if (t) { t.value = b.getAttribute('data-fill'); t.focus(); } });

@@ -42,7 +42,7 @@ html.scrolled .scrim{opacity:1}
 .powered{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);text-decoration:none;color:var(--ink);transition:opacity .2s}
 .powered:hover{opacity:.8}
 .alpha-mark{height:44px;width:auto;flex:none}
-.powered-txt{display:grid;gap:1px;text-align:left}
+.powered-txt{display:grid;gap:1px;text-align:left;font-family:"AW Grotesk Full","IRANYekanX FaNum",system-ui,sans-serif}
 .powered-txt .pb{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .powered-txt .pa{font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.15}
 

@@ -83,7 +83,8 @@ button{font:inherit;color:inherit}
 .li-t{flex:1;display:flex;flex-direction:column;line-height:1.45;font-weight:500}
 .li-t small{color:var(--muted);font-size:12.5px;font-weight:400}
 .li-t small[dir=ltr]{text-align:right}
-.chev{color:var(--muted);font-size:22px;line-height:1}
+.chev{display:grid;place-items:center;color:var(--muted);line-height:1}
+.chev svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---------- bag ---------- */
 .empty{display:grid;justify-items:center;gap:12px;text-align:center;padding:40px 10px;color:var(--muted)}

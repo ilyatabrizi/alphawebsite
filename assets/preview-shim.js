@@ -44,6 +44,7 @@
       return json({ messages: msgs.filter(function (x) { return x.id > after; }), unread: 0, online: true });
     }
     if (/\/api\/order/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
+    if (/\/api\/call/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/panel\/unread/.test(u)) { var nb = document.getElementById('navChat'); return json({ n: nb && !nb.hidden ? faInt(nb.textContent) : 0 }); }
     if (/\/panel\/chat\/\d+\/poll/.test(u)) return json({ messages: [] });
     if (/\/panel\/chat\/\d+\/send/.test(u)) { var b3 = body(opt); return json({ message: { id: 100000 + (++seq), s: 'o', b: b3.get('body') || '', k: 'text', t: stamp() } }); }

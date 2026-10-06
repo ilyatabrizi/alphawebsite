@@ -21,12 +21,13 @@
       <a class="thread unread" href="panel-thread.html">
       <span class="av">ع</span>
       <span class="tx"><b>علی رضایی</b><small>بله، قهوه‌ای لطفاً 🙏</small></span>
-      <span class="mt"><small>1405/07/15 ۰۲:۰۳</small><b class="nb">۱</b></span>
+      <span class="mt"><small>1405/07/15 ۰۲:۴۷</small><b class="nb">۱</b></span>
     </a>
       </div>
-</div></div></div><nav class="tabbar" aria-label="پنل"><div class="tb-in"><a href="panel.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></a><a href="panel-menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>منو</span></a><a href="panel-orders.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>سفارش‌ها</span></a><a href="panel-chat.html" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span><b class="nb" data-unread>۱</b></a><a href="panel-more.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/></svg><span>بیشتر</span></a></div></nav><script>
+</div></div></div><nav class="tabbar" aria-label="پنل"><div class="tb-in"><a href="panel.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></a><a href="panel-menu.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>منو</span></a><a href="panel-orders.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>سفارش‌ها</span><b class="nb" data-orders hidden>۰</b></a><a href="panel-chat.html" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span><b class="nb" data-unread>۱</b></a><a href="panel-more.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="18" cy="12" r="1.2"/></svg><span>بیشتر</span></a></div></nav><script>
 (function(){
-  var bs=document.querySelectorAll('[data-unread]'),inbox=document.getElementById('inbox'),base=document.title,last=null;
+  var bs=document.querySelectorAll('[data-unread]'),ob=document.querySelectorAll('[data-orders]'),inbox=document.getElementById('inbox'),olist=document.querySelector('.olist'),base=document.title,last=null,lastCall=null,lastOrders=null;
+  function toast(t){var d=document.createElement('div');d.className='call-toast';d.setAttribute('role','alert');d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.classList.add('out');},6000);setTimeout(function(){d.remove();},6600);}
   var fa=function(s){return String(s).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d];});};
   function chime(){try{var a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.setValueAtTime(.0001,a.currentTime);g.gain.exponentialRampToValueAtTime(.18,a.currentTime+.02);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.35);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.4);}catch(e){}}
   function tick(){ if(document.hidden&&last!==null) return;
@@ -35,6 +36,11 @@
       document.title=(j.n?'('+fa(j.n)+') ':'')+base;
       if(last!==null&&j.n>last){chime(); if(inbox) location.reload();}
       last=j.n;
+      ob.forEach(function(b){b.hidden=!j.orders;b.textContent=fa(j.orders||0);});
+      var cid=j.call?j.call.id:0;
+      if(lastCall!==null&&cid>lastCall){chime(); toast(j.call.text);}
+      if(lastOrders!==null&&j.orders>lastOrders&&olist&&!document.querySelector('form:focus-within')) setTimeout(function(){location.reload();},cid>lastCall?2500:300);
+      lastCall=Math.max(lastCall||0,cid); lastOrders=j.orders;
     }).catch(function(){});
   }
   tick(); setInterval(tick,10000);

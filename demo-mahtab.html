@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="assets/alpha.css">
 <script src="assets/preview-shim.js"></script>
 </head>
-<body class="glass dark" style="--bg:#0E1116;--surface:#171B22;--ink:#F3EFE6;--muted:#9AA0AA;--line:#262B34;--accent:#E7D3A7;--onaccent:#111111;--glass:rgba(23,27,34,0.64);--glass-strong:rgba(23,27,34,0.82);--glass-line:rgba(255,255,255,.10);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3);--pill-on:rgba(255,255,255,.12);">
+<body class="glass dark" style="--bg:#0E1116;--surface:#171B22;--ink:#F3EFE6;--muted:#9AA0AA;--line:#262B34;--accent:#E7D3A7;--onaccent:#111111;--glass:rgba(23,27,34,0.64);--glass-strong:rgba(23,27,34,0.82);--glass-line:rgba(255,255,255,.10);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3);--pill-on:rgba(255,255,255,.12);--pat:rgba(243,239,230,0.13);--glow:rgba(231,211,167,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
 <script>try{if(window.top===window&&!sessionStorage.getItem('seen-demo-mahtab'))document.body.classList.add('splashing')}catch(e){}</script>
 <div id="splash" aria-hidden="true"><img class="splash-logo" src="assets/demo/restaurant/logo.webp" alt="رستوران شهرزاد"><div class="splash-bar"><i></i></div></div>
 <div class="demo-bar">پیش‌نمایش قالب «رستوران با عکس»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div><div class="island is-closed" id="island" data-open="12:00" data-close="23:30" data-off="-1">
@@ -49,12 +49,12 @@
       </div>
     </header>
 
-        <div class="g-sec">
+        <div class="g-sec g-picks">
       <div class="g-sec-h"><h2>پیشنهاد ما</h2><button type="button" data-go="menu">همه</button></div>
       <div class="rail"><article class="card" data-name="سالاد شیرازی">
   <img src="assets/demo/restaurant/salad-shirazi.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>سالاد شیرازی</h3>
-    <p>خیار، گوجه، پیاز و نعناع خشک</p>        <div class="row">
+    <p class="desc">خیار، گوجه، پیاز و نعناع خشک</p>        <div class="row">
       <span class="price">۱۲۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="37" data-name="سالاد شیرازی" data-price="120000" aria-label="افزودن سالاد شیرازی">+</button>    </div>
   </div>
@@ -62,7 +62,7 @@
 <article class="card" data-name="ماست و خیار">
   <img src="assets/demo/restaurant/mast-khiar.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>ماست و خیار</h3>
-    <p>با گل‌محمدی و نعناع</p>        <div class="row">
+    <p class="desc">با گل‌محمدی و نعناع</p>        <div class="row">
       <span class="price">۱۱۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="38" data-name="ماست و خیار" data-price="110000" aria-label="افزودن ماست و خیار">+</button>    </div>
   </div>
@@ -70,7 +70,7 @@
 <article class="card" data-name="کشک بادمجان">
   <img src="assets/demo/restaurant/kashk-bademjan.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کشک بادمجان</h3>
-    <p>با نعناداغ، پیاز داغ و گردو</p>        <div class="row">
+    <p class="desc">با نعناداغ، پیاز داغ و گردو</p>        <div class="row">
       <span class="price">۲۶۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="39" data-name="کشک بادمجان" data-price="260000" aria-label="افزودن کشک بادمجان">+</button>    </div>
   </div>
@@ -78,7 +78,7 @@
 <article class="card" data-name="سوپ جو">
   <img src="assets/demo/restaurant/soup-jo.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>سوپ جو</h3>
-    <p>با لیمو و جعفری</p>        <div class="row">
+    <p class="desc">با لیمو و جعفری</p>        <div class="row">
       <span class="price">۱۸۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="40" data-name="سوپ جو" data-price="180000" aria-label="افزودن سوپ جو">+</button>    </div>
   </div>
@@ -86,7 +86,7 @@
 <article class="card" data-name="چلوکباب کوبیده">
   <img src="assets/demo/restaurant/koobideh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>چلوکباب کوبیده</h3>
-    <p>دو سیخ، برنج زعفرانی، گوجه کبابی</p>        <div class="row">
+    <p class="desc">دو سیخ، برنج زعفرانی، گوجه کبابی</p>        <div class="row">
       <span class="price">۱٬۱۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="41" data-name="چلوکباب کوبیده" data-price="1150000" aria-label="افزودن چلوکباب کوبیده">+</button>    </div>
   </div>
@@ -94,7 +94,7 @@
 <article class="card" data-name="جوجه‌کباب">
   <img src="assets/demo/restaurant/joojeh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>جوجه‌کباب</h3>
-    <p>سینه مرغ زعفرانی، با برنج</p>    <p class="opts">همراه: برنج، نان</p>    <div class="row">
+    <p class="desc">سینه مرغ زعفرانی، با برنج</p>    <p class="opts">همراه: برنج، نان</p>    <div class="row">
       <span class="price">۹۸۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="42" data-name="جوجه‌کباب" data-price="980000" data-opts="[{&quot;n&quot;:&quot;همراه&quot;,&quot;v&quot;:[&quot;برنج&quot;,&quot;نان&quot;]}]" aria-label="انتخاب و افزودن جوجه‌کباب">+</button>    </div>
   </div>
@@ -102,7 +102,7 @@
 <article class="card" data-name="کباب برگ">
   <img src="assets/demo/restaurant/barg.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کباب برگ</h3>
-    <p>فیله گوسفندی، برنج زعفرانی و سماق</p>        <div class="row">
+    <p class="desc">فیله گوسفندی، برنج زعفرانی و سماق</p>        <div class="row">
       <span class="price">۱٬۸۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="43" data-name="کباب برگ" data-price="1850000" aria-label="افزودن کباب برگ">+</button>    </div>
   </div>
@@ -110,7 +110,7 @@
 <article class="card" data-name="قورمه‌سبزی">
   <img src="assets/demo/restaurant/ghormeh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>قورمه‌سبزی</h3>
-    <p>با گوشت گوسفندی و برنج</p>        <div class="row">
+    <p class="desc">با گوشت گوسفندی و برنج</p>        <div class="row">
       <span class="price">۷۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="44" data-name="قورمه‌سبزی" data-price="750000" aria-label="افزودن قورمه‌سبزی">+</button>    </div>
   </div>
@@ -118,12 +118,12 @@
 </div>
     </div>
     
-    <div class="g-sec">
+    <div class="g-sec g-facts">
       <div class="group">
         <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۱۲:۰۰ تا ۲۳:۳۰</small></span></div>        <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">آدرس<small>تبریز، ائل‌گلی، بلوار پاسداران، پلاک ۴۸</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      </div>
     </div>
 
-    <div class="g-sec"><div class="g-sec-h"><h2>درباره ما</h2></div><p class="g-about">از سال ۱۳۸۹ همان دستپخت خانگی: برنج ایرانی، کباب روی ذغال و خورشی که از صبح بار گذاشته می‌شود. سالن خانوادگی و ارسال به محدوده.</p></div>  </section>
+    <div class="g-sec g-about-sec"><div class="g-sec-h"><h2>درباره ما</h2></div><p class="g-about">از سال ۱۳۸۹ همان دستپخت خانگی: برنج ایرانی، کباب روی ذغال و خورشی که از صبح بار گذاشته می‌شود. سالن خانوادگی و ارسال به محدوده.</p></div>  </section>
 
   <section class="view" data-view="menu" id="v-menu" aria-label="منو">
     <h1 class="g-title">منو</h1>
@@ -134,7 +134,7 @@
         <div class="cards"><article class="card" data-name="سالاد شیرازی">
   <img src="assets/demo/restaurant/salad-shirazi.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>سالاد شیرازی</h3>
-    <p>خیار، گوجه، پیاز و نعناع خشک</p>        <div class="row">
+    <p class="desc">خیار، گوجه، پیاز و نعناع خشک</p>        <div class="row">
       <span class="price">۱۲۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="37" data-name="سالاد شیرازی" data-price="120000" aria-label="افزودن سالاد شیرازی">+</button>    </div>
   </div>
@@ -142,7 +142,7 @@
 <article class="card" data-name="ماست و خیار">
   <img src="assets/demo/restaurant/mast-khiar.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>ماست و خیار</h3>
-    <p>با گل‌محمدی و نعناع</p>        <div class="row">
+    <p class="desc">با گل‌محمدی و نعناع</p>        <div class="row">
       <span class="price">۱۱۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="38" data-name="ماست و خیار" data-price="110000" aria-label="افزودن ماست و خیار">+</button>    </div>
   </div>
@@ -150,7 +150,7 @@
 <article class="card" data-name="کشک بادمجان">
   <img src="assets/demo/restaurant/kashk-bademjan.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کشک بادمجان</h3>
-    <p>با نعناداغ، پیاز داغ و گردو</p>        <div class="row">
+    <p class="desc">با نعناداغ، پیاز داغ و گردو</p>        <div class="row">
       <span class="price">۲۶۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="39" data-name="کشک بادمجان" data-price="260000" aria-label="افزودن کشک بادمجان">+</button>    </div>
   </div>
@@ -158,7 +158,7 @@
 <article class="card" data-name="سوپ جو">
   <img src="assets/demo/restaurant/soup-jo.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>سوپ جو</h3>
-    <p>با لیمو و جعفری</p>        <div class="row">
+    <p class="desc">با لیمو و جعفری</p>        <div class="row">
       <span class="price">۱۸۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="40" data-name="سوپ جو" data-price="180000" aria-label="افزودن سوپ جو">+</button>    </div>
   </div>
@@ -170,7 +170,7 @@
         <div class="cards"><article class="card" data-name="چلوکباب کوبیده">
   <img src="assets/demo/restaurant/koobideh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>چلوکباب کوبیده</h3>
-    <p>دو سیخ، برنج زعفرانی، گوجه کبابی</p>        <div class="row">
+    <p class="desc">دو سیخ، برنج زعفرانی، گوجه کبابی</p>        <div class="row">
       <span class="price">۱٬۱۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="41" data-name="چلوکباب کوبیده" data-price="1150000" aria-label="افزودن چلوکباب کوبیده">+</button>    </div>
   </div>
@@ -178,7 +178,7 @@
 <article class="card" data-name="جوجه‌کباب">
   <img src="assets/demo/restaurant/joojeh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>جوجه‌کباب</h3>
-    <p>سینه مرغ زعفرانی، با برنج</p>    <p class="opts">همراه: برنج، نان</p>    <div class="row">
+    <p class="desc">سینه مرغ زعفرانی، با برنج</p>    <p class="opts">همراه: برنج، نان</p>    <div class="row">
       <span class="price">۹۸۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="42" data-name="جوجه‌کباب" data-price="980000" data-opts="[{&quot;n&quot;:&quot;همراه&quot;,&quot;v&quot;:[&quot;برنج&quot;,&quot;نان&quot;]}]" aria-label="انتخاب و افزودن جوجه‌کباب">+</button>    </div>
   </div>
@@ -186,7 +186,7 @@
 <article class="card" data-name="کباب برگ">
   <img src="assets/demo/restaurant/barg.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>کباب برگ</h3>
-    <p>فیله گوسفندی، برنج زعفرانی و سماق</p>        <div class="row">
+    <p class="desc">فیله گوسفندی، برنج زعفرانی و سماق</p>        <div class="row">
       <span class="price">۱٬۸۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="43" data-name="کباب برگ" data-price="1850000" aria-label="افزودن کباب برگ">+</button>    </div>
   </div>
@@ -198,7 +198,7 @@
         <div class="cards"><article class="card" data-name="قورمه‌سبزی">
   <img src="assets/demo/restaurant/ghormeh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>قورمه‌سبزی</h3>
-    <p>با گوشت گوسفندی و برنج</p>        <div class="row">
+    <p class="desc">با گوشت گوسفندی و برنج</p>        <div class="row">
       <span class="price">۷۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="44" data-name="قورمه‌سبزی" data-price="750000" aria-label="افزودن قورمه‌سبزی">+</button>    </div>
   </div>
@@ -206,7 +206,7 @@
 <article class="card" data-name="زرشک‌پلو با مرغ">
   <img src="assets/demo/restaurant/zereshk-polo.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>زرشک‌پلو با مرغ</h3>
-    <p>ران مرغ زعفرانی، زرشک و پسته</p>        <div class="row">
+    <p class="desc">ران مرغ زعفرانی، زرشک و پسته</p>        <div class="row">
       <span class="price">۸۲۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="45" data-name="زرشک‌پلو با مرغ" data-price="820000" aria-label="افزودن زرشک‌پلو با مرغ">+</button>    </div>
   </div>
@@ -214,7 +214,7 @@
 <article class="card" data-name="قزل‌آلای کبابی">
   <img src="assets/demo/restaurant/trout.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>قزل‌آلای کبابی</h3>
-    <p>با سبزی‌پلو و لیمو</p>        <div class="row">
+    <p class="desc">با سبزی‌پلو و لیمو</p>        <div class="row">
       <span class="price">۱٬۰۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="46" data-name="قزل‌آلای کبابی" data-price="1050000" aria-label="افزودن قزل‌آلای کبابی">+</button>    </div>
   </div>
@@ -222,7 +222,7 @@
 <article class="card" data-name="باقالی‌پلو با ماهیچه">
   <img src="assets/demo/restaurant/baghali-mahiche.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>باقالی‌پلو با ماهیچه</h3>
-    <p>ماهیچه گوسفندی، شوید و باقالی</p>        <div class="row">
+    <p class="desc">ماهیچه گوسفندی، شوید و باقالی</p>        <div class="row">
       <span class="price">۱٬۶۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="47" data-name="باقالی‌پلو با ماهیچه" data-price="1650000" data-stock="8" aria-label="افزودن باقالی‌پلو با ماهیچه">+</button>    </div>
   </div>
@@ -234,7 +234,7 @@
         <div class="cards"><article class="card" data-name="دوغ محلی">
   <img src="assets/demo/restaurant/doogh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>دوغ محلی</h3>
-    <p>با نعناع خشک</p>        <div class="row">
+    <p class="desc">با نعناع خشک</p>        <div class="row">
       <span class="price">۱۲۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="48" data-name="دوغ محلی" data-price="120000" aria-label="افزودن دوغ محلی">+</button>    </div>
   </div>
@@ -242,7 +242,7 @@
 <article class="card" data-name="لیموناد">
   <img src="assets/demo/restaurant/lemonade.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>لیموناد</h3>
-    <p>لیموی تازه و نعناع</p>        <div class="row">
+    <p class="desc">لیموی تازه و نعناع</p>        <div class="row">
       <span class="price">۱۶۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="49" data-name="لیموناد" data-price="160000" aria-label="افزودن لیموناد">+</button>    </div>
   </div>
@@ -254,7 +254,7 @@
         <div class="cards"><article class="card" data-name="فالوده شیرازی">
   <img src="assets/demo/restaurant/faloodeh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>فالوده شیرازی</h3>
-    <p>با گلاب و آب‌لیمو</p>        <div class="row">
+    <p class="desc">با گلاب و آب‌لیمو</p>        <div class="row">
       <span class="price">۱۸۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="50" data-name="فالوده شیرازی" data-price="180000" aria-label="افزودن فالوده شیرازی">+</button>    </div>
   </div>
@@ -262,7 +262,7 @@
 <article class="card" data-name="بستنی سنتی">
   <img src="assets/demo/restaurant/bastani.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>بستنی سنتی</h3>
-    <p>زعفرانی با پسته</p>        <div class="row">
+    <p class="desc">زعفرانی با پسته</p>        <div class="row">
       <span class="price">۱۹۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="51" data-name="بستنی سنتی" data-price="190000" aria-label="افزودن بستنی سنتی">+</button>    </div>
   </div>
@@ -270,7 +270,7 @@
 <article class="card" data-name="شله‌زرد">
   <img src="assets/demo/restaurant/sholeh-zard.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
     <h3>شله‌زرد</h3>
-    <p>با دارچین و خلال بادام</p>        <div class="row">
+    <p class="desc">با دارچین و خلال بادام</p>        <div class="row">
       <span class="price">۱۵۰٬۰۰۰ <small>تومان</small></span>
       <button class="add" type="button" data-id="52" data-name="شله‌زرد" data-price="150000" aria-label="افزودن شله‌زرد">+</button>    </div>
   </div>
@@ -345,5 +345,5 @@
       <button type="button" data-tab="info" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
   </nav>
 
-<script>window.SITE={"slug":"demo-mahtab","name":"رستوران شهرزاد","base":"/s/demo-mahtab","chat":true,"glass":true,"demo":true,"v":"2026.10.07-1","type":"restaurant","delivery":true,"fee":60000,"min":500000,"calls":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
+<script>window.SITE={"slug":"demo-mahtab","name":"رستوران شهرزاد","base":"/s/demo-mahtab","chat":true,"glass":true,"demo":true,"v":"2026.10.07-2","type":"restaurant","delivery":true,"fee":60000,"min":500000,"calls":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
 </html>

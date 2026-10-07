@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="assets/alpha.css">
 <script src="assets/preview-shim.js"></script>
 </head>
-<body class="hero-split menu-twocol has-island" style="--bg:#F3F5F1;--surface:#FFFFFF;--ink:#17251B;--muted:#66756A;--line:#DCE3DA;--accent:#2F6B45;--onaccent:#FFFFFF;--glass:rgba(243,245,241,0.72);--glass-strong:rgba(255,255,255,0.86);--glass-line:rgba(23,37,27,0.1);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px rgba(23,37,27,0.16),0 3px 10px rgba(23,37,27,0.08);--pill-on:rgba(23,37,27,0.09);">
+<body class="hero-split menu-twocol has-island" style="--bg:#F3F5F1;--surface:#FFFFFF;--ink:#17251B;--muted:#66756A;--line:#DCE3DA;--accent:#2F6B45;--onaccent:#FFFFFF;--glass:rgba(243,245,241,0.72);--glass-strong:rgba(255,255,255,0.86);--glass-line:rgba(23,37,27,0.1);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px rgba(23,37,27,0.16),0 3px 10px rgba(23,37,27,0.08);--pill-on:rgba(23,37,27,0.09);--pat:rgba(23,37,27,0.1);--glow:rgba(47,107,69,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
 <div class="demo-bar">پیش‌نمایش قالب «رستوران ساده»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div><div class="island is-closed" id="island" data-open="12:00" data-close="23:30" data-off="-1">
   <button class="isl-pill" type="button" aria-expanded="false" aria-controls="islPanel">
     <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">بسته است؛ از ۱۲:۰۰ باز می‌شود</span>    <span class="isl-news">امشب: باقالی‌پلو با ماهیچه</span>  </button>
@@ -56,7 +56,7 @@
           <article class="item" data-name="سالاد شیرازی">
                 <div class="item-body">
           <h3>سالاد شیرازی</h3>
-          <p>خیار، گوجه، پیاز و نعناع خشک</p>                    <div class="row">
+          <p class="desc">خیار، گوجه، پیاز و نعناع خشک</p>                    <div class="row">
             <span class="price">۱۲۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="53" data-name="سالاد شیرازی" data-price="120000" aria-label="افزودن سالاد شیرازی">+</button>                      </div>
         </div>
@@ -64,7 +64,7 @@
           <article class="item" data-name="ماست و خیار">
                 <div class="item-body">
           <h3>ماست و خیار</h3>
-          <p>با گل‌محمدی و نعناع</p>                    <div class="row">
+          <p class="desc">با گل‌محمدی و نعناع</p>                    <div class="row">
             <span class="price">۱۱۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="54" data-name="ماست و خیار" data-price="110000" aria-label="افزودن ماست و خیار">+</button>                      </div>
         </div>
@@ -72,7 +72,7 @@
           <article class="item" data-name="کشک بادمجان">
                 <div class="item-body">
           <h3>کشک بادمجان</h3>
-          <p>با نعناداغ، پیاز داغ و گردو</p>                    <div class="row">
+          <p class="desc">با نعناداغ، پیاز داغ و گردو</p>                    <div class="row">
             <span class="price">۲۶۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="55" data-name="کشک بادمجان" data-price="260000" aria-label="افزودن کشک بادمجان">+</button>                      </div>
         </div>
@@ -80,7 +80,7 @@
           <article class="item" data-name="سوپ جو">
                 <div class="item-body">
           <h3>سوپ جو</h3>
-          <p>با لیمو و جعفری</p>                    <div class="row">
+          <p class="desc">با لیمو و جعفری</p>                    <div class="row">
             <span class="price">۱۸۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="56" data-name="سوپ جو" data-price="180000" aria-label="افزودن سوپ جو">+</button>                      </div>
         </div>
@@ -93,7 +93,7 @@
           <article class="item" data-name="چلوکباب کوبیده">
                 <div class="item-body">
           <h3>چلوکباب کوبیده</h3>
-          <p>دو سیخ، برنج زعفرانی، گوجه کبابی</p>                    <div class="row">
+          <p class="desc">دو سیخ، برنج زعفرانی، گوجه کبابی</p>                    <div class="row">
             <span class="price">۱٬۱۵۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="57" data-name="چلوکباب کوبیده" data-price="1150000" aria-label="افزودن چلوکباب کوبیده">+</button>                      </div>
         </div>
@@ -101,7 +101,7 @@
           <article class="item" data-name="جوجه‌کباب">
                 <div class="item-body">
           <h3>جوجه‌کباب</h3>
-          <p>سینه مرغ زعفرانی، با برنج</p>          <p class="opts">همراه: برنج، نان</p>          <div class="row">
+          <p class="desc">سینه مرغ زعفرانی، با برنج</p>          <p class="opts">همراه: برنج، نان</p>          <div class="row">
             <span class="price">۹۸۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="58" data-name="جوجه‌کباب" data-price="980000" data-opts="[{&quot;n&quot;:&quot;همراه&quot;,&quot;v&quot;:[&quot;برنج&quot;,&quot;نان&quot;]}]" aria-label="انتخاب و افزودن جوجه‌کباب">+</button>                      </div>
         </div>
@@ -109,7 +109,7 @@
           <article class="item" data-name="کباب برگ">
                 <div class="item-body">
           <h3>کباب برگ</h3>
-          <p>فیله گوسفندی، برنج زعفرانی و سماق</p>                    <div class="row">
+          <p class="desc">فیله گوسفندی، برنج زعفرانی و سماق</p>                    <div class="row">
             <span class="price">۱٬۸۵۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="59" data-name="کباب برگ" data-price="1850000" aria-label="افزودن کباب برگ">+</button>                      </div>
         </div>
@@ -122,7 +122,7 @@
           <article class="item" data-name="قورمه‌سبزی">
                 <div class="item-body">
           <h3>قورمه‌سبزی</h3>
-          <p>با گوشت گوسفندی و برنج</p>                    <div class="row">
+          <p class="desc">با گوشت گوسفندی و برنج</p>                    <div class="row">
             <span class="price">۷۵۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="60" data-name="قورمه‌سبزی" data-price="750000" aria-label="افزودن قورمه‌سبزی">+</button>                      </div>
         </div>
@@ -130,7 +130,7 @@
           <article class="item" data-name="زرشک‌پلو با مرغ">
                 <div class="item-body">
           <h3>زرشک‌پلو با مرغ</h3>
-          <p>ران مرغ زعفرانی، زرشک و پسته</p>                    <div class="row">
+          <p class="desc">ران مرغ زعفرانی، زرشک و پسته</p>                    <div class="row">
             <span class="price">۸۲۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="61" data-name="زرشک‌پلو با مرغ" data-price="820000" aria-label="افزودن زرشک‌پلو با مرغ">+</button>                      </div>
         </div>
@@ -138,7 +138,7 @@
           <article class="item" data-name="قزل‌آلای کبابی">
                 <div class="item-body">
           <h3>قزل‌آلای کبابی</h3>
-          <p>با سبزی‌پلو و لیمو</p>                    <div class="row">
+          <p class="desc">با سبزی‌پلو و لیمو</p>                    <div class="row">
             <span class="price">۱٬۰۵۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="62" data-name="قزل‌آلای کبابی" data-price="1050000" aria-label="افزودن قزل‌آلای کبابی">+</button>                      </div>
         </div>
@@ -146,7 +146,7 @@
           <article class="item" data-name="باقالی‌پلو با ماهیچه">
                 <div class="item-body">
           <h3>باقالی‌پلو با ماهیچه</h3>
-          <p>ماهیچه گوسفندی، شوید و باقالی</p>                    <div class="row">
+          <p class="desc">ماهیچه گوسفندی، شوید و باقالی</p>                    <div class="row">
             <span class="price">۱٬۶۵۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="63" data-name="باقالی‌پلو با ماهیچه" data-price="1650000" data-stock="8" aria-label="افزودن باقالی‌پلو با ماهیچه">+</button>                      </div>
         </div>
@@ -159,7 +159,7 @@
           <article class="item" data-name="دوغ محلی">
                 <div class="item-body">
           <h3>دوغ محلی</h3>
-          <p>با نعناع خشک</p>                    <div class="row">
+          <p class="desc">با نعناع خشک</p>                    <div class="row">
             <span class="price">۱۲۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="64" data-name="دوغ محلی" data-price="120000" aria-label="افزودن دوغ محلی">+</button>                      </div>
         </div>
@@ -167,7 +167,7 @@
           <article class="item" data-name="لیموناد">
                 <div class="item-body">
           <h3>لیموناد</h3>
-          <p>لیموی تازه و نعناع</p>                    <div class="row">
+          <p class="desc">لیموی تازه و نعناع</p>                    <div class="row">
             <span class="price">۱۶۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="65" data-name="لیموناد" data-price="160000" aria-label="افزودن لیموناد">+</button>                      </div>
         </div>
@@ -180,7 +180,7 @@
           <article class="item" data-name="فالوده شیرازی">
                 <div class="item-body">
           <h3>فالوده شیرازی</h3>
-          <p>با گلاب و آب‌لیمو</p>                    <div class="row">
+          <p class="desc">با گلاب و آب‌لیمو</p>                    <div class="row">
             <span class="price">۱۸۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="66" data-name="فالوده شیرازی" data-price="180000" aria-label="افزودن فالوده شیرازی">+</button>                      </div>
         </div>
@@ -188,7 +188,7 @@
           <article class="item" data-name="بستنی سنتی">
                 <div class="item-body">
           <h3>بستنی سنتی</h3>
-          <p>زعفرانی با پسته</p>                    <div class="row">
+          <p class="desc">زعفرانی با پسته</p>                    <div class="row">
             <span class="price">۱۹۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="67" data-name="بستنی سنتی" data-price="190000" aria-label="افزودن بستنی سنتی">+</button>                      </div>
         </div>
@@ -196,7 +196,7 @@
           <article class="item" data-name="شله‌زرد">
                 <div class="item-body">
           <h3>شله‌زرد</h3>
-          <p>با دارچین و خلال بادام</p>                    <div class="row">
+          <p class="desc">با دارچین و خلال بادام</p>                    <div class="row">
             <span class="price">۱۵۰٬۰۰۰ <small>تومان</small></span>
                           <button class="add" type="button" data-id="68" data-name="شله‌زرد" data-price="150000" aria-label="افزودن شله‌زرد">+</button>                      </div>
         </div>
@@ -240,5 +240,5 @@
 </dialog>
 
 
-<script>window.SITE={"slug":"demo-sofreh","name":"رستوران شهرزاد","base":"/s/demo-sofreh","chat":false,"glass":false,"demo":true,"v":"2026.10.07-1","type":"restaurant","delivery":true,"fee":60000,"min":500000,"calls":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script></body>
+<script>window.SITE={"slug":"demo-sofreh","name":"رستوران شهرزاد","base":"/s/demo-sofreh","chat":false,"glass":false,"demo":true,"v":"2026.10.07-2","type":"restaurant","delivery":true,"fee":60000,"min":500000,"calls":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script></body>
 </html>

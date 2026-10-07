@@ -261,17 +261,179 @@
     inp.addEventListener('change', function () { nm.textContent = inp.files && inp.files.length ? inp.files[0].name : 'فایلی انتخاب نشده'; });
   });
 
-  /* panel → look: try a layout or colour in the live phone before saving */
-  var lf = d.getElementById('lookForm'), pf = d.getElementById('pvFrame');
-  if (lf && pf && /^\/s\//.test(pf.getAttribute('src') || '')) {   // (the static preview has no server to render a layout)
-    lf.addEventListener('change', function () {
-      var l = lf.querySelector('input[name=layout]:checked'), a = lf.querySelector('input[name=accent]:checked');
-      var u = '/s/' + lf.getAttribute('data-slug') + '?pv=1' + (l ? '&layout=' + l.value : '') + (a ? '&accent=' + encodeURIComponent(a.value) : '');
-      if (l) setStage(pf.closest('.phone'), l.getAttribute('data-stage'), l.getAttribute('data-bar'));
-      pf.classList.remove('ready'); pf.src = u;
-      var o = d.getElementById('pvOpen'); if (o) o.href = u;
-    });
+  /* ---------- panel → look: colours (any RGB), shape, text, background and sections, live in the phone before saving ----------
+     lookTheme() is the browser twin of theme_colors() + site_theme() in PHP: the same maths, so the phone shows exactly what
+     the saved site will be. Keep the two identical (e2e compares them). Only a layout change reloads the phone. */
+  var hexOk = function (h) { h = String(h || '').trim().toUpperCase(); return /^#[0-9A-F]{6}$/.test(h) ? h : ''; };
+  var rgbOf = function (h) { var n = parseInt(h.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; };
+  var toHex = function (c) { return '#' + c.map(function (v) { return ('0' + v.toString(16)).slice(-2); }).join('').toUpperCase(); };
+  var lum = function (h) { var c = rgbOf(h).map(function (v) { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  var contrast = function (a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  var mix = function (a, b, t) { var A = rgbOf(a), B = rgbOf(b); return toHex([0, 1, 2].map(function (i) { return Math.floor(A[i] + (B[i] - A[i]) * t + 0.5); })); };
+  var rgba = function (h, a) { var c = rgbOf(h); return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; };
+  var autoInk = function (bg) { return isDark(bg) ? mix(bg, '#FFFFFF', 0.92) : mix(bg, '#000000', 0.88); };
+  var autoSurface = function (bg) { return isDark(bg) ? mix(bg, '#FFFFFF', 0.06) : '#FFFFFF'; };
+  var LOOK_KEYS = ['bg', 'surface', 'ink', 'accent', 'onaccent', 'muted', 'line'];
+  function lookTheme(base, accent, s, opts) {
+    var th = {}; LOOK_KEYS.forEach(function (k) { th[k] = base[k]; });
+    accent = hexOk(accent);
+    if (accent) { th.accent = accent; th.onaccent = isDark(accent) ? '#FFFFFF' : '#111111'; }
+    if (s.bg || s.ink || s.surface) {
+      if (s.bg) th.bg = s.bg;
+      th.ink = s.ink || (s.bg ? autoInk(th.bg) : th.ink);
+      th.surface = s.surface || (s.bg ? autoSurface(th.bg) : th.surface);
+      if (contrast(th.ink, th.bg) < 3) th.ink = autoInk(th.bg);
+      if (contrast(th.ink, th.surface) < 3) th.surface = autoSurface(th.bg);
+      if (contrast(th.ink, th.surface) < 3) th.surface = th.bg;
+      for (var m = 45; m >= 5; m -= 5) { th.muted = mix(th.ink, th.bg, m / 100); if (contrast(th.muted, th.bg) >= 3) break; }
+      th.line = mix(th.ink, th.bg, 0.9);
+    }
+    var dark = isDark(th.bg);
+    th.glass = dark ? rgba(th.surface, 0.64) : rgba(th.bg, 0.72);
+    th['glass-strong'] = dark ? rgba(th.surface, 0.82) : rgba(th.surface, 0.86);
+    th['glass-line'] = dark ? 'rgba(255,255,255,.10)' : rgba(th.ink, 0.1);
+    th['glass-shadow'] = dark ? 'inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3)'
+      : 'inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px ' + rgba(th.ink, 0.16) + ',0 3px 10px ' + rgba(th.ink, 0.08);
+    th['pill-on'] = dark ? 'rgba(255,255,255,.12)' : rgba(th.ink, 0.09);
+    th.pat = rgba(th.ink, dark ? 0.13 : 0.1);
+    th.glow = rgba(th.accent, 0.22);
+    th.rk = opts.radius[s.radius]; th.fs = opts.text[s.text]; th.hw = opts.weight[s.weight]; th.ar = opts.ratio[s.ratio]; th.dim = s.dim / 100;
+    var cls = (s.pattern !== 'none' ? ['pat-' + s.pattern] : []).concat(s.hide.map(function (h) { return 'no-' + h; }));
+    return { th: th, dark: dark, cls: cls };
   }
+  window.awLookTheme = lookTheme;   // e2e checks it against the server
+
+  var lf = d.getElementById('lookForm'), pf = d.getElementById('pvFrame');
+  if (lf) (function () {
+    var themes = JSON.parse(lf.getAttribute('data-themes') || '{}'), opts = JSON.parse(lf.getAttribute('data-opts') || '{}');
+    var phone = pf && pf.closest('.phone');
+    var faNum = function (n) { return String(n).replace(/\d/g, function (x) { return '۰۱۲۳۴۵۶۷۸۹'[x]; }).replace('.', '٫'); };
+    var enNum = function (t) { return String(t).replace(/[۰-۹]/g, function (x) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x); }).replace(/[٠-٩]/g, function (x) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(x); }); };
+    var field = function (n) { return lf.elements[n]; };
+    var radio = function (n) { var r = lf.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; };
+    var layout = function () { return radio('layout'); };
+    var pickers = $$('.cp', lf);
+    var state = function () {
+      var s = { accent: hexOk(field('accent').value), bg: hexOk(field('bg').value), surface: hexOk(field('surface').value), ink: hexOk(field('ink').value),
+                radius: radio('radius'), text: radio('text'), weight: radio('weight'), ratio: radio('ratio'), pattern: radio('pattern'),
+                dim: +field('dim').value, hide: [] };
+      $$('.lk-tog input[type=checkbox]', lf).forEach(function (c) { if (!c.checked) s.hide.push(c.name.slice(5, -1)); });
+      return s;
+    };
+    var url = function () { return '/s/' + lf.getAttribute('data-slug') + '?pv=1&layout=' + layout() + '&look=' + encodeURIComponent(JSON.stringify(state())); };
+    var level = function (r, k) {
+      if (k === 'acc') return r >= 3 ? ['good', 'خوب'] : r >= 1.3 ? ['ok', 'کافی'] : ['bad', 'کم‌پیدا'];
+      return r >= 7 ? ['good', 'عالی'] : r >= 4.5 ? ['good', 'خوب'] : r >= 3 ? ['ok', 'کافی'] : ['bad', 'کم'];
+    };
+    var dragging = null;
+    function paintPicker(cp, T, s) {
+      var k = cp.getAttribute('data-key'), v = s[k], shown = v || T.th[k], c = rgbOf(shown);
+      cp.querySelector('.cp-chip').style.background = shown;
+      cp.querySelector('.cp-val .lat').textContent = shown;
+      cp.querySelector('.cp-val em').hidden = !!v;
+      $$('.cp-sw button', cp).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === v ? 'true' : 'false'); });
+      var rgb = { R: 0, G: 1, B: 2 };
+      $$('input[data-ch]', cp).forEach(function (r) {
+        var i = rgb[r.getAttribute('data-ch')], lo = c.slice(), hi = c.slice(); lo[i] = 0; hi[i] = 255;
+        if (r !== dragging) r.value = c[i];
+        r.style.setProperty('--lo', 'rgb(' + lo.join(',') + ')'); r.style.setProperty('--hi', 'rgb(' + hi.join(',') + ')');
+      });
+      $$('input[data-num]', cp).forEach(function (n) { if (n !== d.activeElement) n.value = c[rgb[n.getAttribute('data-num')]]; });
+      var w = cp.querySelector('input[type=color]'); if (w) w.value = shown.toLowerCase();
+    }
+    function refresh(reload) {
+      var s = state(), base = themes[layout()] || {}, T = lookTheme(base, s.accent, s, opts);
+      pickers.forEach(function (cp) { paintPicker(cp, T, s); });
+      var rows = { text: contrast(T.th.ink, T.th.bg), card: contrast(T.th.ink, T.th.surface), btn: contrast(T.th.onaccent, T.th.accent), acc: contrast(T.th.accent, T.th.bg) };
+      $$('#lookCheck li', lf).forEach(function (li) {
+        var k = li.getAttribute('data-k'), r = rows[k], L = level(r, k);
+        li.className = 'lk-' + L[0]; li.querySelector('b').textContent = faNum(r.toFixed(1)) + ' به ۱، ' + L[1];
+      });
+      d.getElementById('lookFix').hidden = !((s.ink && T.th.ink !== s.ink) || (s.surface && T.th.surface !== s.surface));
+      var out = d.getElementById('lkDimOut'); if (out) out.textContent = faNum(s.dim) + '٪';
+      $$('[data-layouts]', lf).forEach(function (el) { el.hidden = (' ' + el.getAttribute('data-layouts') + ' ').indexOf(' ' + layout() + ' ') < 0; });
+      var def = lf.querySelector('.lk-pal[data-pal=""]');
+      if (def) $$('i', def).forEach(function (i, n) { i.style.background = base[['bg', 'surface', 'ink', 'accent'][n]]; });
+      if (phone) setStage(phone, T.th.bg, base.banner ? T.th.ink : '');
+      if (!pf) return;
+      if (reload) { if (/^\/s\//.test(pf.getAttribute('src') || '')) { pf.classList.remove('ready'); pf.src = url(); } return; }
+      paintFrame(T);
+    }
+    function paintFrame(T) {
+      var doc; try { doc = pf.contentDocument; } catch (e) { return; }
+      if (!doc || !doc.body) return;
+      var b = doc.body;
+      Object.keys(T.th).forEach(function (k) { b.style.setProperty('--' + k, String(T.th[k])); });
+      b.className.split(/\s+/).forEach(function (c) { if (/^(pat|no)-/.test(c)) b.classList.remove(c); });
+      T.cls.forEach(function (c) { b.classList.add(c); });
+      if (b.classList.contains('glass')) b.classList.toggle('dark', T.dark);
+      $$('img.alpha-mark', doc).forEach(function (i) { i.src = i.getAttribute('src').replace(/alpha-(white|black)\.png/, 'alpha-' + (T.dark ? 'white' : 'black') + '.png'); });
+    }
+    if (pf) pf.addEventListener('load', function () { refresh(false); });
+    var setColor = function (cp, hex, typing) {
+      var inp = field(cp.getAttribute('data-key'));
+      if (!typing) inp.value = hex;
+      refresh(false);
+    };
+    pickers.forEach(function (cp) {
+      var k = cp.getAttribute('data-key');
+      $$('.cp-sw button', cp).forEach(function (b) { b.addEventListener('click', function () { setColor(cp, b.getAttribute('data-c')); }); });
+      var fromSliders = function () { var c = [0, 0, 0]; $$('input[data-ch]', cp).forEach(function (r) { c[{ R: 0, G: 1, B: 2 }[r.getAttribute('data-ch')]] = Math.max(0, Math.min(255, Math.round(+r.value) || 0)); }); return c; };
+      $$('input[data-ch]', cp).forEach(function (r) {
+        r.addEventListener('input', function () { dragging = r; setColor(cp, toHex(fromSliders())); });
+        r.addEventListener('change', function () { dragging = null; refresh(false); });
+      });
+      $$('input[data-num]', cp).forEach(function (n) {
+        n.addEventListener('input', function () {
+          var v = Math.max(0, Math.min(255, Math.round(+enNum(n.value)) || 0));
+          var c = fromSliders(); c[{ R: 0, G: 1, B: 2 }[n.getAttribute('data-num')]] = v; setColor(cp, toHex(c));
+        });
+        n.addEventListener('blur', function () { refresh(false); });
+      });
+      var hx = field(k);
+      hx.addEventListener('input', function () {
+        var t = enNum(hx.value).replace(/\s/g, '').toUpperCase(); if (t && t[0] !== '#') t = '#' + t;
+        if (t !== hx.value) hx.value = t;
+        if (t === '' || hexOk(t)) setColor(cp, t, true);
+      });
+      hx.addEventListener('blur', function () { if (hx.value && !hexOk(hx.value)) hx.value = ''; refresh(false); });
+      var w = cp.querySelector('input[type=color]');
+      if (w) w.addEventListener('input', function () { setColor(cp, w.value.toUpperCase()); });
+      cp.addEventListener('toggle', function () { if (cp.open) pickers.forEach(function (o) { if (o !== cp) o.open = false; }); });
+    });
+    $$('.lk-pal', lf).forEach(function (b) {
+      b.addEventListener('click', function () {
+        field('accent').value = b.getAttribute('data-accent') || ''; field('bg').value = b.getAttribute('data-bg') || '';
+        field('ink').value = b.getAttribute('data-ink') || ''; field('surface').value = '';
+        refresh(false);
+      });
+    });
+    var reset = d.getElementById('lookReset');
+    if (reset) reset.addEventListener('click', function () {
+      ['accent', 'bg', 'surface', 'ink'].forEach(function (k) { field(k).value = ''; });
+      [['radius', 'normal'], ['text', 'normal'], ['weight', 'bold'], ['ratio', 'square'], ['pattern', 'none']].forEach(function (p) { var r = lf.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]'); if (r) r.checked = true; });
+      field('dim').value = 66;
+      $$('.lk-tog input[type=checkbox]', lf).forEach(function (c) { c.checked = true; });
+      refresh(false);
+    });
+    lf.addEventListener('change', function (e) { if (e.target.name === 'layout') refresh(true); else if (!e.target.closest('.cp')) refresh(false); });
+    lf.addEventListener('input', function (e) { if (e.target.name === 'dim') refresh(false); });
+    refresh(false);
+
+    /* phones and tablets: the live phone opens over the page */
+    var show = d.getElementById('pvShow'), pv = d.querySelector('.ed-pv');
+    if (show && pv) {
+      var x = d.createElement('button'); x.type = 'button'; x.className = 'lk-pvx'; x.setAttribute('aria-label', 'بستن پیش‌نمایش'); x.textContent = '×';
+      pv.querySelector('.ed-pv-in').appendChild(x);
+      var fit = function () { if (phone) phone.style.setProperty('--pv-s', String(Math.min(0.9, (window.innerHeight - 130) / 896, (window.innerWidth - 32) / 424))); };
+      var open = function (on) { d.body.classList.toggle('pv-show', on); show.setAttribute('aria-expanded', on ? 'true' : 'false'); if (on) { fit(); x.focus(); } else show.focus(); };
+      show.addEventListener('click', function () { open(true); });
+      x.addEventListener('click', function () { open(false); });
+      pv.addEventListener('click', function (e) { if (e.target === pv) open(false); });
+      d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && d.body.classList.contains('pv-show')) open(false); });
+      window.addEventListener('resize', function () { if (d.body.classList.contains('pv-show')) fit(); });
+    }
+  })();
 
   /* ready-made replies fill the ticket box */
   $$('[data-fill]').forEach(function (b) {

@@ -43,6 +43,8 @@
       var after = 0; try { after = +new URL(u, location.href).searchParams.get('after') || 0; } catch (e) {}
       return json({ messages: msgs.filter(function (x) { return x.id > after; }), unread: 0, online: true });
     }
+    if (/\/api\/domain/.test(u)) { var l = ''; try { l = new URL(u, location.href).searchParams.get('l') || ''; } catch (e) {}
+      return json({ status: /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(l) ? (l.length < 5 ? 'taken' : 'free') : 'invalid' }); }
     if (/\/api\/order/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/api\/call/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/panel\/unread/.test(u)) { var nb = document.getElementById('navChat'); return json({ n: nb && !nb.hidden ? faInt(nb.textContent) : 0 }); }

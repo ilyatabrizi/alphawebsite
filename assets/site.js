@@ -22,7 +22,7 @@
   if (modes) {
     var tl = modes.querySelector('[data-mode=table]');
     if (tl && table) { tl.hidden = false; $('oTable').textContent = tableFa; }
-    var first = table && tl ? 'table' : (S.type === 'shop' && S.delivery ? 'delivery' : 'pickup');
+    var first = table && tl ? 'table' : (S.fam !== 'food' && S.delivery ? 'delivery' : 'pickup');
     var r0 = modes.querySelector('input[value=' + first + ']'); if (r0) r0.checked = true;
     if (modes.querySelectorAll('label:not([hidden])').length < 2) modes.classList.add('single');
     modes.addEventListener('change', render);
@@ -51,7 +51,7 @@
     var note = $('cNote'), lab = $('cNoteLabel');
     if (note && lab) {
       note.required = m === 'delivery';
-      lab.textContent = m === 'delivery' ? 'آدرس کامل' : m === 'table' ? 'توضیح (اختیاری)' : m === 'pickup' ? 'توضیح یا ساعت تحویل (اختیاری)' : (S.type === 'shop' ? 'آدرس ارسال' : 'آدرس یا شماره میز');
+      lab.textContent = m === 'delivery' ? 'آدرس کامل' : m === 'table' ? 'توضیح (اختیاری)' : m === 'pickup' ? 'توضیح یا ساعت تحویل (اختیاری)' : (S.fam !== 'food' ? 'آدرس ارسال' : 'آدرس یا شماره میز');
     }
     var ul = $('lines'); if (!ul) return;
     ul.innerHTML = '';
@@ -135,7 +135,21 @@
     if (pick.showModal) pick.showModal(); else pick.setAttribute('open', '');
   }
 
-  document.querySelectorAll('.add').forEach(function (b) {
+  /* Real estate and gyms: no cart. «درخواست بازدید» / «ثبت‌نام» opens the site chat with the message ready, or
+     WhatsApp (or a call) when the chat is off. */
+  document.querySelectorAll('.add[data-ask]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var n = b.getAttribute('data-ask');
+      var msg = S.type === 'realestate' ? 'سلام، برای بازدید «' + n + '» وقت می‌خواهم.' : S.type === 'gym' ? 'سلام، برای «' + n + '» ثبت‌نام می‌کنم.' : 'سلام، درباره «' + n + '» سؤال دارم.';
+      if (S.chat && window.AlphaUI) {
+        window.AlphaUI.openChat();
+        setTimeout(function () { var t = $('chText'), f = $('chatForm'); if (t) t.value = msg; var el = f && !f.hidden ? t : $('chName'); if (el) el.focus(); }, 120);
+      } else if (S.ask) {
+        location.href = S.ask.indexOf('wa.me') > -1 ? S.ask + '?text=' + encodeURIComponent(msg) : S.ask;
+      }
+    });
+  });
+  document.querySelectorAll('.add:not([data-ask])').forEach(function (b) {
     b.addEventListener('click', function () {
       if (b.dataset.stock !== undefined && inCart(Number(b.dataset.id)) >= Number(b.dataset.stock)) { flashBtn(b, 'موجودی همین است'); return; }
       if (b.dataset.opts) picker(b); else put(b);
@@ -144,7 +158,7 @@
   if ($('openCart')) $('openCart').addEventListener('click', function () { if (sheet.showModal) sheet.showModal(); else sheet.setAttribute('open', ''); });
 
   /* ---------- sending ---------- */
-  var MODE_TEXT = { table: 'سر میز', pickup: 'تحویل حضوری', delivery: S.type === 'shop' ? 'ارسال' : 'ارسال با پیک' };
+  var MODE_TEXT = { table: 'سر میز', pickup: 'تحویل حضوری', delivery: S.fam !== 'food' ? 'ارسال' : 'ارسال با پیک' };
   function message() {
     var t = totals(), m = mode(), lines = ['سفارش جدید از سایت ' + S.name];
     Object.keys(cart).forEach(function (k) { var it = cart[k]; lines.push(fa(it.q) + ' × ' + it.n + ' — ' + fa(it.q * it.p)); });

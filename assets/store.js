@@ -206,37 +206,40 @@
     try { if (pvf.contentDocument && pvf.contentDocument.readyState === 'complete') arm(); } catch (e) {}
   }
 
-  /* home: café / restaurant / shop switcher with a sliding pill */
-  var seg = d.querySelector('.seg');
-  if (seg) {
-    var pill = seg.querySelector('.seg-pill'), tabs = $$('[role=tab]', seg), cap = d.getElementById('liveCap');
-    var place = function (b, instant) {
-      if (instant) pill.style.transition = 'none';
-      pill.style.left = b.offsetLeft + 'px'; pill.style.width = b.offsetWidth + 'px';
-      if (instant) { pill.offsetWidth; pill.style.transition = ''; }
+  /* home: pick a niche and layout 1 or 2; the phone loads that demo */
+  var tryer = d.querySelector('.tryer');
+  if (tryer && lv) {
+    var tns = $$('.tn', tryer), tls = $$('.try-l button', tryer), go = d.getElementById('tryGo'), more = d.getElementById('tryMore');
+    var num = 1, cur = tns.filter(function (t) { return t.getAttribute('aria-pressed') === 'true'; })[0] || tns[0];
+    var show = function () {
+      var lay = cur.getAttribute('data-l' + num), name = cur.getAttribute('data-n' + num);
+      live(lv, lay, name, cur.getAttribute('data-s' + num), cur.getAttribute('data-b' + num));
+      if (go) go.href = window.AW_STATIC ? 'start.html' : '/start?layout=' + lay;
+      if (more) more.href = window.AW_STATIC ? 'layout-' + lay + '.html' : '/layouts/' + lay;
     };
-    var cur = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
-    place(cur, true);
-    window.addEventListener('resize', function () { place(cur, true); });
-    tabs.forEach(function (b) {
+    tns.forEach(function (b) {
       b.addEventListener('click', function () {
         if (b === cur) return;
-        cur = b; tabs.forEach(function (t) { t.setAttribute('aria-selected', t === b ? 'true' : 'false'); });
-        place(b);
-        var lay = b.getAttribute('data-layout');
-        live(lv, lay, b.getAttribute('data-name'), b.getAttribute('data-stage'), b.getAttribute('data-bar'));
-        if (cap) { cap.href = window.AW_STATIC ? 'layout-' + lay + '.html' : '/layouts/' + lay; cap.textContent = 'نمونه زنده «' + b.getAttribute('data-name') + '»؛ داخل گوشی امتحانش کن'; }
+        cur = b; tns.forEach(function (t) { t.setAttribute('aria-pressed', t === b ? 'true' : 'false'); });
+        show();
+      });
+    });
+    tls.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var n = +b.getAttribute('data-n'); if (n === num) return;
+        num = n; tls.forEach(function (t) { t.setAttribute('aria-pressed', t === b ? 'true' : 'false'); });
+        show();
       });
     });
   }
 
-  /* pricing: monthly / yearly */
+  /* pricing: monthly / three months */
   var bt = $$('.bill-toggle button');
   bt.forEach(function (b) {
     b.addEventListener('click', function () {
       var k = b.getAttribute('data-bill');
-      bt.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      $$('.tier [data-m]').forEach(function (el) { el.textContent = el.getAttribute('data-' + k); });
+      bt.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bill') === k ? 'true' : 'false'); });
+      $$('.plan [data-m]').forEach(function (el) { el.textContent = el.getAttribute('data-' + k); });
     });
   });
 

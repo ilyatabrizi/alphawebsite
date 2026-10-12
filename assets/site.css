@@ -102,3 +102,4 @@ h1,h2,h3{margin:0;line-height:1.45}
 /* classic layouts: once scrolled, a solid strip behind the island joins the sticky category bar */
 body.has-island .scrim{background:var(--bg);height:calc(env(safe-area-inset-top,0px) + 58px)}
 body.has-island .demo-bar~.scrim{height:calc(env(safe-area-inset-top,0px) + 96px)}
+.add.ask{width:auto;min-width:0;padding:0 14px;font-size:13px;font-weight:700;white-space:nowrap}

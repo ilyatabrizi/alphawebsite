@@ -269,3 +269,4 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .chat-sheet .chat-head{padding-inline-end:48px}
 @media(min-width:900px){.chat-sheet{margin:auto;border-radius:calc(28px*var(--rk,1))}}
 .buy.pop{transform:scale(.9)}
+.ps-alt{display:block;margin-top:4px;color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}

@@ -176,7 +176,8 @@
   /* The screenshot shows first; on a computer the real site fades in on top of it. */
   function live(box, layout, name, stage, bar) {
     var ph = box.querySelector('.phone'), vp = box.querySelector('.vp'); if (!ph || !vp) return;
-    var img = vp.querySelector('img'); if (img) img.src = (window.AW_STATIC ? 'assets' : '/assets') + '/shots/' + layout + '.webp';
+    var img = vp.querySelector('img');
+    if (img) { img.style.visibility = ''; img.src = (window.AW_STATIC ? 'assets' : '/assets') + '/shots/' + layout + '.webp?v=' + (d.documentElement.getAttribute('data-v') || ''); }
     if (stage) setStage(ph, stage, bar);
     box.setAttribute('data-layout', layout);
     var old = vp.querySelector('iframe'); if (old) old.remove();
@@ -186,7 +187,10 @@
     f.src = demoSrc(layout); f.title = 'نمونه زنده ' + (name || box.getAttribute('data-name') || ''); f.tabIndex = -1;
     f.addEventListener('load', function () {
       touchify(f);
-      setTimeout(function () { f.classList.add('ready'); ph.classList.add('on'); peek(f, box); }, 250);
+      setTimeout(function () {
+        f.classList.add('ready'); ph.classList.add('on'); peek(f, box);
+        setTimeout(function () { if (img && f.parentNode) img.style.visibility = 'hidden'; }, 450);   // once the live page covers it, the picture under it can't show through
+      }, 250);
     });
     vp.appendChild(f);
   }

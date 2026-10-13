@@ -144,7 +144,7 @@ main.page{padding-block:34px 72px;display:flex;flex-direction:column;gap:28px}
 .sb-r svg:last-child{height:13px}
 .vp{position:absolute;top:54px;left:0;width:402px;height:820px;overflow:hidden}
 .vp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-.vp iframe{position:absolute;inset:0;z-index:1;width:402px;height:820px;border:0;opacity:0;transition:opacity .4s var(--ease);pointer-events:none}
+.vp iframe{position:absolute;inset:0;z-index:1;width:402px;height:820px;border:0;opacity:0;transition:opacity .4s var(--ease);pointer-events:none;background:var(--stage,#fff)}
 .vp iframe.ready{opacity:1}
 .hi{position:absolute;bottom:8px;left:50%;z-index:4;width:140px;height:5px;margin-left:-70px;border-radius:3px;background:rgba(0,0,0,.82);pointer-events:none}
 .phone.dk .sb,.phone.bdk .sb{color:#fff}
@@ -629,8 +629,9 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .lay-pick{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .lay-pick input{position:absolute;opacity:0;pointer-events:none}
 .lay-pick>span{display:grid;gap:10px;height:100%;padding:10px;border:1px solid var(--line2);border-radius:var(--r2);background:var(--field);transition:border-color .2s,box-shadow .2s,background .2s}
-.lp-shot{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;border-radius:14px;background:var(--stage,var(--bg2))}
-.lp-shot img{position:absolute;inset:0;width:100%;height:auto;display:block}
+.lp-shot{position:relative;display:flex;justify-content:center;height:clamp(214px,24vw,292px);padding-top:18px;overflow:hidden;border-radius:14px;background:var(--stage,var(--bg2))}
+.lp-shot .phone{--s:.48}
+@media(max-width:560px){.lp-shot{height:196px;padding-top:14px}.lp-shot .phone{--s:.28}}
 .lp-tx{display:grid;gap:2px;padding-inline:4px}
 .lp-tx b{font-size:15px}
 .lp-tx em{font-style:normal;font-size:12.5px;color:var(--muted)}
@@ -996,7 +997,7 @@ a.kpi{transition:border-color .2s,box-shadow .2s}
 .type-pick input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
 .typed .lay-picks,.lay-picks.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .typed .lp-type{display:none}
-.typed .lp-shot,.lay-picks.two .lp-shot{aspect-ratio:3/4}
+
 .lp-tx em+em{margin-top:2px;line-height:1.7}
 .sum-shot{display:flex;justify-content:center;height:186px;padding-top:12px;border-radius:18px;background:var(--bg2);overflow:hidden;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
 .sum-shot .phone{--s:.34}

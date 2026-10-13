@@ -45,7 +45,20 @@
     }
     if (/\/api\/domain/.test(u)) { var l = ''; try { l = new URL(u, location.href).searchParams.get('l') || ''; } catch (e) {}
       return json({ status: /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(l) ? (l.length < 5 ? 'taken' : 'free') : 'invalid' }); }
-    if (/\/api\/order/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
+    if (/\/api\/order/.test(u)) {
+      /* the bag: answer like the server, from the page's own cards (prices as shown), number 101 and up */
+      var bo = body(opt), items = []; try { items = JSON.parse(bo.get('items') || '[]'); } catch (e) {}
+      var lines = [], sum = 0;
+      items.forEach(function (r) {
+        var c = document.querySelector('.card[data-id="' + (+r.id) + '"]'); if (!c) return;
+        var o = r.o && typeof r.o === 'object' ? Object.keys(r.o).map(function (k) { return r.o[k]; }) : [];
+        var p = +c.dataset.price || 0, q = Math.max(1, Math.min(99, +r.q || 1));
+        lines.push({ n: c.dataset.name + (o.length ? ' (' + o.join('، ') + ')' : ''), q: q, p: p }); sum += p * q;
+      });
+      var mode = bo.get('mode') || '', fee = mode === 'delivery' && window.SITE && window.SITE.del ? +window.SITE.del.fee || 0 : 0;
+      var no = 0; try { no = (+sessionStorage.getItem('aw-pv-no') || 100) + 1; sessionStorage.setItem('aw-pv-no', no); } catch (e) { no = 101; }
+      return json({ ok: true, no: (window.SITE && window.SITE.demo) ? 0 : no, lines: lines, sum: sum, fee: fee, total: sum + fee, mode: mode, table: bo.get('table') || '', channel: bo.get('channel') || '' });
+    }
     if (/\/api\/call/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/api\/(v|tap)(\?|$)/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/panel\/unread/.test(u)) { var nb = document.getElementById('navChat'); return json({ n: nb && !nb.hidden ? faInt(nb.textContent) : 0 }); }

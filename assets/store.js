@@ -443,17 +443,31 @@
     }
   })();
 
-  /* where a buy button goes (signup + /panel/info): WhatsApp or Telegram; the Telegram username only for Telegram */
+  /* where orders go (signup + /panel/info): seven messengers, one main. A filled row lights up; the main one must be
+     filled, so choosing an empty row as main moves the focus to it, and emptying the main row passes «main» on. */
   $$('[data-och]').forEach(function (box) {
+    var rows = $$('.och-row', box);
     var sync = function () {
-      var r = box.querySelector('input[name=order_channel]:checked'), tg = r && r.value === 'telegram';
-      var tgBox = box.querySelector('[data-tg]'); if (tgBox) tgBox.hidden = !tg;
-      $$('[data-och-name]', box).forEach(function (x) { x.textContent = tg ? 'تلگرام' : 'واتساپ'; });
-      var demo = box.querySelector('.och-demo'); if (demo) demo.classList.toggle('tg', !!tg);
+      var main = box.querySelector('input[name=order_channel]:checked');
+      rows.forEach(function (row) { var v = row.querySelector('input.ltr').value.trim(); row.classList.toggle('on', v !== ''); });
+      if (main && !main.closest('.och-row').classList.contains('on')) {
+        var first = rows.filter(function (r) { return r.classList.contains('on'); })[0];
+        if (first && document.activeElement !== main.closest('.och-row').querySelector('input.ltr')) { first.querySelector('input[name=order_channel]').checked = true; main = first.querySelector('input[name=order_channel]'); }
+      }
+      var row = main && main.closest('.och-row'), ch = row ? row.getAttribute('data-ch') : 'whatsapp';
+      var name = row ? row.querySelector('.och-name b').textContent : 'واتساپ';
+      $$('[data-och-name]', box).forEach(function (x) { x.textContent = name; });
+      var demo = box.querySelector('.och-demo'); if (demo) { demo.classList.toggle('tg', ch === 'telegram'); demo.classList.toggle('other', ch !== 'telegram' && ch !== 'whatsapp'); }
     };
-    $$('input[name=order_channel]', box).forEach(function (r) { r.addEventListener('change', sync); });
-    var tgIn = box.querySelector('input[name=order_tg]');
-    if (tgIn) tgIn.addEventListener('input', function () { tgIn.value = tgIn.value.replace(/^@+/, '').replace(/[^A-Za-z0-9_]/g, ''); });
+    rows.forEach(function (row) {
+      var inp = row.querySelector('input.ltr'), r = row.querySelector('input[name=order_channel]');
+      inp.addEventListener('input', function () {
+        if (row.getAttribute('data-ch') !== 'whatsapp') inp.value = inp.value.replace(/^\s+/, '');
+        sync();
+      });
+      inp.addEventListener('blur', sync);
+      r.addEventListener('change', function () { if (!inp.value.trim()) inp.focus(); sync(); });
+    });
     sync();
   });
 

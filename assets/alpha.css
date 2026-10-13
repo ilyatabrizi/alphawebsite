@@ -108,7 +108,7 @@ body.pat-glow{background-image:radial-gradient(140% 60% at 50% -8%,var(--glow),t
 .demo-in{padding:20px;display:grid;gap:12px}
 .demo-in h2{font-size:18px;font-weight:800;line-height:1.5}
 .demo-in p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
-.demo-bubble{white-space:pre-line;overflow-wrap:anywhere;padding:12px 14px;border-radius:18px 18px 6px 18px;background:#DCF8C6;color:#111;font-size:14px;line-height:1.75;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.demo-bubble{white-space:pre-line;unicode-bidi:plaintext;overflow-wrap:anywhere;padding:12px 14px;border-radius:18px 18px 6px 18px;background:#DCF8C6;color:#111;font-size:14px;line-height:1.75;box-shadow:0 1px 1px rgba(0,0,0,.08)}
 .demo-bubble.tg{background:#EFFDDE}
 .demo-acts{display:grid;gap:8px}
 .demo-acts a,.demo-acts button{display:inline-flex;align-items:center;justify-content:center;height:50px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-weight:700;text-decoration:none;cursor:pointer}

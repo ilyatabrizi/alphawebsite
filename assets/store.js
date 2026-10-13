@@ -243,6 +243,18 @@
     });
   });
 
+  /* admin domain queue: is this name still free? */
+  $$('[data-dcheck]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var out = b.nextElementSibling, words = { free: 'آزاد است', taken: 'ثبت شده', unknown: 'الان قابل بررسی نیست', invalid: 'نام معتبر نیست' };
+      out.className = 'dstate'; out.textContent = 'در حال بررسی…';
+      fetch('/api/domain?l=' + encodeURIComponent(b.getAttribute('data-dcheck')) + '&ext=' + encodeURIComponent(b.getAttribute('data-ext') || 'ir'))
+        .then(function (r) { return r.json(); })
+        .then(function (j) { out.className = 'dstate ' + j.status; out.textContent = words[j.status] || ''; })
+        .catch(function () { out.className = 'dstate unknown'; out.textContent = words.unknown; });
+    });
+  });
+
   /* show / hide password */
   $$('.pw-t').forEach(function (b) {
     b.addEventListener('click', function () {

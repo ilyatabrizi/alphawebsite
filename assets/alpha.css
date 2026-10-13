@@ -1,42 +1,8 @@
-/* Alpha signature — shared by every layout: Alpha Island, scroll-edge scrim, chat, splash, Powered by Alpha.
+/* Alpha signature on every client site: chat, splash, Powered by Alpha, choices, the table bar, the demo sheet.
    Glass rule we learned on KAI/Lamiz: never put a backdrop-filter inside another one, and never give a glass
    element's ancestors filter/opacity/will-change, or the inner glass blurs nothing. Every glass piece here is
    a direct child of body or of a plain container. */
 :root{--spring:cubic-bezier(.34,1.4,.44,1);--ease:cubic-bezier(.16,.9,.24,1);--blur:blur(26px) saturate(200%)}
-
-/* ---------- Alpha Island ---------- */
-.island{position:fixed;z-index:70;top:calc(env(safe-area-inset-top,0px) + 10px);left:0;right:0;padding:0 12px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
-.island>*{pointer-events:auto}
-.isl-pill{display:flex;align-items:center;gap:9px;max-width:100%;height:40px;padding:0 16px 0 14px;border-radius:999px;border:1px solid var(--glass-line);background:var(--glass);color:var(--ink);font:inherit;font-size:13.5px;font-weight:500;line-height:1;box-shadow:var(--glass-shadow);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);cursor:pointer;transition:transform .38s var(--spring);-webkit-tap-highlight-color:transparent}
-.isl-pill:active{transform:scale(.95)}
-.isl-dot{width:8px;height:8px;border-radius:50%;background:#9AA0A6;flex:none}
-.island.is-open .isl-dot{background:#22A55A;box-shadow:0 0 0 0 rgba(34,165,90,.5);animation:islPulse 2.4s infinite}
-.island.is-closed .isl-dot{background:#E5484D}
-@keyframes islPulse{0%{box-shadow:0 0 0 0 rgba(34,165,90,.45)}70%{box-shadow:0 0 0 7px rgba(34,165,90,0)}100%{box-shadow:0 0 0 0 rgba(34,165,90,0)}}
-.isl-status,.isl-name{white-space:nowrap;font-weight:700}
-.isl-news{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:44vw;color:var(--muted);padding-inline-start:9px;border-inline-start:1px solid var(--glass-line)}
-.isl-panel{width:min(100%,400px);border-radius:28px;padding:16px;display:grid;gap:12px;background:var(--glass-strong);border:1px solid var(--glass-line);box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(30px) saturate(200%);backdrop-filter:blur(30px) saturate(200%);color:var(--ink);transform-origin:top center;animation:islIn .46s var(--spring)}
-@keyframes islIn{from{opacity:0;transform:translateY(-10px) scale(.9)}to{opacity:1;transform:none}}
-.isl-head{display:flex;align-items:center;gap:12px}
-.isl-head>div{flex:1;display:grid;line-height:1.45}
-.isl-head b{font-size:17px;font-weight:800}
-.isl-head .isl-status{font-size:13px;color:var(--muted);font-weight:500}
-.island.is-open .isl-head .isl-status{color:#1E8C4D}
-.dark .island.is-open .isl-head .isl-status,.island.dark .isl-head .isl-status{color:#5BD08A}
-.isl-logo{width:46px;height:46px;border-radius:15px;object-fit:cover;flex:none}
-.isl-logo.mono,.chat-av.mono,.g-logo.mono,.splash-logo.mono{display:grid;place-items:center;background:var(--accent);color:var(--onaccent);font-weight:800;font-size:22px}
-.isl-x{width:32px;height:32px;border-radius:50%;border:0;background:var(--pill-on);color:var(--ink);font-size:20px;line-height:1;cursor:pointer}
-.isl-ann{margin:0;padding:10px 12px;border-radius:16px;background:var(--accent);color:var(--onaccent);font-weight:700;font-size:14.5px}
-.isl-meta{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
-.isl-acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px}
-.isl-acts a,.isl-acts button{display:grid;justify-items:center;gap:5px;padding:11px 4px 9px;border-radius:18px;border:0;background:var(--pill-on);color:var(--ink);font:inherit;font-size:12.5px;font-weight:500;text-decoration:none;cursor:pointer;transition:transform .25s var(--spring)}
-.isl-acts a:active,.isl-acts button:active{transform:scale(.94)}
-.isl-acts svg,.li-ic svg,.chat-fab svg,.chat-send svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.isl-ios{margin:0;font-size:12.5px;color:var(--muted)}
-
-/* scroll-edge scrim behind the island: content fades out under it instead of a hard bar */
-.scrim{position:fixed;z-index:65;top:0;left:0;right:0;height:calc(env(safe-area-inset-top,0px) + 66px);background:linear-gradient(var(--bg) 62%,transparent);opacity:0;transition:opacity .25s;pointer-events:none}
-html.scrolled .scrim{opacity:1}
 
 /* ---------- Powered by Alpha Agency ---------- */
 .powered{display:flex;align-items:center;gap:14px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);text-decoration:none;color:var(--ink);transition:opacity .2s}
@@ -78,14 +44,7 @@ html.scrolled .scrim{opacity:1}
 .chat-send:active{transform:scale(.9)}
 .chat-send svg{transform:scaleX(-1)}
 
-/* chat button + sheet on classic layouts */
-.chat-fab{position:fixed;z-index:11;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;border:1px solid var(--glass-line);background:var(--glass);color:var(--ink);box-shadow:var(--glass-shadow);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);display:grid;place-items:center;cursor:pointer;transition:transform .3s var(--spring),bottom .3s var(--ease)}
-.chat-fab:active{transform:scale(.92)}
-.chat-fab svg{width:25px;height:25px}
-body.has-cart .chat-fab{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
-.chat-sheet .sheet-in{max-height:86vh;overflow-y:auto}
 .badge{position:absolute;top:2px;right:calc(50% - 22px);min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#E5484D;color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center;font-style:normal}
-.chat-fab .badge{top:-2px;right:-2px}
 
 /* ---------- splash (glass layouts) ---------- */
 #splash{display:none}
@@ -103,38 +62,17 @@ body.has-cart .chat-fab{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
   .splash-logo{opacity:1;transform:none}
 }
 @media (prefers-reduced-transparency:reduce){
-  .isl-pill,.isl-panel,.chat-fab,.dock,.g-chips a{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:var(--surface)!important}
+  .hdr-in,.dock,.g-chips a,.table-bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:var(--surface)!important}
 }
 
 /* ---------- ordering: choices, stock, how the order is received, the table bar (both layout families) ---------- */
 .opts{margin:2px 0 0;font-size:calc(12px*var(--fs,1));line-height:1.6;color:var(--muted)}
 .low{margin:2px 0 0;font-size:calc(12px*var(--fs,1));font-weight:700;color:#C2410C}
 .dark .low{color:#FDBA74}
-.add.no{animation:addNo .36s}
-@keyframes addNo{20%,60%{transform:translateX(-3px)}40%,80%{transform:translateX(3px)}}
-.modes{margin:0;padding:0;border:0;display:grid;gap:8px;min-width:0}
-.modes legend{padding:0;margin-bottom:6px;font-size:calc(13px*var(--fs,1));color:var(--muted)}
-.modes.single{display:none}
-.modes-in{display:flex;flex-wrap:wrap;gap:6px}
-.modes label{position:relative;display:block!important;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.modes label[hidden]{display:none!important}
-.modes input{position:absolute;opacity:0;pointer-events:none}
-.modes span{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 15px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:calc(14px*var(--fs,1));font-weight:600;transition:background .18s,border-color .18s,color .18s}
-.modes input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--onaccent)}
-.modes input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-.mode-note{margin:0;font-size:calc(12.5px*var(--fs,1));line-height:1.7;color:var(--muted)}
-.fee-row{display:flex;justify-content:space-between;align-items:center;font-size:calc(14px*var(--fs,1));color:var(--muted);padding:4px 4px 0}
-.fee-row b{font-weight:600;color:var(--ink)}
-.min-warn{margin:0;padding:10px 12px;border-radius:calc(14px*var(--rk,1));background:rgba(234,88,12,.1);color:#9A3412;font-size:calc(13px*var(--fs,1));line-height:1.7}
-.dark .min-warn{background:rgba(251,146,60,.14);color:#FDBA74}
-.ch:disabled{opacity:.45;cursor:not-allowed;transform:none}
-
 .table-bar{position:fixed;z-index:58;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));width:min(calc(100% - 22px),448px);
   display:flex;align-items:center;gap:6px;padding:6px;border-radius:24px;background:var(--glass-strong);border:1px solid var(--glass-line);box-shadow:var(--glass-shadow);
   -webkit-backdrop-filter:blur(26px) saturate(200%);backdrop-filter:blur(26px) saturate(200%)}
 .table-bar[hidden]{display:none}
-body:not(.glass) .table-bar{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
-body:not(.glass).has-cart .table-bar{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 .tb-no{flex:none;padding:0 10px 0 6px;font-size:13px;color:var(--muted);white-space:nowrap}
 .tb-no b{color:var(--ink);font-size:15px}
 .table-bar button{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;padding:0 10px;border:0;border-radius:18px;background:var(--pill-on);color:var(--ink);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .2s}
@@ -145,33 +83,33 @@ body:not(.glass).has-cart .table-bar{bottom:calc(76px + env(safe-area-inset-bott
 .tb-msg{position:absolute;left:12px;right:12px;bottom:calc(100% + 8px);text-align:center;font-size:13px;font-weight:600;color:var(--ink);pointer-events:none}
 .tb-msg:empty{display:none}
 .tb-msg:not(:empty){padding:9px 12px;border-radius:16px;background:var(--glass-strong);border:1px solid var(--glass-line);box-shadow:var(--glass-shadow)}
-.glass.has-table .views{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
-body.has-table:not(.glass){padding-bottom:160px}
+body.has-table{padding-bottom:calc(160px + env(safe-area-inset-bottom,0px))}
+@media(min-width:900px){.table-bar{bottom:calc(16px + env(safe-area-inset-bottom,0px))}body.has-table{padding-bottom:90px}}
 @media(max-width:360px){.tb-no{display:none}.table-bar button{font-size:12.5px}}
 
-.opt-sheet{border:0;border-radius:calc(24px*var(--rk,1)) calc(24px*var(--rk,1)) 0 0;padding:0;width:100%;max-width:520px;margin:auto auto 0;background:var(--surface);color:var(--ink);max-height:86vh}
-.opt-sheet::backdrop{background:rgba(0,0,0,.45)}
-.opt-in{padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
-.opt-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.opt-h h2{margin:0;font-size:calc(19px*var(--fs,1));font-weight:800}
-.opt-sheet .x{width:36px;height:36px;border-radius:50%;border:0;background:var(--pill-on);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
-.opt-sheet fieldset{margin:0;padding:0;border:0;display:grid;gap:8px}
-.opt-sheet legend{padding:0;margin-bottom:6px;font-size:calc(14px*var(--fs,1));font-weight:700}
 .opt-row{display:flex;flex-wrap:wrap;gap:6px}
 .opt-row label{position:relative;cursor:pointer}
 .opt-row input{position:absolute;opacity:0;pointer-events:none}
 .opt-row span{display:inline-flex;align-items:center;min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);font-size:calc(14.5px*var(--fs,1));font-weight:600}
 .opt-row input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--onaccent)}
 .opt-row input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-.opt-err{margin:0;color:#D13B40;font-size:13px}
-.opt-go{height:52px;border:0;border-radius:999px;background:var(--accent);color:var(--onaccent);font:inherit;font-size:calc(16px*var(--fs,1));font-weight:800;cursor:pointer}
-.opt-go:active{transform:scale(.98)}
-
 /* ---------- the owner's look (/panel/look): background pattern and hidden sections, as body classes from site_theme ----------
    Corners (--rk), text size (--fs), title weight (--hw), photo shape (--ar) and the hero shade (--dim) are variables
-   used inside site.css and glass.css. The island, the glass tab bar and the Alpha sign never change. */
+   used inside site.css and glass.css. The glass tab bar, the buy buttons and the Alpha sign never change. */
 body.pat-dots{background-image:radial-gradient(var(--pat) 1.2px,transparent 1.7px);background-size:18px 18px}
 body.pat-grid{background-image:linear-gradient(var(--pat) 1px,transparent 1px),linear-gradient(90deg,var(--pat) 1px,transparent 1px);background-size:28px 28px}
 body.pat-glow{background-image:radial-gradient(140% 60% at 50% -8%,var(--glow),transparent 64%);background-repeat:no-repeat}
-.no-facts .facts,.no-facts .g-facts,.no-picks .g-picks,.no-about .about,.no-about .g-about-sec,.no-desc .desc,
-.no-photos .item>img,.no-photos .card>img,.no-search .search,.no-search .g-search{display:none!important}
+.no-facts .g-facts,.no-picks .g-picks,.no-about .g-about-sec,.no-desc .card .desc,
+.no-photos .card .card-img,.no-search .g-search{display:none!important}
+
+/* ---------- the demo sheet: on sample sites a buy button shows the message it would send ---------- */
+.demo-sheet{border:0;padding:0;width:min(100% - 24px,440px);border-radius:calc(26px*var(--rk,1));background:var(--surface);color:var(--ink)}
+.demo-sheet::backdrop{background:rgba(0,0,0,.5)}
+.demo-in{padding:20px;display:grid;gap:12px}
+.demo-in h2{font-size:18px;font-weight:800;line-height:1.5}
+.demo-in p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+.demo-bubble{white-space:pre-line;overflow-wrap:anywhere;padding:12px 14px;border-radius:18px 18px 6px 18px;background:#DCF8C6;color:#111;font-size:14px;line-height:1.75;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.demo-bubble.tg{background:#EFFDDE}
+.demo-acts{display:grid;gap:8px}
+.demo-acts a,.demo-acts button{display:inline-flex;align-items:center;justify-content:center;height:50px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+.demo-acts a{background:var(--accent);border-color:var(--accent);color:var(--onaccent)}

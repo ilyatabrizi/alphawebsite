@@ -17,229 +17,306 @@
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/glass.css">
 <link rel="stylesheet" href="assets/alpha.css">
+<link rel="stylesheet" href="assets/popups.css">
 <script src="assets/preview-shim.js"></script>
 </head>
-<body class="glass dark" style="--bg:#0C1220;--surface:#141C2E;--ink:#EEF2F8;--muted:#8B97AB;--line:#1F2A40;--accent:#2EC4F1;--onaccent:#111111;--glass:rgba(20,28,46,0.64);--glass-strong:rgba(20,28,46,0.82);--glass-line:rgba(255,255,255,.10);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3);--pill-on:rgba(255,255,255,.12);--pat:rgba(238,242,248,0.13);--glow:rgba(46,196,241,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
+<body class="glass pro fam-catalog dark" style="--bg:#0C1220;--surface:#141C2E;--ink:#EEF2F8;--muted:#8B97AB;--line:#1F2A40;--accent:#2EC4F1;--onaccent:#111111;--glass:rgba(20,28,46,0.64);--glass-strong:rgba(20,28,46,0.82);--glass-line:rgba(255,255,255,.10);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3);--pill-on:rgba(255,255,255,.12);--pat:rgba(238,242,248,0.13);--glow:rgba(46,196,241,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
 <script>try{if(window.top===window&&!sessionStorage.getItem('seen-demo-carservice-1'))document.body.classList.add('splashing')}catch(e){}</script>
 <div id="splash" aria-hidden="true"><img class="splash-logo" src="assets/demo/carservice/logo.webp" alt="کارواش و خدمات خودرو برق"><div class="splash-bar"><i></i></div></div>
-<div class="demo-bar">پیش‌نمایش قالب «خدمات خودرو»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div><div class="island is-open" id="island" data-open="08:00" data-close="22:00" data-off="-1">
-  <button class="isl-pill" type="button" aria-expanded="false" aria-controls="islPanel">
-    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">باز است تا ۲۲:۰۰</span>    <span class="isl-news">با هر سرامیک، کارواش یک ماه رایگان</span>  </button>
-  <div class="isl-panel" id="islPanel" hidden>
-    <div class="isl-head"><img class="isl-logo" src="assets/demo/carservice/logo.webp" alt="کارواش و خدمات خودرو برق"><div><b>کارواش و خدمات خودرو برق</b><span class="isl-status">باز است تا ۲۲:۰۰</span></div>
-      <button class="isl-x" type="button" aria-label="بستن">×</button></div>
-    <p class="isl-ann">با هر سرامیک، کارواش یک ماه رایگان</p>    <p class="isl-meta">هر روز ۸:۰۰ تا ۲۲:۰۰، تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳</p>    <div class="isl-acts">
-      <a href="tel:09120000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>تماس</span></a>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>مسیریابی</span></a>      <button type="button" data-act="chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span></button>      <button type="button" data-act="install" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg><span>نصب اپ</span></button>
-    </div>
-    <p class="isl-ios" hidden>در سافاری دکمه اشتراک‌گذاری را بزنید و «Add to Home Screen» را انتخاب کنید.</p>
-  </div>
-</div>
-<div class="scrim" aria-hidden="true"></div>
+<a class="skip" href="#products">رفتن به خدمات</a>
+<div class="demo-bar">پیش‌نمایش قالب «خدمات خودرو»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/carservice/logo.webp" alt="کارواش و خدمات خودرو برق"><b>کارواش و خدمات خودرو برق</b></a>
+    <nav class="hdr-nav" aria-label="بخش‌های سایت"><a href="#products" data-jump="products">خدمات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a></nav>
+    <button class="hdr-cta" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span class="cta-l">رزرو نوبت در واتساپ</span><span class="cta-s">واتساپ</span></button>  </div>
+</header>
 
-<main class="views">
+<main id="top" class="site">
 
-  <section class="view on" data-view="home" id="v-home" aria-label="خانه">
-    <header class="g-hero" style="background-image:url('assets/demo/carservice/cover.webp')">
-      <div class="g-hero-in">
-        <img class="g-logo" src="assets/demo/carservice/logo.webp" alt="کارواش و خدمات خودرو برق">        <h1>کارواش و خدمات خودرو برق</h1>
-        <p>کارواش، پولیش، سرامیک و تعویض روغن</p>        <div class="g-cta">
-          <button class="pill" type="button" data-go="menu">دیدن خدمات</button>
-          <button class="pill clear" type="button" data-go="chat">گفتگو</button>
-                  </div>
+  <section class="hero" aria-labelledby="hero-h">
+    <img class="hero-img" src="assets/demo/carservice/cover.webp" alt="" fetchpriority="high" decoding="async">    <div class="hero-in">
+      <img class="g-logo" src="assets/demo/carservice/logo.webp" alt="کارواش و خدمات خودرو برق">      <h1 id="hero-h">کارواش و خدمات خودرو برق</h1>
+      <p class="hero-tag">کارواش، پولیش، سرامیک و تعویض روغن</p>      <div class="hero-cta">
+        <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>رزرو نوبت در واتساپ</button>        <a class="pill clear" href="#products" data-jump="products">دیدن خدمات</a>
       </div>
-    </header>
+      <p class="hero-meta"><span class="hero-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳</span></p>    </div>
+  </section>
 
-        <div class="g-sec g-picks">
-      <div class="g-sec-h"><h2>ویژه</h2><button type="button" data-go="menu">همه</button></div>
-      <div class="rail"><article class="card" data-name="کارواش کامل">
-  <img src="assets/demo/carservice/wash.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>کارواش کامل</h3>
-    <p class="desc">بیرون، داخل و موتور</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row">
-      <span class="price">۴۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="کارواش کامل">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="کارواش بیرون">
-  <img src="assets/demo/carservice/wash-out.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>کارواش بیرون</h3>
-    <p class="desc">شستشوی بدنه و رینگ</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row">
-      <span class="price">۲۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="کارواش بیرون">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="صفرشویی داخل">
-  <img src="assets/demo/carservice/interior.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>صفرشویی داخل</h3>
-    <p class="desc">شستشوی صندلی و سقف</p>        <div class="row">
-      <span class="price">۱٬۸۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="صفرشویی داخل">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="پولیش سه‌مرحله‌ای">
-  <img src="assets/demo/carservice/polish.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>پولیش سه‌مرحله‌ای</h3>
-    <p class="desc">رفع خط و خش سطحی</p>        <div class="row">
-      <span class="price">۳٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="پولیش سه‌مرحله‌ای">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="پوشش سرامیک">
-  <img src="assets/demo/carservice/ceramic.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>پوشش سرامیک</h3>
-    <p class="desc">ضمانت یک‌ساله</p>        <div class="row">
-      <span class="price">۹٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="پوشش سرامیک">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="تعویض روغن">
-  <img src="assets/demo/carservice/oil.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>تعویض روغن</h3>
-    <p class="desc">با فیلتر، روغن به انتخاب شما</p>        <div class="row">
-      <span class="price">۱٬۳۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تعویض روغن">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="بالانس و تنظیم فرمان">
-  <img src="assets/demo/carservice/alignment.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>بالانس و تنظیم فرمان</h3>
-    <p class="desc">چهار چرخ</p>        <div class="row">
-      <span class="price">۶۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="بالانس و تنظیم فرمان">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="تعویض لاستیک">
-  <img src="assets/demo/carservice/tyres.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>تعویض لاستیک</h3>
-    <p class="desc">نصب و بالانس</p>        <div class="row">
-      <span class="price">۴۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تعویض لاستیک">رزرو نوبت</button>    </div>
-  </div>
-</article>
-</div>
-    </div>
-    
-    <div class="g-sec g-facts">
-      <div class="group">
-        <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۸:۰۰ تا ۲۲:۰۰</small></span></div>        <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">آدرس<small>تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      </div>
-    </div>
+  <div class="news" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg><span>با هر سرامیک، کارواش یک ماه رایگان</span></div>
+  <ul class="hl g-facts" aria-label="چرا کارواش و خدمات خودرو برق">
+    <li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span>نوبت بدون صف</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5s6 6.4 6 10.6a6 6 0 0 1-12 0C6 9.9 12 3.5 12 3.5Z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/></svg></span><span>مواد استاندارد</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5 6.2v5.4c0 4.1 2.9 7.5 7 8.9 4.1-1.4 7-4.8 7-8.9V6.2Z"/><path d="m9 12.2 2.2 2.2 3.9-4.2"/></svg></span><span>ضمانت سرامیک</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg></span><span>تحویل همان روز</span></li>  </ul>
 
-    <div class="g-sec g-about-sec"><div class="g-sec-h"><h2>درباره ما</h2></div><p class="g-about">شستشو با مواد استاندارد، پولیش و سرامیک با ضمانت و سرویس سریع روغن. نوبت بگیرید تا بدون صف تحویل بدهید و همان روز تحویل بگیرید.</p></div>  </section>
-
-  <section class="view" data-view="menu" id="v-menu" aria-label="خدمات">
-    <h1 class="g-title">خدمات</h1>
-    <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="q" placeholder="جستجو در خدمات" aria-label="جستجو"></label>    <nav class="g-chips" aria-label="دسته‌بندی‌ها">
-      <a href="#c63" data-cat="c63">کارواش</a><a href="#c64" data-cat="c64">پولیش و سرامیک</a><a href="#c65" data-cat="c65">سرویس فنی</a>    </nav>
-          <section class="g-cat" id="c63">
-        <h2>کارواش</h2>
-        <div class="cards"><article class="card" data-name="کارواش کامل">
-  <img src="assets/demo/carservice/wash.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>کارواش کامل</h3>
-    <p class="desc">بیرون، داخل و موتور</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row">
-      <span class="price">۴۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="کارواش کامل">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="کارواش بیرون">
-  <img src="assets/demo/carservice/wash-out.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>کارواش بیرون</h3>
-    <p class="desc">شستشوی بدنه و رینگ</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row">
-      <span class="price">۲۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="کارواش بیرون">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="صفرشویی داخل">
-  <img src="assets/demo/carservice/interior.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>صفرشویی داخل</h3>
-    <p class="desc">شستشوی صندلی و سقف</p>        <div class="row">
-      <span class="price">۱٬۸۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="صفرشویی داخل">رزرو نوبت</button>    </div>
-  </div>
-</article>
-</div>
-      </section>
-          <section class="g-cat" id="c64">
-        <h2>پولیش و سرامیک</h2>
-        <div class="cards"><article class="card" data-name="پولیش سه‌مرحله‌ای">
-  <img src="assets/demo/carservice/polish.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>پولیش سه‌مرحله‌ای</h3>
-    <p class="desc">رفع خط و خش سطحی</p>        <div class="row">
-      <span class="price">۳٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="پولیش سه‌مرحله‌ای">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="پوشش سرامیک">
-  <img src="assets/demo/carservice/ceramic.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>پوشش سرامیک</h3>
-    <p class="desc">ضمانت یک‌ساله</p>        <div class="row">
-      <span class="price">۹٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="پوشش سرامیک">رزرو نوبت</button>    </div>
-  </div>
-</article>
-</div>
-      </section>
-          <section class="g-cat" id="c65">
-        <h2>سرویس فنی</h2>
-        <div class="cards"><article class="card" data-name="تعویض روغن">
-  <img src="assets/demo/carservice/oil.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>تعویض روغن</h3>
-    <p class="desc">با فیلتر، روغن به انتخاب شما</p>        <div class="row">
-      <span class="price">۱٬۳۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تعویض روغن">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="بالانس و تنظیم فرمان">
-  <img src="assets/demo/carservice/alignment.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>بالانس و تنظیم فرمان</h3>
-    <p class="desc">چهار چرخ</p>        <div class="row">
-      <span class="price">۶۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="بالانس و تنظیم فرمان">رزرو نوبت</button>    </div>
-  </div>
-</article>
-<article class="card" data-name="تعویض لاستیک">
-  <img src="assets/demo/carservice/tyres.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
-    <h3>تعویض لاستیک</h3>
-    <p class="desc">نصب و بالانس</p>        <div class="row">
-      <span class="price">۴۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تعویض لاستیک">رزرو نوبت</button>    </div>
-  </div>
-</article>
-</div>
-      </section>
-      </section>
-
+    <section class="sec" aria-labelledby="cats-h">
+    <div class="sec-h"><h2 id="cats-h">دسته‌بندی‌ها</h2></div>
+    <div class="cat-tiles">
+              <a class="cat-tile" href="#c63" data-jump="c63">
+          <img src="assets/demo/carservice/wash.webp" alt="" loading="lazy" decoding="async">          <span><b>کارواش</b><small>۳ خدمت</small></span>
+        </a>
+              <a class="cat-tile" href="#c64" data-jump="c64">
+          <img src="assets/demo/carservice/polish.webp" alt="" loading="lazy" decoding="async">          <span><b>پولیش و سرامیک</b><small>۲ خدمت</small></span>
+        </a>
+              <a class="cat-tile" href="#c65" data-jump="c65">
+          <img src="assets/demo/carservice/oil.webp" alt="" loading="lazy" decoding="async">          <span><b>سرویس فنی</b><small>۳ خدمت</small></span>
+        </a>
+          </div>
+  </section>
   
-    <section class="view" data-view="chat" id="v-chat" aria-label="گفتگو"><div class="chat" id="chat">
-  <div class="chat-head"><img class="chat-av" src="assets/demo/carservice/logo.webp" alt="کارواش و خدمات خودرو برق"><div><b>کارواش و خدمات خودرو برق</b><small id="chatState">پیام‌ها مستقیم به فروشنده می‌رسد</small></div></div>
-  <div class="chat-intro" id="chatIntro">
-    <p class="chat-note">سفارش و سؤالتان را همین‌جا بنویسید. این گفتگو روی سرور داخلی است؛ وقتی واتساپ و تلگرام قطع است هم کار می‌کند.</p>
-    <label class="field">نام<input id="chName" autocomplete="name" maxlength="60"></label>
-    <label class="field">شماره موبایل<input id="chPhone" inputmode="tel" autocomplete="tel" maxlength="20"></label>
-    <button class="pill" type="button" id="chStart">شروع گفتگو</button>
-    <p class="chat-err" id="chErr" hidden></p>
+    <section class="sec g-picks" aria-labelledby="picks-h">
+    <div class="sec-h"><h2 id="picks-h">ویژه</h2><a href="#products" data-jump="products">همه خدمات</a></div>
+    <div class="rail"><article class="card" id="p209" data-id="209" data-name="کارواش کامل" data-price="450000" data-img="/assets/demo/carservice/wash.webp" data-desc="بیرون، داخل و موتور" data-opts="[{&quot;n&quot;:&quot;خودرو&quot;,&quot;v&quot;:[&quot;سواری&quot;,&quot;شاسی‌بلند&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات کارواش کامل">
+    <span class="card-img"><img src="assets/demo/carservice/wash.webp" alt="کارواش کامل" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>کارواش کامل</h3>
+    <p class="desc">بیرون، داخل و موتور</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row wide">
+      <span class="price">۴۵۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
   </div>
-  <div class="chat-log" id="chatLog" aria-live="polite"></div>
-  <form class="chat-form" id="chatForm" hidden autocomplete="off">
-    <input id="chText" maxlength="600" placeholder="پیام شما…" aria-label="پیام">
-    <button class="chat-send" type="submit" aria-label="ارسال"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4 3.5 11l7 2.5L13 20.5Z"/><path d="m10.5 13.5 4-4"/></svg></button>
-  </form>
+</article>
+<article class="card" id="p210" data-id="210" data-name="کارواش بیرون" data-price="250000" data-img="/assets/demo/carservice/wash-out.webp" data-desc="شستشوی بدنه و رینگ" data-opts="[{&quot;n&quot;:&quot;خودرو&quot;,&quot;v&quot;:[&quot;سواری&quot;,&quot;شاسی‌بلند&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات کارواش بیرون">
+    <span class="card-img"><img src="assets/demo/carservice/wash-out.webp" alt="کارواش بیرون" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>کارواش بیرون</h3>
+    <p class="desc">شستشوی بدنه و رینگ</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row wide">
+      <span class="price">۲۵۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p211" data-id="211" data-name="صفرشویی داخل" data-price="1800000" data-img="/assets/demo/carservice/interior.webp" data-desc="شستشوی صندلی و سقف">
+  <button class="card-open" type="button" aria-label="جزئیات صفرشویی داخل">
+    <span class="card-img"><img src="assets/demo/carservice/interior.webp" alt="صفرشویی داخل" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>صفرشویی داخل</h3>
+    <p class="desc">شستشوی صندلی و سقف</p>        <div class="row wide">
+      <span class="price">۱٬۸۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p212" data-id="212" data-name="پولیش سه‌مرحله‌ای" data-price="3500000" data-img="/assets/demo/carservice/polish.webp" data-desc="رفع خط و خش سطحی">
+  <button class="card-open" type="button" aria-label="جزئیات پولیش سه‌مرحله‌ای">
+    <span class="card-img"><img src="assets/demo/carservice/polish.webp" alt="پولیش سه‌مرحله‌ای" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>پولیش سه‌مرحله‌ای</h3>
+    <p class="desc">رفع خط و خش سطحی</p>        <div class="row wide">
+      <span class="price">۳٬۵۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p213" data-id="213" data-name="پوشش سرامیک" data-price="9500000" data-img="/assets/demo/carservice/ceramic.webp" data-desc="ضمانت یک‌ساله">
+  <button class="card-open" type="button" aria-label="جزئیات پوشش سرامیک">
+    <span class="card-img"><img src="assets/demo/carservice/ceramic.webp" alt="پوشش سرامیک" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>پوشش سرامیک</h3>
+    <p class="desc">ضمانت یک‌ساله</p>        <div class="row wide">
+      <span class="price">۹٬۵۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p214" data-id="214" data-name="تعویض روغن" data-price="1300000" data-img="/assets/demo/carservice/oil.webp" data-desc="با فیلتر، روغن به انتخاب شما">
+  <button class="card-open" type="button" aria-label="جزئیات تعویض روغن">
+    <span class="card-img"><img src="assets/demo/carservice/oil.webp" alt="تعویض روغن" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>تعویض روغن</h3>
+    <p class="desc">با فیلتر، روغن به انتخاب شما</p>        <div class="row wide">
+      <span class="price">۱٬۳۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p215" data-id="215" data-name="بالانس و تنظیم فرمان" data-price="600000" data-img="/assets/demo/carservice/alignment.webp" data-desc="چهار چرخ">
+  <button class="card-open" type="button" aria-label="جزئیات بالانس و تنظیم فرمان">
+    <span class="card-img"><img src="assets/demo/carservice/alignment.webp" alt="بالانس و تنظیم فرمان" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>بالانس و تنظیم فرمان</h3>
+    <p class="desc">چهار چرخ</p>        <div class="row wide">
+      <span class="price">۶۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p216" data-id="216" data-name="تعویض لاستیک" data-price="400000" data-img="/assets/demo/carservice/tyres.webp" data-desc="نصب و بالانس">
+  <button class="card-open" type="button" aria-label="جزئیات تعویض لاستیک">
+    <span class="card-img"><img src="assets/demo/carservice/tyres.webp" alt="تعویض لاستیک" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>تعویض لاستیک</h3>
+    <p class="desc">نصب و بالانس</p>        <div class="row wide">
+      <span class="price">۴۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
 </div>
-</section>
+  </section>
   
-  <section class="view" data-view="info" id="v-info" aria-label="تماس">
-    <h1 class="g-title">تماس و آدرس</h1>
-    <div class="group">
-      <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۸:۰۰ تا ۲۲:۰۰</small></span></div>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="#chat" data-go="chat"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg></span><span class="li-t">گفتگوی سایت<small>روی شبکه داخلی هم کار می‌کند</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>              <a href="https://wa.me/989120000000" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ</span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>
-                  <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب به‌صورت اپ<small>بدون اپ‌استور، منو آفلاین هم باز می‌شود</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+  <section class="sec" id="products" aria-labelledby="products-h">
+    <div class="sec-h"><h2 id="products-h">خدمات</h2><span class="count">۸ مورد</span></div>
+        <nav class="g-chips" aria-label="دسته‌بندی‌ها"><a href="#c63" data-cat="c63">کارواش</a><a href="#c64" data-cat="c64">پولیش و سرامیک</a><a href="#c65" data-cat="c65">سرویس فنی</a></nav>          <section class="g-cat" id="c63" aria-label="کارواش">
+        <h3 class="cat-h">کارواش</h3>
+        <div class="cards"><article class="card" id="p209" data-id="209" data-name="کارواش کامل" data-price="450000" data-img="/assets/demo/carservice/wash.webp" data-desc="بیرون، داخل و موتور" data-opts="[{&quot;n&quot;:&quot;خودرو&quot;,&quot;v&quot;:[&quot;سواری&quot;,&quot;شاسی‌بلند&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات کارواش کامل">
+    <span class="card-img"><img src="assets/demo/carservice/wash.webp" alt="کارواش کامل" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>کارواش کامل</h3>
+    <p class="desc">بیرون، داخل و موتور</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row wide">
+      <span class="price">۴۵۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p210" data-id="210" data-name="کارواش بیرون" data-price="250000" data-img="/assets/demo/carservice/wash-out.webp" data-desc="شستشوی بدنه و رینگ" data-opts="[{&quot;n&quot;:&quot;خودرو&quot;,&quot;v&quot;:[&quot;سواری&quot;,&quot;شاسی‌بلند&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات کارواش بیرون">
+    <span class="card-img"><img src="assets/demo/carservice/wash-out.webp" alt="کارواش بیرون" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>کارواش بیرون</h3>
+    <p class="desc">شستشوی بدنه و رینگ</p>    <p class="opts">خودرو: سواری، شاسی‌بلند</p>    <div class="row wide">
+      <span class="price">۲۵۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p211" data-id="211" data-name="صفرشویی داخل" data-price="1800000" data-img="/assets/demo/carservice/interior.webp" data-desc="شستشوی صندلی و سقف">
+  <button class="card-open" type="button" aria-label="جزئیات صفرشویی داخل">
+    <span class="card-img"><img src="assets/demo/carservice/interior.webp" alt="صفرشویی داخل" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>صفرشویی داخل</h3>
+    <p class="desc">شستشوی صندلی و سقف</p>        <div class="row wide">
+      <span class="price">۱٬۸۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+</div>
+      </section>
+          <section class="g-cat" id="c64" aria-label="پولیش و سرامیک">
+        <h3 class="cat-h">پولیش و سرامیک</h3>
+        <div class="cards"><article class="card" id="p212" data-id="212" data-name="پولیش سه‌مرحله‌ای" data-price="3500000" data-img="/assets/demo/carservice/polish.webp" data-desc="رفع خط و خش سطحی">
+  <button class="card-open" type="button" aria-label="جزئیات پولیش سه‌مرحله‌ای">
+    <span class="card-img"><img src="assets/demo/carservice/polish.webp" alt="پولیش سه‌مرحله‌ای" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>پولیش سه‌مرحله‌ای</h3>
+    <p class="desc">رفع خط و خش سطحی</p>        <div class="row wide">
+      <span class="price">۳٬۵۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p213" data-id="213" data-name="پوشش سرامیک" data-price="9500000" data-img="/assets/demo/carservice/ceramic.webp" data-desc="ضمانت یک‌ساله">
+  <button class="card-open" type="button" aria-label="جزئیات پوشش سرامیک">
+    <span class="card-img"><img src="assets/demo/carservice/ceramic.webp" alt="پوشش سرامیک" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>پوشش سرامیک</h3>
+    <p class="desc">ضمانت یک‌ساله</p>        <div class="row wide">
+      <span class="price">۹٬۵۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+</div>
+      </section>
+          <section class="g-cat" id="c65" aria-label="سرویس فنی">
+        <h3 class="cat-h">سرویس فنی</h3>
+        <div class="cards"><article class="card" id="p214" data-id="214" data-name="تعویض روغن" data-price="1300000" data-img="/assets/demo/carservice/oil.webp" data-desc="با فیلتر، روغن به انتخاب شما">
+  <button class="card-open" type="button" aria-label="جزئیات تعویض روغن">
+    <span class="card-img"><img src="assets/demo/carservice/oil.webp" alt="تعویض روغن" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>تعویض روغن</h3>
+    <p class="desc">با فیلتر، روغن به انتخاب شما</p>        <div class="row wide">
+      <span class="price">۱٬۳۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p215" data-id="215" data-name="بالانس و تنظیم فرمان" data-price="600000" data-img="/assets/demo/carservice/alignment.webp" data-desc="چهار چرخ">
+  <button class="card-open" type="button" aria-label="جزئیات بالانس و تنظیم فرمان">
+    <span class="card-img"><img src="assets/demo/carservice/alignment.webp" alt="بالانس و تنظیم فرمان" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>بالانس و تنظیم فرمان</h3>
+    <p class="desc">چهار چرخ</p>        <div class="row wide">
+      <span class="price">۶۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+<article class="card" id="p216" data-id="216" data-name="تعویض لاستیک" data-price="400000" data-img="/assets/demo/carservice/tyres.webp" data-desc="نصب و بالانس">
+  <button class="card-open" type="button" aria-label="جزئیات تعویض لاستیک">
+    <span class="card-img"><img src="assets/demo/carservice/tyres.webp" alt="تعویض لاستیک" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
+    <h3>تعویض لاستیک</h3>
+    <p class="desc">نصب و بالانس</p>        <div class="row wide">
+      <span class="price">۴۰۰٬۰۰۰ <small>تومان</small></span>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو نوبت</span></button>    </div>
+  </div>
+</article>
+</div>
+      </section>
+            <p class="none" id="qNone" hidden>چیزی با این نام پیدا نشد. در گفتگو بپرسید؛ شاید داشته باشیم.</p>
+    <p class="how"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>روی «رزرو نوبت» بزنید؛ گفتگوی واتساپ ما با یک پیام آماده باز می‌شود.</span></p>
+  </section>
+
+  <section class="sec about g-about-sec" id="about" aria-labelledby="about-h">
+    <div class="about-grid">
+      <div class="about-img"><img src="assets/demo/carservice/wash.webp" alt="" loading="lazy" decoding="async"></div>      <div class="about-tx">
+        <p class="kicker">درباره ما</p>
+        <h2 id="about-h">کارواش و خدمات خودرو برق</h2>
+        <p class="g-about">شستشو با مواد استاندارد، پولیش و سرامیک با ضمانت و سرویس سریع روغن. نوبت بگیرید تا بدون صف تحویل بدهید و همان روز تحویل بگیرید.</p>        <dl class="facts-dl">
+          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>ساعت کاری</dt><dd>هر روز ۸:۰۰ تا ۲۲:۰۰</dd></div>          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>آدرس</dt><dd>تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳</dd></div>                            </dl>
+      </div>
     </div>
-    <a class="powered" href="https://alphawebsite.ir/?ref=demo-carservice-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-white.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a>  </section>
-</main>
+  </section>
+
+    <section class="sec" aria-labelledby="gal-h">
+    <div class="sec-h"><h2 id="gal-h">گالری</h2></div>
+    <div class="gallery"><figure class="g0"><img src="assets/demo/carservice/cover.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g1"><img src="assets/demo/carservice/wash.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g2"><img src="assets/demo/carservice/wash-out.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g3"><img src="assets/demo/carservice/interior.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g4"><img src="assets/demo/carservice/polish.webp" alt="" loading="lazy" decoding="async"></figure></div>
+  </section>
+  
+  <section class="sec contact" id="contact" aria-labelledby="contact-h">
+    <div class="sec-h"><h2 id="contact-h">تماس و آدرس</h2></div>
+    <div class="contact-grid">
+            <div class="box hours">
+        <div class="box-h"><b>ساعت کاری</b><span class="now-chip" data-hours><i aria-hidden="true"></i><span class="now-t">باز است تا ۲۲:۰۰</span></span></div>
+        <table class="week"><caption class="sr">ساعت کاری هفته</caption><tbody>
+          <tr data-dow="6"><th scope="row">شنبه</th><td>۸:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="0"><th scope="row">یکشنبه</th><td>۸:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="1"><th scope="row">دوشنبه</th><td>۸:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="2"><th scope="row">سه‌شنبه</th><td>۸:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="3"><th scope="row">چهارشنبه</th><td>۸:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="4"><th scope="row">پنجشنبه</th><td>۸:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="5"><th scope="row">جمعه</th><td>۸:۰۰ تا ۲۲:۰۰</td></tr>        </tbody></table>
+      </div>
+            <div class="box group">
+        <button class="li as-btn" type="button" data-buy-general><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ<small>سفارش و سؤال، با پیام آماده</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="https://www.google.com/maps/search/?api=1&amp;query=%D8%AA%D8%A8%D8%B1%DB%8C%D8%B2%D8%8C%20%DA%A9%D9%85%D8%B1%D8%A8%D9%86%D8%AF%DB%8C%20%D8%B4%D9%85%D8%A7%D9%84%DB%8C%D8%8C%20%D8%AC%D9%86%D8%A8%20%D9%BE%D9%85%D9%BE%20%D8%A8%D9%86%D8%B2%DB%8C%D9%86%D8%8C%20%D9%BE%D9%84%D8%A7%DA%A9%20%DB%B3" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>                                        <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب روی گوشی<small>با نام و لوگوی کارواش و خدمات خودرو برق، مثل یک اپ</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+
+    <section class="sec faq" id="faq" aria-labelledby="faq-h">
+    <div class="sec-h"><h2 id="faq-h">سؤالات رایج</h2></div>
+    <div class="faq-list"><details open><summary>چطور رزرو نوبت کنم؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>روی دکمه «رزرو نوبت» زیر هر خدمت بزنید. گفتگوی واتساپ کارواش و خدمات خودرو برق با یک پیام آماده باز می‌شود؛ همان را بفرستید تا ما هماهنگ کنیم.</p></details><details><summary>پرداخت چطور است؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>بعد از هماهنگی در گفتگو، با کارت‌به‌کارت یا در محل.</p></details><details><summary>ساعت کاری‌تان چیست؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>هر روز ۸:۰۰ تا ۲۲:۰۰.</p></details><details><summary>کجا هستید؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳.</p></details></div>
+  </section>
+  </main>
+
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/carservice/logo.webp" alt="کارواش و خدمات خودرو برق"><b>کارواش و خدمات خودرو برق</b></a>
+      <p>کارواش، پولیش، سرامیک و تعویض روغن</p>      <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>رزرو نوبت در واتساپ</button>    </div>
+    <nav class="ft-col" aria-label="دسترسی سریع"><b>دسترسی سریع</b><a href="#products" data-jump="products">خدمات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a><button type="button" class="ft-link" data-act="install" hidden>نصب روی گوشی</button></nav>
+    <div class="ft-col"><b>تماس</b>
+      <a href="tel:09120000000" dir="ltr" class="ltr-t">09120000000</a>      <span>تبریز، کمربندی شمالی، جنب پمپ بنزین، پلاک ۳</span>      <span>هر روز ۸:۰۰ تا ۲۲:۰۰</span>    </div>
+  </div>
+  <div class="ft-bottom"><span>© 1405 کارواش و خدمات خودرو برق. همه حقوق محفوظ است.</span><a class="powered" href="https://alphawebsite.ir/?ref=demo-carservice-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-white.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a></div>
+</footer>
 
 <nav class="dock" aria-label="بخش‌ها">
-      <button type="button" data-tab="home" aria-label="خانه" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
-      <button type="button" data-tab="menu" aria-label="خدمات"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>خدمات</span></button>
-      <button type="button" data-tab="chat" aria-label="گفتگو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span><b class="badge" data-badge="chat" hidden>۰</b></button>
-      <button type="button" data-tab="info" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
-  </nav>
+  <button type="button" data-tab="top" class="on" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
+  <button type="button" data-tab="products"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>خدمات</span></button>
+  <button type="button" data-tab="about"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8Z"/></svg><span>درباره</span></button>
+    <button type="button" data-tab="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
+</nav>
 
-<script>window.SITE={"slug":"demo-carservice-1","name":"کارواش و خدمات خودرو برق","base":"/s/demo-carservice-1","chat":true,"glass":true,"demo":true,"v":"2026.10.13-2","type":"carservice","fam":"catalog","askMsg":"سلام، برای «%s» نوبت می‌خواهم.","ask":"https://wa.me/989120000000","delivery":false,"fee":0,"min":0,"calls":false};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
+<dialog class="psheet" id="psheet" aria-labelledby="psName">
+  <form method="dialog" class="ps-in">
+    <button class="x" value="close" aria-label="بستن"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
+    <div class="ps-img" id="psImg"></div>
+    <div class="ps-b">
+      <h2 id="psName"></h2>
+      <p class="ps-price" id="psPrice"></p>
+      <p class="ps-desc" id="psDesc"></p>
+      <div id="psOpts"></div>
+      <p class="ps-low" id="psLow" hidden></p>
+      <p class="ps-err" id="psErr" role="alert" hidden></p>
+      <button type="button" class="ps-buy" id="psBuy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span id="psBuyT">رزرو نوبت در واتساپ</span></button>
+      <button type="button" class="ps-share" id="psShare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7h8v8"/><path d="M17 7 7 17"/></svg>اشتراک‌گذاری</button>
+      <p class="ps-note">گفتگوی واتساپ کارواش و خدمات خودرو برق با یک پیام آماده باز می‌شود؛ فقط «ارسال» را بزنید.</p>
+    </div>
+  </form>
+</dialog>
+
+<script>window.SITE={"slug":"demo-carservice-1","name":"کارواش و خدمات خودرو برق","base":"/s/demo-carservice-1","chat":false,"glass":true,"demo":true,"v":"2026.10.14-1","type":"carservice","fam":"catalog","askMsg":"سلام، برای «%s» نوبت می‌خواهم.","buy":{"ch":"whatsapp","to":"989120000000","label":"واتساپ","word":"رزرو نوبت"},"layout":"carservice-1","calls":false,"hours":{"open":"08:00","close":"22:00","off":-1}};window.AWP={"scope":"site","slug":"demo-carservice-1","name":"کارواش و خدمات خودرو برق","base":"/s/demo-carservice-1","icon":"/s/demo-carservice-1/icon-192.png","privacy":"https://alphawebsite.ir/privacy#visitors","api":"/api/v","demo":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/popups.js" defer></script></body>
 </html>

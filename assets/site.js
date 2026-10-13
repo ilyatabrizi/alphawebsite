@@ -1,13 +1,13 @@
-/* Cart → message to the shop. Every order is also saved to the owner's panel, so it isn't lost if a messenger is blocked.
-   Works in both families: classic layouts (cart bar + sheet) and glass layouts (the «سبد» tab).
-   Also: item choices (size, colour, milk…), stock limits, how the order is received (at the table, pickup,
-   delivery with its fee and minimum) and the table bar that calls the waiter from a QR card. */
+/* Buying on a client site (Ilya, 2026-10-14): every product's button opens the shop's own WhatsApp or Telegram chat
+   with a ready message naming the product, its choices, price and link; the customer only presses "send".
+   Also: the product sheet (photo, description, choices, stock, share), search, the table bar that calls the waiter
+   from a QR card, and a privacy-light tap log so the owner's panel shows which products people asked about.
+   On sample sites the button shows the message it would send instead of messaging a real number. */
 (function () {
-  var S = window.SITE || {};
-  var cart = {};                       // key (item id + choices) → { id, n, o, p, q, s }
-  var fa = function (n) { return Number(n).toLocaleString('fa-IR'); };
+  var S = window.SITE || {}, B = S.buy || {};
   var $ = function (id) { return document.getElementById(id); };
-  var sheet = $('sheet');
+  var fa = function (n) { return Number(n).toLocaleString('fa-IR'); };
+  var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
   var table = '';
 
   /* Opened from a table's QR card (?t=12): kept for the visit. */
@@ -16,112 +16,89 @@
   try { if (table) sessionStorage.setItem('aw-table-' + S.slug, table); else table = sessionStorage.getItem('aw-table-' + S.slug) || ''; } catch (e) {}
   var tableFa = table ? Number(table).toLocaleString('fa-IR', { useGrouping: false }) : '';
 
-  /* ---------- how the order is received ---------- */
-  var modes = $('oModes'), fee = modes ? Number(modes.getAttribute('data-fee')) || 0 : 0, min = modes ? Number(modes.getAttribute('data-min')) || 0 : 0;
-  function mode() { var r = document.querySelector('input[name=omode]:checked'); return r ? r.value : ''; }
-  if (modes) {
-    var tl = modes.querySelector('[data-mode=table]');
-    if (tl && table) { tl.hidden = false; $('oTable').textContent = tableFa; }
-    var first = table && tl ? 'table' : (S.fam !== 'food' && S.delivery ? 'delivery' : 'pickup');
-    var r0 = modes.querySelector('input[value=' + first + ']'); if (r0) r0.checked = true;
-    if (modes.querySelectorAll('label:not([hidden])').length < 2) modes.classList.add('single');
-    modes.addEventListener('change', render);
+  function siteUrl(id) {
+    var u = location.origin + location.pathname.replace(/\/+$/, '');
+    return u + (id ? '#p' + id : '');
   }
-
-  function totals() {
-    var count = 0, sum = 0;
-    Object.keys(cart).forEach(function (k) { count += cart[k].q; sum += cart[k].q * cart[k].p; });
-    var f = mode() === 'delivery' ? fee : 0;
-    return { count: count, sum: sum, fee: f, total: sum + f, short: mode() === 'delivery' && min > sum ? min - sum : 0 };
-  }
-  function inCart(id) { var n = 0; Object.keys(cart).forEach(function (k) { if (cart[k].id === id) n += cart[k].q; }); return n; }
-  function set(id, v) { var el = $(id); if (el) el.textContent = v; }
-
-  function render() {
-    var t = totals(), m = mode();
-    if ($('cartbar')) $('cartbar').hidden = t.count === 0;
-    document.body.classList.toggle('has-cart', t.count > 0);
-    if ($('bagEmpty')) { $('bagEmpty').hidden = t.count > 0; $('bagFull').hidden = t.count === 0; }
-    set('cartCount', fa(t.count)); set('cartTotal', fa(t.sum)); set('sumTotal', fa(t.total));
-    if ($('feeRow')) { $('feeRow').hidden = !t.fee; set('feeVal', fa(t.fee)); }
-    if ($('oDelivNote')) $('oDelivNote').hidden = m !== 'delivery';
-    var warn = $('minWarn');
-    if (warn) { warn.hidden = !t.short; if (t.short) warn.textContent = 'حداقل سفارش برای ارسال ' + fa(min) + ' تومان است؛ ' + fa(t.short) + ' تومان دیگر اضافه کنید یا «تحویل حضوری» را بزنید.'; }
-    document.querySelectorAll('.ch').forEach(function (b) { b.disabled = !!t.short; });
-    var note = $('cNote'), lab = $('cNoteLabel');
-    if (note && lab) {
-      note.required = m === 'delivery';
-      lab.textContent = m === 'delivery' ? 'آدرس کامل' : m === 'table' ? 'توضیح (اختیاری)' : m === 'pickup' ? 'توضیح یا ساعت تحویل (اختیاری)' : (S.fam !== 'food' ? 'آدرس ارسال' : 'آدرس یا شماره میز');
+  /* The message: what, which choices, the price, where (table), and the link to the product on the site. */
+  function message(it, choice) {
+    var opt = choice && Object.keys(choice).length ? ' (' + Object.keys(choice).map(function (g) { return choice[g]; }).join('، ') + ')' : '';
+    var price = it && it.p > 0 ? fa(it.p) + ' تومان' : '';
+    var lines = [];
+    if (!it) lines.push('سلام، از سایت ' + S.name + ' پیام می‌دهم.');
+    else if (S.fam === 'catalog') { lines.push((S.askMsg || 'سلام، درباره «%s» سؤال دارم.').replace('%s', it.n + opt)); if (price) lines.push('قیمت در سایت: ' + price); }
+    else {
+      lines.push(S.fam === 'food' ? 'سلام، از منوی ' + S.name + ' سفارش دارم:' : 'سلام، این را از سایت ' + S.name + ' می‌خواهم:');
+      lines.push('• ' + it.n + opt + (price ? '، ' + price : ''));
+      if (table) lines.push('میز ' + tableFa);
     }
-    var ul = $('lines'); if (!ul) return;
-    ul.innerHTML = '';
-    Object.keys(cart).forEach(function (k) {
-      var it = cart[k];
-      var li = document.createElement('li');
-      li.innerHTML = '<span></span><span class="qty"><button type="button" data-d="-1" aria-label="کم کردن">−</button><b></b><button type="button" data-d="1" aria-label="اضافه کردن">+</button></span>';
-      li.firstChild.textContent = it.n;
-      li.querySelector('b').textContent = fa(it.q);
-      var plus = li.querySelector('[data-d="1"]');
-      if (it.s !== null && inCart(it.id) >= it.s) { plus.disabled = true; plus.title = 'موجودی همین است'; }
-      li.querySelectorAll('button').forEach(function (b) {
-        b.addEventListener('click', function () {
-          var d = Number(b.dataset.d);
-          if (d > 0 && it.s !== null && inCart(it.id) >= it.s) return;
-          it.q += d;
-          if (it.q <= 0) delete cart[k];
-          render();
-          if (totals().count === 0 && sheet && sheet.open) sheet.close();
-        });
-      });
-      ul.appendChild(li);
-    });
-    document.dispatchEvent(new CustomEvent('cart:change', { detail: t }));
+    lines.push(siteUrl(it && it.id));
+    return lines.join('\n');
+  }
+  function link(text) {
+    var t = encodeURIComponent(text);
+    if (B.ch === 'whatsapp') return 'https://wa.me/' + B.to + '?text=' + t;
+    if (B.ch === 'telegram') return 'https://t.me/' + B.to + '?text=' + t;
+    if (B.ch === 'call') return 'tel:' + B.to;
+    return '';
+  }
+  function logTap(it) {
+    var body = JSON.stringify({ slug: S.slug, id: it ? it.id : 0, item: it ? it.n : '', ch: B.ch, vid: (window.AWP && window.AWP.vid) ? window.AWP.vid() : '' });
+    try { if (!navigator.sendBeacon('/api/tap', new Blob([body], { type: 'application/json' }))) throw 0; }
+    catch (e) { try { fetch('/api/tap', { method: 'POST', body: body, headers: { 'Content-Type': 'application/json' }, keepalive: true }); } catch (x) {} }
   }
 
-  function put(b, choice) {
-    var id = Number(b.dataset.id), stock = b.dataset.stock === undefined ? null : Number(b.dataset.stock);
-    if (stock !== null && inCart(id) >= stock) { flashBtn(b, 'موجودی همین است'); return false; }
-    var keys = choice ? Object.keys(choice) : [];
-    var key = id + (keys.length ? '|' + keys.map(function (g) { return g + ':' + choice[g]; }).join('|') : '');
-    var label = b.dataset.name + (keys.length ? ' (' + keys.map(function (g) { return choice[g]; }).join('، ') + ')' : '');
-    cart[key] = cart[key] || { id: id, n: label, o: choice || null, p: Number(b.dataset.price), q: 0, s: stock };
-    cart[key].q++;
-    b.classList.add('pop'); setTimeout(function () { b.classList.remove('pop'); }, 180);
-    render();
-    document.dispatchEvent(new CustomEvent('cart:add'));
-    return true;
-  }
-  function flashBtn(b, text) {
-    var old = b.getAttribute('aria-label'); b.classList.add('no'); b.setAttribute('aria-label', text); b.title = text;
-    setTimeout(function () { b.classList.remove('no'); b.setAttribute('aria-label', old); b.title = ''; }, 1400);
-  }
-
-  /* ---------- choices: a small sheet with one row of chips per group ---------- */
-  var pick = null, pickFor = null;
-  function picker(b) {
-    var groups; try { groups = JSON.parse(b.dataset.opts); } catch (e) { groups = []; }
-    if (!groups.length) { put(b); return; }
-    if (!pick) {
-      pick = document.createElement('dialog'); pick.className = 'opt-sheet'; pick.setAttribute('aria-labelledby', 'optTitle');
-      pick.innerHTML = '<form method="dialog" class="opt-in"><div class="opt-h"><h2 id="optTitle"></h2><button value="close" class="x" formnovalidate aria-label="بستن">×</button></div>'
-        + '<div id="optGroups"></div><p class="opt-err" id="optErr" role="alert" hidden></p><button type="button" class="opt-go" id="optGo">افزودن به سبد</button></form>';
-      document.body.appendChild(pick);
-      pick.addEventListener('click', function (e) { if (e.target === pick) pick.close(); });
-      $('optGo').addEventListener('click', function () {
-        var choice = {}, missing = '';
-        pick.querySelectorAll('fieldset').forEach(function (fs) {
-          var c = fs.querySelector('input:checked'); if (c) choice[fs.dataset.g] = c.value; else if (!missing) missing = fs.dataset.g;
-        });
-        if (missing) { $('optErr').hidden = false; $('optErr').textContent = missing + ' را انتخاب کنید.'; return; }
-        if (put(pickFor, choice)) pick.close();
-        else { $('optErr').hidden = false; $('optErr').textContent = 'از این آیتم بیشتر از این موجود نیست.'; }
-      });
+  /* ---------- the demo sheet (sample sites only) ---------- */
+  var demo = null;
+  function showDemo(text) {
+    if (!demo) {
+      demo = document.createElement('dialog'); demo.className = 'demo-sheet'; demo.setAttribute('aria-labelledby', 'demoH');
+      demo.innerHTML = '<div class="demo-in"><h2 id="demoH"></h2><p id="demoP"></p><div class="demo-bubble" id="demoB"></div>'
+        + '<div class="demo-acts"><a id="demoGo" target="_top">همین را برای کسب‌وکارم می‌خواهم</a><button type="button" id="demoX">بستن</button></div></div>';
+      document.body.appendChild(demo);
+      $('demoX').addEventListener('click', function () { demo.close(); });
+      demo.addEventListener('click', function (e) { if (e.target === demo) demo.close(); });
     }
-    pickFor = b;
-    $('optTitle').textContent = b.dataset.name;
-    $('optErr').hidden = true;
-    var box = $('optGroups'); box.innerHTML = '';
-    groups.forEach(function (g, gi) {
+    var via = B.label || 'واتساپ';
+    $('demoH').textContent = 'این دکمه، گفتگوی ' + via + ' فروشنده را باز می‌کند';
+    $('demoP').textContent = 'در سایت واقعی، مشتری با یک لمس به ' + via + ' شما می‌رود و این پیام آماده است؛ فقط «ارسال» را می‌زند:';
+    $('demoB').textContent = text; $('demoB').className = 'demo-bubble' + (B.ch === 'telegram' ? ' tg' : '');
+    $('demoGo').href = '/start?layout=' + encodeURIComponent(S.layout || '');
+    if (demo.showModal) demo.showModal(); else demo.setAttribute('open', '');
+  }
+
+  function go(it, choice) {
+    var text = message(it, choice);
+    if (S.demo) { showDemo(text); return; }
+    logTap(it);
+    if (B.ch === 'chat' && window.AlphaUI) {
+      window.AlphaUI.openChat();
+      setTimeout(function () { var t = $('chText'), f = $('chatForm'); if (t) t.value = text; var el = f && !f.hidden ? t : $('chName'); if (el) el.focus(); }, 160);
+      return;
+    }
+    var url = link(text); if (!url) return;
+    if (mobile || B.ch === 'call') location.href = url; else window.open(url, '_blank', 'noopener');
+  }
+
+  /* ---------- product sheet ---------- */
+  var ps = $('psheet'), cur = null;
+  function item(card) {
+    var d = card.dataset, o = [];
+    try { o = d.opts ? JSON.parse(d.opts) : []; } catch (e) { o = []; }
+    return { id: +d.id, n: d.name, p: +d.price || 0, img: d.img || '', desc: d.desc || '', opts: o, stock: d.stock === undefined ? null : +d.stock, off: !!d.off };
+  }
+  function openSheet(card) {
+    if (!ps) return;
+    var it = cur = item(card);
+    $('psImg').innerHTML = '';
+    if (it.img) { var im = document.createElement('img'); im.src = it.img; im.alt = it.n; $('psImg').appendChild(im); }
+    $('psName').textContent = it.n;
+    var pr = card.querySelector('.price'); $('psPrice').innerHTML = pr ? pr.innerHTML : '';
+    $('psDesc').textContent = it.desc;
+    $('psErr').hidden = true;
+    var low = $('psLow'); low.hidden = !(it.stock !== null && it.stock > 0 && it.stock <= 3); if (!low.hidden) low.textContent = 'فقط ' + fa(it.stock) + ' عدد مانده';
+    var box = $('psOpts'); box.innerHTML = '';
+    it.opts.forEach(function (g, gi) {
       var fs = document.createElement('fieldset'); fs.dataset.g = g.n;
       var lg = document.createElement('legend'); lg.textContent = g.n; fs.appendChild(lg);
       var row = document.createElement('div'); row.className = 'opt-row';
@@ -132,78 +109,66 @@
       });
       fs.appendChild(row); box.appendChild(fs);
     });
-    if (pick.showModal) pick.showModal(); else pick.setAttribute('open', '');
+    $('psBuy').disabled = it.off;
+    $('psBuy').hidden = it.off || !B.ch;
+    if (ps.showModal) ps.showModal(); else ps.setAttribute('open', '');
+    try { history.replaceState(null, '', '#p' + it.id); } catch (e) {}
   }
-
-  /* Catalogs and services (cars, real estate, salons, clinics, gyms, courses, repairs, tours…): no cart. «درخواست بازدید» / «ثبت‌نام» opens the site chat with the message ready, or
-     WhatsApp (or a call) when the chat is off. */
-  document.querySelectorAll('.add[data-ask]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var n = b.getAttribute('data-ask');
-      var msg = (S.askMsg || 'سلام، درباره «%s» سؤال دارم.').replace('%s', n);
-      if (S.chat && window.AlphaUI) {
-        window.AlphaUI.openChat();
-        setTimeout(function () { var t = $('chText'), f = $('chatForm'); if (t) t.value = msg; var el = f && !f.hidden ? t : $('chName'); if (el) el.focus(); }, 120);
-      } else if (S.ask) {
-        location.href = S.ask.indexOf('wa.me') > -1 ? S.ask + '?text=' + encodeURIComponent(msg) : S.ask;
-      }
+  function chosen() {
+    var choice = {}, missing = '';
+    ($('psOpts').querySelectorAll('fieldset') || []).forEach(function (fs) {
+      var c = fs.querySelector('input:checked'); if (c) choice[fs.dataset.g] = c.value; else if (!missing) missing = fs.dataset.g;
+    });
+    return { choice: choice, missing: missing };
+  }
+  if (ps) {
+    $('psBuy').addEventListener('click', function () {
+      if (!cur || cur.off) return;
+      var c = chosen();
+      if (c.missing) { $('psErr').hidden = false; $('psErr').textContent = c.missing + ' را انتخاب کنید.'; return; }
+      go(cur, c.choice);
+    });
+    $('psShare').addEventListener('click', function () {
+      if (!cur) return;
+      var data = { title: cur.n + ' | ' + S.name, text: cur.n, url: siteUrl(cur.id) };
+      if (navigator.share) navigator.share(data).catch(function () {});
+      else { try { navigator.clipboard.writeText(data.url); $('psShare').lastChild.textContent = 'پیوند کپی شد'; setTimeout(function () { $('psShare').lastChild.textContent = 'اشتراک‌گذاری'; }, 1600); } catch (e) {} }
+    });
+    ps.addEventListener('click', function (e) { if (e.target === ps) ps.close(); });
+    ps.addEventListener('close', function () { try { if (/^#p\d+$/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search); } catch (e) {} });
+  }
+  document.querySelectorAll('.card').forEach(function (card) {
+    var open = card.querySelector('.card-open'), buy = card.querySelector('[data-buy]');
+    if (open) open.addEventListener('click', function () { openSheet(card); });
+    if (buy) buy.addEventListener('click', function () {
+      var it = item(card);
+      if (it.opts.length) { openSheet(card); return; }
+      buy.classList.add('pop'); setTimeout(function () { buy.classList.remove('pop'); }, 200);
+      go(it, null);
     });
   });
-  document.querySelectorAll('.add:not([data-ask])').forEach(function (b) {
-    b.addEventListener('click', function () {
-      if (b.dataset.stock !== undefined && inCart(Number(b.dataset.id)) >= Number(b.dataset.stock)) { flashBtn(b, 'موجودی همین است'); return; }
-      if (b.dataset.opts) picker(b); else put(b);
-    });
-  });
-  if ($('openCart')) $('openCart').addEventListener('click', function () { if (sheet.showModal) sheet.showModal(); else sheet.setAttribute('open', ''); });
+  document.querySelectorAll('[data-buy-general]').forEach(function (b) { b.addEventListener('click', function () { go(null, null); }); });
 
-  /* ---------- sending ---------- */
-  var MODE_TEXT = { table: 'سر میز', pickup: 'تحویل حضوری', delivery: S.fam !== 'food' ? 'ارسال' : 'ارسال با پیک' };
-  function message() {
-    var t = totals(), m = mode(), lines = ['سفارش جدید از سایت ' + S.name];
-    Object.keys(cart).forEach(function (k) { var it = cart[k]; lines.push(fa(it.q) + ' × ' + it.n + ' — ' + fa(it.q * it.p)); });
-    if (t.fee) { lines.push('جمع اقلام: ' + fa(t.sum) + ' تومان'); lines.push('هزینه ارسال: ' + fa(t.fee) + ' تومان'); }
-    lines.push('جمع: ' + fa(t.total) + ' تومان');
-    if (m) lines.push('نوع: ' + MODE_TEXT[m] + (m === 'table' ? ' ' + tableFa : ''));
-    lines.push('نام: ' + $('cName').value.trim() + ' | تلفن: ' + $('cPhone').value.trim());
-    if ($('cNote').value.trim()) lines.push((m === 'delivery' ? 'آدرس: ' : m ? 'توضیح: ' : 'آدرس/میز: ') + $('cNote').value.trim());
-    return lines.join('\n');
-  }
+  /* a shared product link (#p12) opens its sheet */
+  var m = /^#p(\d+)$/.exec(location.hash);
+  if (m) { var c0 = document.getElementById('p' + m[1]); if (c0 && c0.classList.contains('card')) setTimeout(function () { openSheet(c0); }, 400); }
 
-  document.querySelectorAll('.ch').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var name = $('cName'), phone = $('cPhone'), note = $('cNote');
-      if (!name.value.trim()) { name.reportValidity ? name.reportValidity() : 0; name.focus(); return; }
-      if (!phone.value.trim()) { phone.reportValidity ? phone.reportValidity() : 0; phone.focus(); return; }
-      if (note.required && !note.value.trim()) { note.reportValidity ? note.reportValidity() : 0; note.focus(); return; }
-      if (totals().short) return;
-      var text = message(), ch = b.dataset.ch, href = b.dataset.href;
-      var items = Object.keys(cart).map(function (k) { return { id: cart[k].id, q: cart[k].q, o: cart[k].o }; });
-      var body = new URLSearchParams({ slug: S.slug, items: JSON.stringify(items), name: name.value, phone: phone.value, note: note.value,
-        channel: ch, mode: mode(), table: mode() === 'table' ? table : '' });
-      try { if (!navigator.sendBeacon('/api/order', body)) throw 0; } catch (e) { fetch('/api/order', { method: 'POST', body: body, keepalive: true }); }
-      if (ch === 'chat') {
-        if (sheet && sheet.open) sheet.close();
-        if (window.AlphaChat) window.AlphaChat.order(name.value.trim(), phone.value.trim(), text);
-        cart = {}; render();
-        return;
-      }
-      if (ch === 'whatsapp') href += '?text=' + encodeURIComponent(text);
-      else if (ch === 'sms') href += (/iPhone|iPad/.test(navigator.userAgent) ? '&' : '?') + 'body=' + encodeURIComponent(text);
-      else if (ch === 'bale' || ch === 'telegram') {
-        try { navigator.clipboard.writeText(text); $('copied').hidden = false; } catch (e) {}
-      }
-      window.location.href = href;
+  /* ---------- search ---------- */
+  var q = $('q');
+  if (q) q.addEventListener('input', function () {
+    var v = q.value.trim(), any = false;
+    document.querySelectorAll('#products .card').forEach(function (el) {
+      var hit = v === '' || (el.dataset.name || '').indexOf(v) > -1 || (el.dataset.desc || '').indexOf(v) > -1;
+      el.hidden = !hit; if (hit) any = true;
     });
+    document.querySelectorAll('#products .g-cat').forEach(function (sec) { sec.hidden = !sec.querySelector('.card:not([hidden])'); });
+    if ($('qNone')) $('qNone').hidden = any;
   });
 
   /* ---------- the table bar: call the waiter, ask for the bill ---------- */
   var bar = $('tableBar');
   if (bar && table && S.calls) {
-    bar.hidden = false; set('tbNo', tableFa); document.body.classList.add('has-table');
-    /* out of the way while the customer fills in the bag or chats */
-    document.addEventListener('view:change', function (e) { bar.hidden = e.detail === 'bag' || e.detail === 'chat'; });
-    if (/^#(bag|chat)$/.test(location.hash)) bar.hidden = true;
+    bar.hidden = false; $('tbNo').textContent = tableFa; document.body.classList.add('has-table');
     var msg = $('tbMsg'), timer = 0;
     var say = function (t) { msg.textContent = t; clearTimeout(timer); timer = setTimeout(function () { msg.textContent = ''; }, 5000); };
     bar.querySelectorAll('[data-call]').forEach(function (b) {
@@ -221,12 +186,5 @@
       });
     });
   }
-
-  var q = $('q');
-  if (q) q.addEventListener('input', function () {
-    var v = q.value.trim();
-    document.querySelectorAll('.menu .item, #v-menu .card').forEach(function (el) { el.hidden = v !== '' && el.dataset.name.indexOf(v) === -1; });
-    document.querySelectorAll('#v-menu .g-cat, .menu .cat').forEach(function (sec) { sec.hidden = !sec.querySelector('.item:not([hidden]), .card:not([hidden])'); });
-  });
-  render();
+  window.AlphaBuy = { message: message, link: link, go: go };
 })();

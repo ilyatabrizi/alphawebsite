@@ -443,6 +443,20 @@
     }
   })();
 
+  /* where a buy button goes (signup + /panel/info): WhatsApp or Telegram; the Telegram username only for Telegram */
+  $$('[data-och]').forEach(function (box) {
+    var sync = function () {
+      var r = box.querySelector('input[name=order_channel]:checked'), tg = r && r.value === 'telegram';
+      var tgBox = box.querySelector('[data-tg]'); if (tgBox) tgBox.hidden = !tg;
+      $$('[data-och-name]', box).forEach(function (x) { x.textContent = tg ? 'تلگرام' : 'واتساپ'; });
+      var demo = box.querySelector('.och-demo'); if (demo) demo.classList.toggle('tg', !!tg);
+    };
+    $$('input[name=order_channel]', box).forEach(function (r) { r.addEventListener('change', sync); });
+    var tgIn = box.querySelector('input[name=order_tg]');
+    if (tgIn) tgIn.addEventListener('input', function () { tgIn.value = tgIn.value.replace(/^@+/, '').replace(/[^A-Za-z0-9_]/g, ''); });
+    sync();
+  });
+
   /* ready-made replies fill the ticket box */
   $$('[data-fill]').forEach(function (b) {
     b.addEventListener('click', function () { var t = d.getElementById('replyBody'); if (t) { t.value = b.getAttribute('data-fill'); t.focus(); } });

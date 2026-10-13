@@ -1,0 +1,32 @@
+/* The consent and add-to-home-screen cards (popups.js), on the store and on every client site.
+   A small glassless card at the bottom, above the client site's tab bar; it never blocks the page. */
+.awp{--p-bg:var(--surface,var(--card,#fff));--p-ink:var(--ink,#131312);--p-mu:var(--muted,#6C6A63);--p-ac:var(--accent,var(--ink,#131312));--p-on:var(--onaccent,#fff);--p-line:var(--line,rgba(19,19,18,.1));
+  position:fixed;z-index:250;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;padding:0 12px;pointer-events:none;
+  opacity:0;transform:translateY(18px);transition:opacity .32s cubic-bezier(.16,.9,.24,1),transform .42s cubic-bezier(.16,.9,.24,1)}
+.awp.in{opacity:1;transform:none}
+.awp.out{opacity:0;transform:translateY(14px);transition-duration:.22s}
+.awp-site{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+@media(min-width:900px){.awp-site{bottom:calc(18px + env(safe-area-inset-bottom,0px))}.awp{justify-content:flex-start;padding:0 20px}}
+.awp-card{pointer-events:auto;width:min(100%,440px);display:grid;gap:12px;padding:16px;border-radius:24px;background:var(--p-bg);color:var(--p-ink);border:1px solid var(--p-line);
+  box-shadow:0 2px 6px rgba(0,0,0,.06),0 28px 60px -20px rgba(0,0,0,.38);font-family:inherit}
+.awp-top{display:flex;align-items:flex-start;gap:12px}
+.awp-ic{width:48px;height:48px;flex:none;border-radius:14px;object-fit:cover;box-shadow:0 0 0 1px var(--p-line)}
+.awp-ic-c{display:grid;place-items:center;background:var(--p-ac);color:var(--p-on)}
+.awp-ic-c svg,.awp-x svg,.awp-i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.awp-tx{flex:1;min-width:0;display:grid;gap:3px}
+.awp-tx b{font-size:15.5px;font-weight:800;line-height:1.5}
+.awp-tx p{margin:0;font-size:13.5px;line-height:1.85;color:var(--p-mu)}
+.awp-tx a{color:var(--p-ink);font-weight:600;text-underline-offset:.3em}
+.awp-x{flex:none;width:34px;height:34px;margin:-4px -4px 0 0;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:var(--p-mu);cursor:pointer}
+.awp-x svg{width:18px;height:18px}
+.awp-x:hover{background:rgba(127,127,127,.12);color:var(--p-ink)}
+.awp-steps{margin:0;padding:12px 14px 12px 12px;padding-inline-start:30px;display:grid;gap:7px;border-radius:16px;background:rgba(127,127,127,.09);font-size:13.5px;line-height:1.8}
+.awp-steps li::marker{font-weight:800}
+.awp-i{width:19px;height:19px;vertical-align:-4px;margin:0 2px}
+.awp-acts{display:flex;gap:8px}
+.awp-acts button{flex:1;height:48px;border-radius:999px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:transform .2s}
+.awp-acts button:active{transform:scale(.97)}
+.awp-yes{border:0;background:var(--p-ac);color:var(--p-on)}
+.awp-no{border:1px solid var(--p-line);background:transparent;color:var(--p-ink)}
+.awp :focus-visible{outline:2px solid var(--p-ac);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.awp{transition:opacity .01ms}}

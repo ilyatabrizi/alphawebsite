@@ -17,293 +17,346 @@
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/glass.css">
 <link rel="stylesheet" href="assets/alpha.css">
+<link rel="stylesheet" href="assets/popups.css">
 <script src="assets/preview-shim.js"></script>
 </head>
-<body class="glass" style="--bg:#FBF1F1;--surface:#FFFFFF;--ink:#2B1A1F;--muted:#86636C;--line:#F0DEDF;--accent:#B0476C;--onaccent:#FFFFFF;--glass:rgba(251,241,241,0.72);--glass-strong:rgba(255,255,255,0.86);--glass-line:rgba(43,26,31,0.1);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px rgba(43,26,31,0.16),0 3px 10px rgba(43,26,31,0.08);--pill-on:rgba(43,26,31,0.09);--pat:rgba(43,26,31,0.1);--glow:rgba(176,71,108,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
+<body class="glass pro fam-shop" style="--bg:#FBF1F1;--surface:#FFFFFF;--ink:#2B1A1F;--muted:#86636C;--line:#F0DEDF;--accent:#B0476C;--onaccent:#FFFFFF;--glass:rgba(251,241,241,0.72);--glass-strong:rgba(255,255,255,0.86);--glass-line:rgba(43,26,31,0.1);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px rgba(43,26,31,0.16),0 3px 10px rgba(43,26,31,0.08);--pill-on:rgba(43,26,31,0.09);--pat:rgba(43,26,31,0.1);--glow:rgba(176,71,108,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
 <script>try{if(window.top===window&&!sessionStorage.getItem('seen-demo-cosmetics-1'))document.body.classList.add('splashing')}catch(e){}</script>
 <div id="splash" aria-hidden="true"><img class="splash-logo" src="assets/demo/cosmetics/logo.webp" alt="آرایشی و بهداشتی رز"><div class="splash-bar"><i></i></div></div>
-<div class="demo-bar">پیش‌نمایش قالب «آرایشی و بهداشتی»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div><div class="island is-open" id="island" data-open="10:00" data-close="22:00" data-off="-1">
-  <button class="isl-pill" type="button" aria-expanded="false" aria-controls="islPanel">
-    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">باز است تا ۲۲:۰۰</span>    <span class="isl-news">نمونه عطر هدیه با هر خرید بالای ۲ میلیون</span>  </button>
-  <div class="isl-panel" id="islPanel" hidden>
-    <div class="isl-head"><img class="isl-logo" src="assets/demo/cosmetics/logo.webp" alt="آرایشی و بهداشتی رز"><div><b>آرایشی و بهداشتی رز</b><span class="isl-status">باز است تا ۲۲:۰۰</span></div>
-      <button class="isl-x" type="button" aria-label="بستن">×</button></div>
-    <p class="isl-ann">نمونه عطر هدیه با هر خرید بالای ۲ میلیون</p>    <p class="isl-meta">هر روز ۱۰:۰۰ تا ۲۲:۰۰، تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰</p>    <div class="isl-acts">
-      <a href="tel:09120000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>تماس</span></a>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>مسیریابی</span></a>      <button type="button" data-act="chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span></button>      <button type="button" data-act="install" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg><span>نصب اپ</span></button>
-    </div>
-    <p class="isl-ios" hidden>در سافاری دکمه اشتراک‌گذاری را بزنید و «Add to Home Screen» را انتخاب کنید.</p>
-  </div>
-</div>
-<div class="scrim" aria-hidden="true"></div>
+<a class="skip" href="#products">رفتن به محصولات</a>
+<div class="demo-bar">پیش‌نمایش قالب «آرایشی و بهداشتی»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/cosmetics/logo.webp" alt="آرایشی و بهداشتی رز"><b>آرایشی و بهداشتی رز</b></a>
+    <nav class="hdr-nav" aria-label="بخش‌های سایت"><a href="#products" data-jump="products">محصولات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a></nav>
+    <button class="hdr-cta" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span class="cta-l">خرید در واتساپ</span><span class="cta-s">واتساپ</span></button>  </div>
+</header>
 
-<main class="views">
+<main id="top" class="site">
 
-  <section class="view on" data-view="home" id="v-home" aria-label="خانه">
-    <header class="g-hero" style="background-image:url('assets/demo/cosmetics/cover.webp')">
-      <div class="g-hero-in">
-        <img class="g-logo" src="assets/demo/cosmetics/logo.webp" alt="آرایشی و بهداشتی رز">        <h1>آرایشی و بهداشتی رز</h1>
-        <p>اصالت کالا تضمینی؛ مراقبت پوست، آرایش و عطر</p>        <div class="g-cta">
-          <button class="pill" type="button" data-go="menu">دیدن محصولات</button>
-          <button class="pill clear" type="button" data-go="chat">گفتگو</button>
-                  </div>
+  <section class="hero" aria-labelledby="hero-h">
+    <img class="hero-img" src="assets/demo/cosmetics/cover.webp" alt="" fetchpriority="high" decoding="async">    <div class="hero-in">
+      <img class="g-logo" src="assets/demo/cosmetics/logo.webp" alt="آرایشی و بهداشتی رز">      <h1 id="hero-h">آرایشی و بهداشتی رز</h1>
+      <p class="hero-tag">اصالت کالا تضمینی؛ مراقبت پوست، آرایش و عطر</p>      <div class="hero-cta">
+        <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>خرید در واتساپ</button>        <a class="pill clear" href="#products" data-jump="products">دیدن محصولات</a>
       </div>
-    </header>
+      <p class="hero-meta"><span class="hero-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰</span></p>    </div>
+  </section>
 
-        <div class="g-sec g-picks">
-      <div class="g-sec-h"><h2>پرفروش‌ها</h2><button type="button" data-go="menu">همه</button></div>
-      <div class="rail"><article class="card" data-name="سرم ویتامین C">
-  <img src="assets/demo/cosmetics/serum.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+  <div class="news" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg><span>نمونه عطر هدیه با هر خرید بالای ۲ میلیون</span></div>
+  <ul class="hl g-facts" aria-label="چرا آرایشی و بهداشتی رز">
+    <li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>اصالت کالا</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c.6 3.9 2.6 5.9 6.5 6.5-3.9.6-5.9 2.6-6.5 6.5-.6-3.9-2.6-5.9-6.5-6.5 3.9-.6 5.9-2.6 6.5-6.5Z"/><path d="M18 15.5c.3 1.6 1 2.3 2.5 2.5-1.5.2-2.2.9-2.5 2.5-.3-1.6-1-2.3-2.5-2.5 1.5-.2 2.2-.9 2.5-2.5Z"/></svg></span><span>مشاوره پوست و مو</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><span>ارسال سریع</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8Z"/></svg></span><span>نمونه هدیه با خرید</span></li>  </ul>
+
+    <section class="sec" aria-labelledby="cats-h">
+    <div class="sec-h"><h2 id="cats-h">دسته‌بندی‌ها</h2></div>
+    <div class="cat-tiles">
+              <a class="cat-tile" href="#c24" data-jump="c24">
+          <img src="assets/demo/cosmetics/serum.webp" alt="" loading="lazy" decoding="async">          <span><b>مراقبت پوست</b><small>۴ محصول</small></span>
+        </a>
+              <a class="cat-tile" href="#c25" data-jump="c25">
+          <img src="assets/demo/cosmetics/lipstick.webp" alt="" loading="lazy" decoding="async">          <span><b>آرایش</b><small>۴ محصول</small></span>
+        </a>
+              <a class="cat-tile" href="#c26" data-jump="c26">
+          <img src="assets/demo/cosmetics/shampoo.webp" alt="" loading="lazy" decoding="async">          <span><b>مو، بدن و عطر</b><small>۴ محصول</small></span>
+        </a>
+          </div>
+  </section>
+  
+    <section class="sec g-picks" aria-labelledby="picks-h">
+    <div class="sec-h"><h2 id="picks-h">پرفروش‌ها</h2><a href="#products" data-jump="products">همه محصولات</a></div>
+    <div class="rail"><article class="card" id="p81" data-id="81" data-name="سرم ویتامین C" data-price="1250000" data-img="/assets/demo/cosmetics/serum.webp" data-desc="۳۰ میلی‌لیتر، روشن‌کننده" data-stock="18">
+  <button class="card-open" type="button" aria-label="جزئیات سرم ویتامین C">
+    <span class="card-img"><img src="assets/demo/cosmetics/serum.webp" alt="سرم ویتامین C" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>سرم ویتامین C</h3>
     <p class="desc">۳۰ میلی‌لیتر، روشن‌کننده</p>        <div class="row">
       <span class="price">۱٬۲۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="81" data-name="سرم ویتامین C" data-price="1250000" data-stock="18" aria-label="افزودن سرم ویتامین C">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کرم ضدآفتاب">
-  <img src="assets/demo/cosmetics/sunscreen.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p82" data-id="82" data-name="کرم ضدآفتاب" data-price="890000" data-img="/assets/demo/cosmetics/sunscreen.webp" data-desc="SPF50، فاقد چربی" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;بی‌رنگ&quot;,&quot;رنگی&quot;]}]" data-stock="25">
+  <button class="card-open" type="button" aria-label="جزئیات کرم ضدآفتاب">
+    <span class="card-img"><img src="assets/demo/cosmetics/sunscreen.webp" alt="کرم ضدآفتاب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کرم ضدآفتاب</h3>
     <p class="desc">SPF50، فاقد چربی</p>    <p class="opts">رنگ: بی‌رنگ، رنگی</p>    <div class="row">
       <span class="price">۸۹۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="82" data-name="کرم ضدآفتاب" data-price="890000" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;بی‌رنگ&quot;,&quot;رنگی&quot;]}]" data-stock="25" aria-label="انتخاب و افزودن کرم ضدآفتاب">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کرم آبرسان">
-  <img src="assets/demo/cosmetics/moisturizer.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p83" data-id="83" data-name="کرم آبرسان" data-price="980000" data-img="/assets/demo/cosmetics/moisturizer.webp" data-desc="هیالورونیک اسید، ۵۰ میل" data-stock="14">
+  <button class="card-open" type="button" aria-label="جزئیات کرم آبرسان">
+    <span class="card-img"><img src="assets/demo/cosmetics/moisturizer.webp" alt="کرم آبرسان" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کرم آبرسان</h3>
     <p class="desc">هیالورونیک اسید، ۵۰ میل</p>        <div class="row">
       <span class="price">۹۸۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="83" data-name="کرم آبرسان" data-price="980000" data-stock="14" aria-label="افزودن کرم آبرسان">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="ژل شستشو">
-  <img src="assets/demo/cosmetics/cleanser.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p84" data-id="84" data-name="ژل شستشو" data-price="520000" data-img="/assets/demo/cosmetics/cleanser.webp" data-desc="مناسب پوست چرب و مختلط" data-stock="22">
+  <button class="card-open" type="button" aria-label="جزئیات ژل شستشو">
+    <span class="card-img"><img src="assets/demo/cosmetics/cleanser.webp" alt="ژل شستشو" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>ژل شستشو</h3>
     <p class="desc">مناسب پوست چرب و مختلط</p>        <div class="row">
       <span class="price">۵۲۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="84" data-name="ژل شستشو" data-price="520000" data-stock="22" aria-label="افزودن ژل شستشو">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="رژ لب مات">
-  <img src="assets/demo/cosmetics/lipstick.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p85" data-id="85" data-name="رژ لب مات" data-price="640000" data-img="/assets/demo/cosmetics/lipstick.webp" data-desc="ماندگاری بالا" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;نود&quot;,&quot;قرمز&quot;,&quot;کالباسی&quot;]}]" data-stock="30">
+  <button class="card-open" type="button" aria-label="جزئیات رژ لب مات">
+    <span class="card-img"><img src="assets/demo/cosmetics/lipstick.webp" alt="رژ لب مات" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>رژ لب مات</h3>
     <p class="desc">ماندگاری بالا</p>    <p class="opts">رنگ: نود، قرمز، کالباسی</p>    <div class="row">
       <span class="price">۶۴۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="85" data-name="رژ لب مات" data-price="640000" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;نود&quot;,&quot;قرمز&quot;,&quot;کالباسی&quot;]}]" data-stock="30" aria-label="انتخاب و افزودن رژ لب مات">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="ریمل حجم‌دهنده">
-  <img src="assets/demo/cosmetics/mascara.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p86" data-id="86" data-name="ریمل حجم‌دهنده" data-price="590000" data-img="/assets/demo/cosmetics/mascara.webp" data-desc="ضدآب" data-stock="20">
+  <button class="card-open" type="button" aria-label="جزئیات ریمل حجم‌دهنده">
+    <span class="card-img"><img src="assets/demo/cosmetics/mascara.webp" alt="ریمل حجم‌دهنده" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>ریمل حجم‌دهنده</h3>
     <p class="desc">ضدآب</p>        <div class="row">
       <span class="price">۵۹۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="86" data-name="ریمل حجم‌دهنده" data-price="590000" data-stock="20" aria-label="افزودن ریمل حجم‌دهنده">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کرم‌پودر">
-  <img src="assets/demo/cosmetics/foundation.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p87" data-id="87" data-name="کرم‌پودر" data-price="1150000" data-img="/assets/demo/cosmetics/foundation.webp" data-desc="پوشش متوسط، ۳۰ میل" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;۱۰۱&quot;,&quot;۱۰۲&quot;,&quot;۱۰۳&quot;,&quot;۱۰۴&quot;]}]" data-stock="12">
+  <button class="card-open" type="button" aria-label="جزئیات کرم‌پودر">
+    <span class="card-img"><img src="assets/demo/cosmetics/foundation.webp" alt="کرم‌پودر" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کرم‌پودر</h3>
     <p class="desc">پوشش متوسط، ۳۰ میل</p>    <p class="opts">رنگ: ۱۰۱، ۱۰۲، ۱۰۳، ۱۰۴</p>    <div class="row">
       <span class="price">۱٬۱۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="87" data-name="کرم‌پودر" data-price="1150000" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;۱۰۱&quot;,&quot;۱۰۲&quot;,&quot;۱۰۳&quot;,&quot;۱۰۴&quot;]}]" data-stock="12" aria-label="انتخاب و افزودن کرم‌پودر">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="پالت سایه">
-  <img src="assets/demo/cosmetics/eyeshadow.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p88" data-id="88" data-name="پالت سایه" data-price="1400000" data-img="/assets/demo/cosmetics/eyeshadow.webp" data-desc="۱۲ رنگ مات و براق" data-stock="9">
+  <button class="card-open" type="button" aria-label="جزئیات پالت سایه">
+    <span class="card-img"><img src="assets/demo/cosmetics/eyeshadow.webp" alt="پالت سایه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>پالت سایه</h3>
     <p class="desc">۱۲ رنگ مات و براق</p>        <div class="row">
       <span class="price">۱٬۴۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="88" data-name="پالت سایه" data-price="1400000" data-stock="9" aria-label="افزودن پالت سایه">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
 </div>
-    </div>
-    
-    <div class="g-sec g-facts">
-      <div class="group">
-        <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۱۰:۰۰ تا ۲۲:۰۰</small></span></div>        <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">آدرس<small>تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      </div>
-    </div>
-
-    <div class="g-sec g-about-sec"><div class="g-sec-h"><h2>درباره ما</h2></div><p class="g-about">همه محصولات از نمایندگی رسمی و با برچسب اصالت. اگر نمی‌دانید چه چیزی مناسب پوست شماست، در گفتگو بپرسید؛ کارشناس ما جواب می‌دهد.</p></div>  </section>
-
-  <section class="view" data-view="menu" id="v-menu" aria-label="محصولات">
-    <h1 class="g-title">محصولات</h1>
-    <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="q" placeholder="جستجو در محصولات" aria-label="جستجو"></label>    <nav class="g-chips" aria-label="دسته‌بندی‌ها">
-      <a href="#c24" data-cat="c24">مراقبت پوست</a><a href="#c25" data-cat="c25">آرایش</a><a href="#c26" data-cat="c26">مو، بدن و عطر</a>    </nav>
-          <section class="g-cat" id="c24">
-        <h2>مراقبت پوست</h2>
-        <div class="cards"><article class="card" data-name="سرم ویتامین C">
-  <img src="assets/demo/cosmetics/serum.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+  </section>
+  
+  <section class="sec" id="products" aria-labelledby="products-h">
+    <div class="sec-h"><h2 id="products-h">محصولات</h2><span class="count">۱۲ مورد</span></div>
+    <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="q" placeholder="جست‌وجو در محصولات" aria-label="جست‌وجو" autocomplete="off"></label>    <nav class="g-chips" aria-label="دسته‌بندی‌ها"><a href="#c24" data-cat="c24">مراقبت پوست</a><a href="#c25" data-cat="c25">آرایش</a><a href="#c26" data-cat="c26">مو، بدن و عطر</a></nav>          <section class="g-cat" id="c24" aria-label="مراقبت پوست">
+        <h3 class="cat-h">مراقبت پوست</h3>
+        <div class="cards"><article class="card" id="p81" data-id="81" data-name="سرم ویتامین C" data-price="1250000" data-img="/assets/demo/cosmetics/serum.webp" data-desc="۳۰ میلی‌لیتر، روشن‌کننده" data-stock="18">
+  <button class="card-open" type="button" aria-label="جزئیات سرم ویتامین C">
+    <span class="card-img"><img src="assets/demo/cosmetics/serum.webp" alt="سرم ویتامین C" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>سرم ویتامین C</h3>
     <p class="desc">۳۰ میلی‌لیتر، روشن‌کننده</p>        <div class="row">
       <span class="price">۱٬۲۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="81" data-name="سرم ویتامین C" data-price="1250000" data-stock="18" aria-label="افزودن سرم ویتامین C">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کرم ضدآفتاب">
-  <img src="assets/demo/cosmetics/sunscreen.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p82" data-id="82" data-name="کرم ضدآفتاب" data-price="890000" data-img="/assets/demo/cosmetics/sunscreen.webp" data-desc="SPF50، فاقد چربی" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;بی‌رنگ&quot;,&quot;رنگی&quot;]}]" data-stock="25">
+  <button class="card-open" type="button" aria-label="جزئیات کرم ضدآفتاب">
+    <span class="card-img"><img src="assets/demo/cosmetics/sunscreen.webp" alt="کرم ضدآفتاب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کرم ضدآفتاب</h3>
     <p class="desc">SPF50، فاقد چربی</p>    <p class="opts">رنگ: بی‌رنگ، رنگی</p>    <div class="row">
       <span class="price">۸۹۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="82" data-name="کرم ضدآفتاب" data-price="890000" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;بی‌رنگ&quot;,&quot;رنگی&quot;]}]" data-stock="25" aria-label="انتخاب و افزودن کرم ضدآفتاب">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کرم آبرسان">
-  <img src="assets/demo/cosmetics/moisturizer.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p83" data-id="83" data-name="کرم آبرسان" data-price="980000" data-img="/assets/demo/cosmetics/moisturizer.webp" data-desc="هیالورونیک اسید، ۵۰ میل" data-stock="14">
+  <button class="card-open" type="button" aria-label="جزئیات کرم آبرسان">
+    <span class="card-img"><img src="assets/demo/cosmetics/moisturizer.webp" alt="کرم آبرسان" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کرم آبرسان</h3>
     <p class="desc">هیالورونیک اسید، ۵۰ میل</p>        <div class="row">
       <span class="price">۹۸۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="83" data-name="کرم آبرسان" data-price="980000" data-stock="14" aria-label="افزودن کرم آبرسان">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="ژل شستشو">
-  <img src="assets/demo/cosmetics/cleanser.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p84" data-id="84" data-name="ژل شستشو" data-price="520000" data-img="/assets/demo/cosmetics/cleanser.webp" data-desc="مناسب پوست چرب و مختلط" data-stock="22">
+  <button class="card-open" type="button" aria-label="جزئیات ژل شستشو">
+    <span class="card-img"><img src="assets/demo/cosmetics/cleanser.webp" alt="ژل شستشو" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>ژل شستشو</h3>
     <p class="desc">مناسب پوست چرب و مختلط</p>        <div class="row">
       <span class="price">۵۲۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="84" data-name="ژل شستشو" data-price="520000" data-stock="22" aria-label="افزودن ژل شستشو">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-          <section class="g-cat" id="c25">
-        <h2>آرایش</h2>
-        <div class="cards"><article class="card" data-name="رژ لب مات">
-  <img src="assets/demo/cosmetics/lipstick.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+          <section class="g-cat" id="c25" aria-label="آرایش">
+        <h3 class="cat-h">آرایش</h3>
+        <div class="cards"><article class="card" id="p85" data-id="85" data-name="رژ لب مات" data-price="640000" data-img="/assets/demo/cosmetics/lipstick.webp" data-desc="ماندگاری بالا" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;نود&quot;,&quot;قرمز&quot;,&quot;کالباسی&quot;]}]" data-stock="30">
+  <button class="card-open" type="button" aria-label="جزئیات رژ لب مات">
+    <span class="card-img"><img src="assets/demo/cosmetics/lipstick.webp" alt="رژ لب مات" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>رژ لب مات</h3>
     <p class="desc">ماندگاری بالا</p>    <p class="opts">رنگ: نود، قرمز، کالباسی</p>    <div class="row">
       <span class="price">۶۴۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="85" data-name="رژ لب مات" data-price="640000" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;نود&quot;,&quot;قرمز&quot;,&quot;کالباسی&quot;]}]" data-stock="30" aria-label="انتخاب و افزودن رژ لب مات">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="ریمل حجم‌دهنده">
-  <img src="assets/demo/cosmetics/mascara.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p86" data-id="86" data-name="ریمل حجم‌دهنده" data-price="590000" data-img="/assets/demo/cosmetics/mascara.webp" data-desc="ضدآب" data-stock="20">
+  <button class="card-open" type="button" aria-label="جزئیات ریمل حجم‌دهنده">
+    <span class="card-img"><img src="assets/demo/cosmetics/mascara.webp" alt="ریمل حجم‌دهنده" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>ریمل حجم‌دهنده</h3>
     <p class="desc">ضدآب</p>        <div class="row">
       <span class="price">۵۹۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="86" data-name="ریمل حجم‌دهنده" data-price="590000" data-stock="20" aria-label="افزودن ریمل حجم‌دهنده">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کرم‌پودر">
-  <img src="assets/demo/cosmetics/foundation.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p87" data-id="87" data-name="کرم‌پودر" data-price="1150000" data-img="/assets/demo/cosmetics/foundation.webp" data-desc="پوشش متوسط، ۳۰ میل" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;۱۰۱&quot;,&quot;۱۰۲&quot;,&quot;۱۰۳&quot;,&quot;۱۰۴&quot;]}]" data-stock="12">
+  <button class="card-open" type="button" aria-label="جزئیات کرم‌پودر">
+    <span class="card-img"><img src="assets/demo/cosmetics/foundation.webp" alt="کرم‌پودر" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کرم‌پودر</h3>
     <p class="desc">پوشش متوسط، ۳۰ میل</p>    <p class="opts">رنگ: ۱۰۱، ۱۰۲، ۱۰۳، ۱۰۴</p>    <div class="row">
       <span class="price">۱٬۱۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="87" data-name="کرم‌پودر" data-price="1150000" data-opts="[{&quot;n&quot;:&quot;رنگ&quot;,&quot;v&quot;:[&quot;۱۰۱&quot;,&quot;۱۰۲&quot;,&quot;۱۰۳&quot;,&quot;۱۰۴&quot;]}]" data-stock="12" aria-label="انتخاب و افزودن کرم‌پودر">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="پالت سایه">
-  <img src="assets/demo/cosmetics/eyeshadow.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p88" data-id="88" data-name="پالت سایه" data-price="1400000" data-img="/assets/demo/cosmetics/eyeshadow.webp" data-desc="۱۲ رنگ مات و براق" data-stock="9">
+  <button class="card-open" type="button" aria-label="جزئیات پالت سایه">
+    <span class="card-img"><img src="assets/demo/cosmetics/eyeshadow.webp" alt="پالت سایه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>پالت سایه</h3>
     <p class="desc">۱۲ رنگ مات و براق</p>        <div class="row">
       <span class="price">۱٬۴۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="88" data-name="پالت سایه" data-price="1400000" data-stock="9" aria-label="افزودن پالت سایه">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-          <section class="g-cat" id="c26">
-        <h2>مو، بدن و عطر</h2>
-        <div class="cards"><article class="card" data-name="شامپو بدون سولفات">
-  <img src="assets/demo/cosmetics/shampoo.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+          <section class="g-cat" id="c26" aria-label="مو، بدن و عطر">
+        <h3 class="cat-h">مو، بدن و عطر</h3>
+        <div class="cards"><article class="card" id="p89" data-id="89" data-name="شامپو بدون سولفات" data-price="480000" data-img="/assets/demo/cosmetics/shampoo.webp" data-desc="۴۰۰ میل، مناسب موی رنگ‌شده" data-stock="24">
+  <button class="card-open" type="button" aria-label="جزئیات شامپو بدون سولفات">
+    <span class="card-img"><img src="assets/demo/cosmetics/shampoo.webp" alt="شامپو بدون سولفات" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>شامپو بدون سولفات</h3>
     <p class="desc">۴۰۰ میل، مناسب موی رنگ‌شده</p>        <div class="row">
       <span class="price">۴۸۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="89" data-name="شامپو بدون سولفات" data-price="480000" data-stock="24" aria-label="افزودن شامپو بدون سولفات">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="ماسک مو">
-  <img src="assets/demo/cosmetics/hair-mask.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p90" data-id="90" data-name="ماسک مو" data-price="650000" data-img="/assets/demo/cosmetics/hair-mask.webp" data-desc="ترمیم‌کننده، ۲۵۰ میل" data-stock="16">
+  <button class="card-open" type="button" aria-label="جزئیات ماسک مو">
+    <span class="card-img"><img src="assets/demo/cosmetics/hair-mask.webp" alt="ماسک مو" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>ماسک مو</h3>
     <p class="desc">ترمیم‌کننده، ۲۵۰ میل</p>        <div class="row">
       <span class="price">۶۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="90" data-name="ماسک مو" data-price="650000" data-stock="16" aria-label="افزودن ماسک مو">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="لوسیون بدن">
-  <img src="assets/demo/cosmetics/body-lotion.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p91" data-id="91" data-name="لوسیون بدن" data-price="560000" data-img="/assets/demo/cosmetics/body-lotion.webp" data-desc="رایحه شکوفه، ۲۵۰ میل" data-stock="19">
+  <button class="card-open" type="button" aria-label="جزئیات لوسیون بدن">
+    <span class="card-img"><img src="assets/demo/cosmetics/body-lotion.webp" alt="لوسیون بدن" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>لوسیون بدن</h3>
     <p class="desc">رایحه شکوفه، ۲۵۰ میل</p>        <div class="row">
       <span class="price">۵۶۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="91" data-name="لوسیون بدن" data-price="560000" data-stock="19" aria-label="افزودن لوسیون بدن">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="عطر زنانه ۵۰ میل">
-  <img src="assets/demo/cosmetics/perfume.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p92" data-id="92" data-name="عطر زنانه ۵۰ میل" data-price="3900000" data-img="/assets/demo/cosmetics/perfume.webp" data-desc="رایحه گلی و گرم" data-stock="7">
+  <button class="card-open" type="button" aria-label="جزئیات عطر زنانه ۵۰ میل">
+    <span class="card-img"><img src="assets/demo/cosmetics/perfume.webp" alt="عطر زنانه ۵۰ میل" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>عطر زنانه ۵۰ میل</h3>
     <p class="desc">رایحه گلی و گرم</p>        <div class="row">
       <span class="price">۳٬۹۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add" type="button" data-id="92" data-name="عطر زنانه ۵۰ میل" data-price="3900000" data-stock="7" aria-label="افزودن عطر زنانه ۵۰ میل">+</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>خرید</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-      </section>
+            <p class="none" id="qNone" hidden>چیزی با این نام پیدا نشد. در گفتگو بپرسید؛ شاید داشته باشیم.</p>
+    <p class="how"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>روی «خرید» بزنید؛ گفتگوی واتساپ ما با یک پیام آماده باز می‌شود.</span></p>
+  </section>
 
-    <section class="view" data-view="bag" id="v-bag" aria-label="سبد">
-    <h1 class="g-title">سبد سفارش</h1>
-    <div class="empty" id="bagEmpty">
-      <div class="empty-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
-      <p>سبد خالی است. از محصولات با دکمه + اضافه کنید.</p>
-      <button class="pill" type="button" data-go="menu">رفتن به محصولات</button>
-    </div>
-    <div id="bagFull" hidden>
-      <ul class="lines group" id="lines"></ul>
-      <div class="fee-row" id="feeRow" hidden><span>هزینه ارسال</span><b><span id="feeVal">۰</span> تومان</b></div><p class="min-warn" id="minWarn" role="status" hidden></p>      <div class="sum"><span>جمع</span><b><span id="sumTotal">۰</span> تومان</b></div>
-      <div class="g-form">
-        <fieldset class="modes" id="oModes" data-fee="70000" data-min="0">
-  <legend>نوع سفارش</legend>
-  <div class="modes-in">
-        <label data-mode="pickup"><input type="radio" name="omode" value="pickup"><span>تحویل حضوری</span></label>
-    <label data-mode="delivery"><input type="radio" name="omode" value="delivery"><span>ارسال</span></label>  </div>
-  <p class="mode-note" id="oDelivNote" hidden>سراسر ایران با پست؛ تبریز با پیک. هزینه ارسال ۷۰٬۰۰۰ تومان.</p></fieldset>
-<label class="field">نام<input id="cName" autocomplete="name" required maxlength="60"></label>
-<label class="field">شماره تماس<input id="cPhone" inputmode="tel" autocomplete="tel" required maxlength="20"></label>
-<label class="field"><span id="cNoteLabel">آدرس ارسال</span><input id="cNote" maxlength="200"></label>
+  <section class="sec about g-about-sec" id="about" aria-labelledby="about-h">
+    <div class="about-grid">
+      <div class="about-img"><img src="assets/demo/cosmetics/serum.webp" alt="" loading="lazy" decoding="async"></div>      <div class="about-tx">
+        <p class="kicker">درباره ما</p>
+        <h2 id="about-h">آرایشی و بهداشتی رز</h2>
+        <p class="g-about">همه محصولات از نمایندگی رسمی و با برچسب اصالت. اگر نمی‌دانید چه چیزی مناسب پوست شماست، در گفتگو بپرسید؛ کارشناس ما جواب می‌دهد.</p>        <dl class="facts-dl">
+          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>ساعت کاری</dt><dd>هر روز ۱۰:۰۰ تا ۲۲:۰۰</dd></div>          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>آدرس</dt><dd>تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰</dd></div>          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>ارسال</dt><dd>سراسر ایران با پست؛ تبریز با پیک؛ ۷۰٬۰۰۰ تومان</dd></div>                  </dl>
       </div>
-      <p class="hint">سفارش برای آرایشی و بهداشتی رز فرستاده و در پنلش ثبت می‌شود. پرداخت را مثل همیشه با خودشان هماهنگ کنید.</p>
-      <div class="send">
-                  <button type="button" class="ch ch-chat" data-ch="chat" data-href="">ارسال در گفتگوی سایت</button>
-                  <button type="button" class="ch ch-whatsapp" data-ch="whatsapp" data-href="https://wa.me/989120000000">ارسال در واتساپ</button>
-                  <button type="button" class="ch ch-sms" data-ch="sms" data-href="sms:09120000000">پیامک</button>
-                  <button type="button" class="ch ch-call" data-ch="call" data-href="tel:09120000000">تماس تلفنی</button>
-              </div>
-      <p class="hint" id="copied" hidden>متن سفارش کپی شد؛ در گفتگو جای‌گذاری کنید.</p>
     </div>
   </section>
+
+    <section class="sec" aria-labelledby="gal-h">
+    <div class="sec-h"><h2 id="gal-h">گالری</h2></div>
+    <div class="gallery"><figure class="g0"><img src="assets/demo/cosmetics/cover.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g1"><img src="assets/demo/cosmetics/serum.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g2"><img src="assets/demo/cosmetics/sunscreen.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g3"><img src="assets/demo/cosmetics/moisturizer.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g4"><img src="assets/demo/cosmetics/cleanser.webp" alt="" loading="lazy" decoding="async"></figure></div>
+  </section>
   
-    <section class="view" data-view="chat" id="v-chat" aria-label="گفتگو"><div class="chat" id="chat">
-  <div class="chat-head"><img class="chat-av" src="assets/demo/cosmetics/logo.webp" alt="آرایشی و بهداشتی رز"><div><b>آرایشی و بهداشتی رز</b><small id="chatState">پیام‌ها مستقیم به فروشنده می‌رسد</small></div></div>
-  <div class="chat-intro" id="chatIntro">
-    <p class="chat-note">سفارش و سؤالتان را همین‌جا بنویسید. این گفتگو روی سرور داخلی است؛ وقتی واتساپ و تلگرام قطع است هم کار می‌کند.</p>
-    <label class="field">نام<input id="chName" autocomplete="name" maxlength="60"></label>
-    <label class="field">شماره موبایل<input id="chPhone" inputmode="tel" autocomplete="tel" maxlength="20"></label>
-    <button class="pill" type="button" id="chStart">شروع گفتگو</button>
-    <p class="chat-err" id="chErr" hidden></p>
-  </div>
-  <div class="chat-log" id="chatLog" aria-live="polite"></div>
-  <form class="chat-form" id="chatForm" hidden autocomplete="off">
-    <input id="chText" maxlength="600" placeholder="پیام شما…" aria-label="پیام">
-    <button class="chat-send" type="submit" aria-label="ارسال"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4 3.5 11l7 2.5L13 20.5Z"/><path d="m10.5 13.5 4-4"/></svg></button>
-  </form>
-</div>
-</section>
-  
-  <section class="view" data-view="info" id="v-info" aria-label="تماس">
-    <h1 class="g-title">تماس و آدرس</h1>
-    <div class="group">
-      <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۱۰:۰۰ تا ۲۲:۰۰</small></span></div>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="#chat" data-go="chat"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg></span><span class="li-t">گفتگوی سایت<small>روی شبکه داخلی هم کار می‌کند</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>              <a href="https://wa.me/989120000000" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ</span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>
-                  <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب به‌صورت اپ<small>بدون اپ‌استور، منو آفلاین هم باز می‌شود</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+  <section class="sec contact" id="contact" aria-labelledby="contact-h">
+    <div class="sec-h"><h2 id="contact-h">تماس و آدرس</h2></div>
+    <div class="contact-grid">
+            <div class="box hours">
+        <div class="box-h"><b>ساعت کاری</b><span class="now-chip" data-hours><i aria-hidden="true"></i><span class="now-t">باز است تا ۲۲:۰۰</span></span></div>
+        <table class="week"><caption class="sr">ساعت کاری هفته</caption><tbody>
+          <tr data-dow="6"><th scope="row">شنبه</th><td>۱۰:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="0"><th scope="row">یکشنبه</th><td>۱۰:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="1"><th scope="row">دوشنبه</th><td>۱۰:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="2"><th scope="row">سه‌شنبه</th><td>۱۰:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="3"><th scope="row">چهارشنبه</th><td>۱۰:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="4"><th scope="row">پنجشنبه</th><td>۱۰:۰۰ تا ۲۲:۰۰</td></tr><tr data-dow="5"><th scope="row">جمعه</th><td>۱۰:۰۰ تا ۲۲:۰۰</td></tr>        </tbody></table>
+      </div>
+            <div class="box group">
+        <button class="li as-btn" type="button" data-buy-general><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ<small>سفارش و سؤال، با پیام آماده</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="https://www.google.com/maps/search/?api=1&amp;query=%D8%AA%D8%A8%D8%B1%DB%8C%D8%B2%D8%8C%20%D9%88%D9%84%DB%8C%D8%B9%D8%B5%D8%B1%D8%8C%20%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86%20%D8%B4%D8%B1%DB%8C%D8%B9%D8%AA%DB%8C%D8%8C%20%D9%BE%D9%84%D8%A7%DA%A9%20%DB%B4%DB%B0" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>                                        <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب روی گوشی<small>با نام و لوگوی آرایشی و بهداشتی رز، مثل یک اپ</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+      </div>
     </div>
-    <a class="powered" href="https://alphawebsite.ir/?ref=demo-cosmetics-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-black.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a>  </section>
-</main>
+  </section>
+
+    <section class="sec faq" id="faq" aria-labelledby="faq-h">
+    <div class="sec-h"><h2 id="faq-h">سؤالات رایج</h2></div>
+    <div class="faq-list"><details open><summary>چطور خرید کنم؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>روی دکمه «خرید» زیر هر محصول بزنید. گفتگوی واتساپ آرایشی و بهداشتی رز با یک پیام آماده باز می‌شود؛ همان را بفرستید تا ما هماهنگ کنیم.</p></details><details><summary>ارسال دارید؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>سراسر ایران با پست؛ تبریز با پیک. هزینه ارسال ۷۰٬۰۰۰ تومان.</p></details><details><summary>پرداخت چطور است؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>بعد از هماهنگی در گفتگو، با کارت‌به‌کارت یا در محل.</p></details><details><summary>ساعت کاری‌تان چیست؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>هر روز ۱۰:۰۰ تا ۲۲:۰۰.</p></details><details><summary>کجا هستید؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰.</p></details></div>
+  </section>
+  </main>
+
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/cosmetics/logo.webp" alt="آرایشی و بهداشتی رز"><b>آرایشی و بهداشتی رز</b></a>
+      <p>اصالت کالا تضمینی؛ مراقبت پوست، آرایش و عطر</p>      <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>خرید در واتساپ</button>    </div>
+    <nav class="ft-col" aria-label="دسترسی سریع"><b>دسترسی سریع</b><a href="#products" data-jump="products">محصولات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a><button type="button" class="ft-link" data-act="install" hidden>نصب روی گوشی</button></nav>
+    <div class="ft-col"><b>تماس</b>
+      <a href="tel:09120000000" dir="ltr" class="ltr-t">09120000000</a>      <span>تبریز، ولیعصر، خیابان شریعتی، پلاک ۴۰</span>      <span>هر روز ۱۰:۰۰ تا ۲۲:۰۰</span>    </div>
+  </div>
+  <div class="ft-bottom"><span>© 1405 آرایشی و بهداشتی رز. همه حقوق محفوظ است.</span><a class="powered" href="https://alphawebsite.ir/?ref=demo-cosmetics-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-black.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a></div>
+</footer>
 
 <nav class="dock" aria-label="بخش‌ها">
-      <button type="button" data-tab="home" aria-label="خانه" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
-      <button type="button" data-tab="menu" aria-label="محصولات"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>محصولات</span></button>
-      <button type="button" data-tab="bag" aria-label="سبد"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>سبد</span><b class="badge" data-badge="bag" hidden>۰</b></button>
-      <button type="button" data-tab="chat" aria-label="گفتگو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span><b class="badge" data-badge="chat" hidden>۰</b></button>
-      <button type="button" data-tab="info" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
-  </nav>
+  <button type="button" data-tab="top" class="on" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
+  <button type="button" data-tab="products"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>محصولات</span></button>
+  <button type="button" data-tab="about"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8Z"/></svg><span>درباره</span></button>
+    <button type="button" data-tab="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
+</nav>
 
-<script>window.SITE={"slug":"demo-cosmetics-1","name":"آرایشی و بهداشتی رز","base":"/s/demo-cosmetics-1","chat":true,"glass":true,"demo":true,"v":"2026.10.13-2","type":"cosmetics","fam":"shop","askMsg":"سلام، درباره «%s» سؤال دارم.","ask":"https://wa.me/989120000000","delivery":true,"fee":70000,"min":0,"calls":false};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
+<dialog class="psheet" id="psheet" aria-labelledby="psName">
+  <form method="dialog" class="ps-in">
+    <button class="x" value="close" aria-label="بستن"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
+    <div class="ps-img" id="psImg"></div>
+    <div class="ps-b">
+      <h2 id="psName"></h2>
+      <p class="ps-price" id="psPrice"></p>
+      <p class="ps-desc" id="psDesc"></p>
+      <div id="psOpts"></div>
+      <p class="ps-low" id="psLow" hidden></p>
+      <p class="ps-err" id="psErr" role="alert" hidden></p>
+      <button type="button" class="ps-buy" id="psBuy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span id="psBuyT">خرید در واتساپ</span></button>
+      <button type="button" class="ps-share" id="psShare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7h8v8"/><path d="M17 7 7 17"/></svg>اشتراک‌گذاری</button>
+      <p class="ps-note">گفتگوی واتساپ آرایشی و بهداشتی رز با یک پیام آماده باز می‌شود؛ فقط «ارسال» را بزنید.</p>
+    </div>
+  </form>
+</dialog>
+
+<script>window.SITE={"slug":"demo-cosmetics-1","name":"آرایشی و بهداشتی رز","base":"/s/demo-cosmetics-1","chat":false,"glass":true,"demo":true,"v":"2026.10.14-1","type":"cosmetics","fam":"shop","askMsg":"سلام، درباره «%s» سؤال دارم.","buy":{"ch":"whatsapp","to":"989120000000","label":"واتساپ","word":"خرید"},"layout":"cosmetics-1","calls":false,"hours":{"open":"10:00","close":"22:00","off":-1}};window.AWP={"scope":"site","slug":"demo-cosmetics-1","name":"آرایشی و بهداشتی رز","base":"/s/demo-cosmetics-1","icon":"/s/demo-cosmetics-1/icon-192.png","privacy":"https://alphawebsite.ir/privacy#visitors","api":"/api/v","demo":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/popups.js" defer></script></body>
 </html>

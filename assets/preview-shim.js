@@ -1,5 +1,5 @@
 /* Preview only. There is no PHP server behind this preview, so the few server calls the pages make
-   (orders, site chat, panel inbox) are answered here in the browser. Forms that would save to the
+   (buy taps, visitor statistics, site chat, panel inbox) are answered here in the browser. Forms that would save to the
    server show a short note instead. */
 (function () {
   window.AW_STATIC = true;   // store.js: demos are demo-<id>.html files here, not /s/demo-<id>
@@ -47,6 +47,7 @@
       return json({ status: /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(l) ? (l.length < 5 ? 'taken' : 'free') : 'invalid' }); }
     if (/\/api\/order/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/api\/call/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
+    if (/\/api\/(v|tap)(\?|$)/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/panel\/unread/.test(u)) { var nb = document.getElementById('navChat'); return json({ n: nb && !nb.hidden ? faInt(nb.textContent) : 0 }); }
     if (/\/panel\/chat\/\d+\/poll/.test(u)) return json({ messages: [] });
     if (/\/panel\/chat\/\d+\/send/.test(u)) { var b3 = body(opt); return json({ message: { id: 100000 + (++seq), s: 'o', b: b3.get('body') || '', k: 'text', t: stamp() } }); }

@@ -17,261 +17,346 @@
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/glass.css">
 <link rel="stylesheet" href="assets/alpha.css">
+<link rel="stylesheet" href="assets/popups.css">
 <script src="assets/preview-shim.js"></script>
 </head>
-<body class="glass dark" style="--bg:#0B0B0C;--surface:#161618;--ink:#F2F2F0;--muted:#9A9A96;--line:#26262A;--accent:#C6F432;--onaccent:#111111;--glass:rgba(22,22,24,0.64);--glass-strong:rgba(22,22,24,0.82);--glass-line:rgba(255,255,255,.10);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3);--pill-on:rgba(255,255,255,.12);--pat:rgba(242,242,240,0.13);--glow:rgba(198,244,50,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
+<body class="glass pro fam-catalog dark" style="--bg:#0B0B0C;--surface:#161618;--ink:#F2F2F0;--muted:#9A9A96;--line:#26262A;--accent:#C6F432;--onaccent:#111111;--glass:rgba(22,22,24,0.64);--glass-strong:rgba(22,22,24,0.82);--glass-line:rgba(255,255,255,.10);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3);--pill-on:rgba(255,255,255,.12);--pat:rgba(242,242,240,0.13);--glow:rgba(198,244,50,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
 <script>try{if(window.top===window&&!sessionStorage.getItem('seen-demo-gym-1'))document.body.classList.add('splashing')}catch(e){}</script>
 <div id="splash" aria-hidden="true"><img class="splash-logo" src="assets/demo/gym/logo.webp" alt="باشگاه انرژی"><div class="splash-bar"><i></i></div></div>
-<div class="demo-bar">پیش‌نمایش قالب «باشگاه»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div><div class="island is-open" id="island" data-open="07:00" data-close="23:00" data-off="-1">
-  <button class="isl-pill" type="button" aria-expanded="false" aria-controls="islPanel">
-    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">باز است تا ۲۳:۰۰</span>    <span class="isl-news">ثبت‌نام پاییز با برنامه تمرینی رایگان</span>  </button>
-  <div class="isl-panel" id="islPanel" hidden>
-    <div class="isl-head"><img class="isl-logo" src="assets/demo/gym/logo.webp" alt="باشگاه انرژی"><div><b>باشگاه انرژی</b><span class="isl-status">باز است تا ۲۳:۰۰</span></div>
-      <button class="isl-x" type="button" aria-label="بستن">×</button></div>
-    <p class="isl-ann">ثبت‌نام پاییز با برنامه تمرینی رایگان</p>    <p class="isl-meta">هر روز ۷:۰۰ تا ۲۳:۰۰، تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰</p>    <div class="isl-acts">
-      <a href="tel:09120000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>تماس</span></a>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>مسیریابی</span></a>      <button type="button" data-act="chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span></button>      <button type="button" data-act="install" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg><span>نصب اپ</span></button>
-    </div>
-    <p class="isl-ios" hidden>در سافاری دکمه اشتراک‌گذاری را بزنید و «Add to Home Screen» را انتخاب کنید.</p>
-  </div>
-</div>
-<div class="scrim" aria-hidden="true"></div>
+<a class="skip" href="#products">رفتن به پلن‌ها</a>
+<div class="demo-bar">پیش‌نمایش قالب «باشگاه»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/gym/logo.webp" alt="باشگاه انرژی"><b>باشگاه انرژی</b></a>
+    <nav class="hdr-nav" aria-label="بخش‌های سایت"><a href="#products" data-jump="products">پلن‌ها</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a></nav>
+    <button class="hdr-cta" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span class="cta-l">ثبت‌نام در واتساپ</span><span class="cta-s">واتساپ</span></button>  </div>
+</header>
 
-<main class="views">
+<main id="top" class="site">
 
-  <section class="view on" data-view="home" id="v-home" aria-label="خانه">
-    <header class="g-hero" style="background-image:url('assets/demo/gym/cover.webp')">
-      <div class="g-hero-in">
-        <img class="g-logo" src="assets/demo/gym/logo.webp" alt="باشگاه انرژی">        <h1>باشگاه انرژی</h1>
-        <p>بدنسازی، فیتنس و کلاس‌های گروهی؛ سانس آقایان و بانوان</p>        <div class="g-cta">
-          <button class="pill" type="button" data-go="menu">دیدن پلن‌ها</button>
-          <button class="pill clear" type="button" data-go="chat">گفتگو</button>
-                  </div>
+  <section class="hero" aria-labelledby="hero-h">
+    <img class="hero-img" src="assets/demo/gym/cover.webp" alt="" fetchpriority="high" decoding="async">    <div class="hero-in">
+      <img class="g-logo" src="assets/demo/gym/logo.webp" alt="باشگاه انرژی">      <h1 id="hero-h">باشگاه انرژی</h1>
+      <p class="hero-tag">بدنسازی، فیتنس و کلاس‌های گروهی؛ سانس آقایان و بانوان</p>      <div class="hero-cta">
+        <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>ثبت‌نام در واتساپ</button>        <a class="pill clear" href="#products" data-jump="products">دیدن پلن‌ها</a>
       </div>
-    </header>
+      <p class="hero-meta"><span class="hero-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰</span></p>    </div>
+  </section>
 
-        <div class="g-sec g-picks">
-      <div class="g-sec-h"><h2>ویژه</h2><button type="button" data-go="menu">همه</button></div>
-      <div class="rail"><article class="card" data-name="عضویت یک‌ماهه">
-  <img src="assets/demo/gym/plan-1m.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+  <div class="news" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg><span>ثبت‌نام پاییز با برنامه تمرینی رایگان</span></div>
+  <ul class="hl g-facts" aria-label="چرا باشگاه انرژی">
+    <li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5v5M6.5 7.5v9M17.5 7.5v9M20.5 9.5v5M6.5 12h11"/></svg></span><span>مربیان باتجربه</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20Z"/><path d="M13.5 3.5v4.5H18M9.5 12.5h5M9.5 16h5"/></svg></span><span>برنامه اختصاصی</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg></span><span>دستگاه‌های نو</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5s6 6.4 6 10.6a6 6 0 0 1-12 0C6 9.9 12 3.5 12 3.5Z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/></svg></span><span>رختکن و دوش</span></li>  </ul>
+
+    <section class="sec" aria-labelledby="cats-h">
+    <div class="sec-h"><h2 id="cats-h">دسته‌بندی‌ها</h2></div>
+    <div class="cat-tiles">
+              <a class="cat-tile" href="#c39" data-jump="c39">
+          <img src="assets/demo/gym/plan-1m.webp" alt="" loading="lazy" decoding="async">          <span><b>عضویت</b><small>۴ پلن و کلاس</small></span>
+        </a>
+              <a class="cat-tile" href="#c40" data-jump="c40">
+          <img src="assets/demo/gym/yoga.webp" alt="" loading="lazy" decoding="async">          <span><b>کلاس‌های گروهی</b><small>۵ پلن و کلاس</small></span>
+        </a>
+              <a class="cat-tile" href="#c41" data-jump="c41">
+          <img src="assets/demo/gym/coach.webp" alt="" loading="lazy" decoding="async">          <span><b>مربی و برنامه</b><small>۳ پلن و کلاس</small></span>
+        </a>
+          </div>
+  </section>
+  
+    <section class="sec g-picks" aria-labelledby="picks-h">
+    <div class="sec-h"><h2 id="picks-h">ویژه</h2><a href="#products" data-jump="products">همه پلن‌ها</a></div>
+    <div class="rail"><article class="card" id="p138" data-id="138" data-name="عضویت یک‌ماهه" data-price="1900000" data-img="/assets/demo/gym/plan-1m.webp" data-desc="استفاده آزاد از سالن در سانس خودتان" data-opts="[{&quot;n&quot;:&quot;سانس&quot;,&quot;v&quot;:[&quot;آقایان&quot;,&quot;بانوان&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات عضویت یک‌ماهه">
+    <span class="card-img"><img src="assets/demo/gym/plan-1m.webp" alt="عضویت یک‌ماهه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>عضویت یک‌ماهه</h3>
-    <p class="desc">استفاده آزاد از سالن در سانس خودتان</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row">
+    <p class="desc">استفاده آزاد از سالن در سانس خودتان</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row wide">
       <span class="price">۱٬۹۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="عضویت یک‌ماهه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="عضویت سه‌ماهه">
-  <img src="assets/demo/gym/plan-3m.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p139" data-id="139" data-name="عضویت سه‌ماهه" data-price="5200000" data-img="/assets/demo/gym/plan-3m.webp" data-desc="با برنامه تمرینی و یک آنالیز بدن" data-opts="[{&quot;n&quot;:&quot;سانس&quot;,&quot;v&quot;:[&quot;آقایان&quot;,&quot;بانوان&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات عضویت سه‌ماهه">
+    <span class="card-img"><img src="assets/demo/gym/plan-3m.webp" alt="عضویت سه‌ماهه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>عضویت سه‌ماهه</h3>
-    <p class="desc">با برنامه تمرینی و یک آنالیز بدن</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row">
+    <p class="desc">با برنامه تمرینی و یک آنالیز بدن</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row wide">
       <span class="price">۵٬۲۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="عضویت سه‌ماهه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="عضویت شش‌ماهه">
-  <img src="assets/demo/gym/plan-6m.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p140" data-id="140" data-name="عضویت شش‌ماهه" data-price="9600000" data-img="/assets/demo/gym/plan-6m.webp" data-desc="با دو آنالیز بدن و قفسه شخصی" data-opts="[{&quot;n&quot;:&quot;سانس&quot;,&quot;v&quot;:[&quot;آقایان&quot;,&quot;بانوان&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات عضویت شش‌ماهه">
+    <span class="card-img"><img src="assets/demo/gym/plan-6m.webp" alt="عضویت شش‌ماهه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>عضویت شش‌ماهه</h3>
-    <p class="desc">با دو آنالیز بدن و قفسه شخصی</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row">
+    <p class="desc">با دو آنالیز بدن و قفسه شخصی</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row wide">
       <span class="price">۹٬۶۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="عضویت شش‌ماهه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تک‌جلسه">
-  <img src="assets/demo/gym/session.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p141" data-id="141" data-name="تک‌جلسه" data-price="150000" data-img="/assets/demo/gym/session.webp" data-desc="برای امتحان کردن یا مهمان">
+  <button class="card-open" type="button" aria-label="جزئیات تک‌جلسه">
+    <span class="card-img"><img src="assets/demo/gym/session.webp" alt="تک‌جلسه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تک‌جلسه</h3>
-    <p class="desc">برای امتحان کردن یا مهمان</p>        <div class="row">
+    <p class="desc">برای امتحان کردن یا مهمان</p>        <div class="row wide">
       <span class="price">۱۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تک‌جلسه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="یوگا">
-  <img src="assets/demo/gym/yoga.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p142" data-id="142" data-name="یوگا" data-price="1600000" data-img="/assets/demo/gym/yoga.webp" data-desc="۱۲ جلسه در ماه، صبح و عصر">
+  <button class="card-open" type="button" aria-label="جزئیات یوگا">
+    <span class="card-img"><img src="assets/demo/gym/yoga.webp" alt="یوگا" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>یوگا</h3>
-    <p class="desc">۱۲ جلسه در ماه، صبح و عصر</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه، صبح و عصر</p>        <div class="row wide">
       <span class="price">۱٬۶۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="یوگا">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="اسپینینگ">
-  <img src="assets/demo/gym/spinning.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p143" data-id="143" data-name="اسپینینگ" data-price="1400000" data-img="/assets/demo/gym/spinning.webp" data-desc="۱۲ جلسه در ماه">
+  <button class="card-open" type="button" aria-label="جزئیات اسپینینگ">
+    <span class="card-img"><img src="assets/demo/gym/spinning.webp" alt="اسپینینگ" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>اسپینینگ</h3>
-    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row wide">
       <span class="price">۱٬۴۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="اسپینینگ">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کراس‌فیت">
-  <img src="assets/demo/gym/crossfit.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p144" data-id="144" data-name="کراس‌فیت" data-price="2200000" data-img="/assets/demo/gym/crossfit.webp" data-desc="۱۲ جلسه در ماه">
+  <button class="card-open" type="button" aria-label="جزئیات کراس‌فیت">
+    <span class="card-img"><img src="assets/demo/gym/crossfit.webp" alt="کراس‌فیت" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کراس‌فیت</h3>
-    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row wide">
       <span class="price">۲٬۲۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="کراس‌فیت">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="بوکس">
-  <img src="assets/demo/gym/boxing.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p145" data-id="145" data-name="بوکس" data-price="1800000" data-img="/assets/demo/gym/boxing.webp" data-desc="۱۲ جلسه در ماه">
+  <button class="card-open" type="button" aria-label="جزئیات بوکس">
+    <span class="card-img"><img src="assets/demo/gym/boxing.webp" alt="بوکس" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>بوکس</h3>
-    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row wide">
       <span class="price">۱٬۸۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="بوکس">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
 </div>
-    </div>
-    
-    <div class="g-sec g-facts">
-      <div class="group">
-        <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۷:۰۰ تا ۲۳:۰۰</small></span></div>        <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">آدرس<small>تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      </div>
-    </div>
-
-    <div class="g-sec g-about-sec"><div class="g-sec-h"><h2>درباره ما</h2></div><p class="g-about">سالن ۸۰۰ متری با دستگاه‌های نو، مربیان دارای مدرک و سانس جدا برای آقایان و بانوان. اولین جلسه را مهمان ما باشید؛ روی هر پلن بزنید و وقت بگیرید.</p></div>  </section>
-
-  <section class="view" data-view="menu" id="v-menu" aria-label="پلن‌ها">
-    <h1 class="g-title">پلن‌ها</h1>
-    <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="q" placeholder="جستجو در پلن‌ها" aria-label="جستجو"></label>    <nav class="g-chips" aria-label="دسته‌بندی‌ها">
-      <a href="#c39" data-cat="c39">عضویت</a><a href="#c40" data-cat="c40">کلاس‌های گروهی</a><a href="#c41" data-cat="c41">مربی و برنامه</a>    </nav>
-          <section class="g-cat" id="c39">
-        <h2>عضویت</h2>
-        <div class="cards"><article class="card" data-name="عضویت یک‌ماهه">
-  <img src="assets/demo/gym/plan-1m.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+  </section>
+  
+  <section class="sec" id="products" aria-labelledby="products-h">
+    <div class="sec-h"><h2 id="products-h">پلن‌ها</h2><span class="count">۱۲ مورد</span></div>
+        <nav class="g-chips" aria-label="دسته‌بندی‌ها"><a href="#c39" data-cat="c39">عضویت</a><a href="#c40" data-cat="c40">کلاس‌های گروهی</a><a href="#c41" data-cat="c41">مربی و برنامه</a></nav>          <section class="g-cat" id="c39" aria-label="عضویت">
+        <h3 class="cat-h">عضویت</h3>
+        <div class="cards"><article class="card" id="p138" data-id="138" data-name="عضویت یک‌ماهه" data-price="1900000" data-img="/assets/demo/gym/plan-1m.webp" data-desc="استفاده آزاد از سالن در سانس خودتان" data-opts="[{&quot;n&quot;:&quot;سانس&quot;,&quot;v&quot;:[&quot;آقایان&quot;,&quot;بانوان&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات عضویت یک‌ماهه">
+    <span class="card-img"><img src="assets/demo/gym/plan-1m.webp" alt="عضویت یک‌ماهه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>عضویت یک‌ماهه</h3>
-    <p class="desc">استفاده آزاد از سالن در سانس خودتان</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row">
+    <p class="desc">استفاده آزاد از سالن در سانس خودتان</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row wide">
       <span class="price">۱٬۹۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="عضویت یک‌ماهه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="عضویت سه‌ماهه">
-  <img src="assets/demo/gym/plan-3m.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p139" data-id="139" data-name="عضویت سه‌ماهه" data-price="5200000" data-img="/assets/demo/gym/plan-3m.webp" data-desc="با برنامه تمرینی و یک آنالیز بدن" data-opts="[{&quot;n&quot;:&quot;سانس&quot;,&quot;v&quot;:[&quot;آقایان&quot;,&quot;بانوان&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات عضویت سه‌ماهه">
+    <span class="card-img"><img src="assets/demo/gym/plan-3m.webp" alt="عضویت سه‌ماهه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>عضویت سه‌ماهه</h3>
-    <p class="desc">با برنامه تمرینی و یک آنالیز بدن</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row">
+    <p class="desc">با برنامه تمرینی و یک آنالیز بدن</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row wide">
       <span class="price">۵٬۲۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="عضویت سه‌ماهه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="عضویت شش‌ماهه">
-  <img src="assets/demo/gym/plan-6m.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p140" data-id="140" data-name="عضویت شش‌ماهه" data-price="9600000" data-img="/assets/demo/gym/plan-6m.webp" data-desc="با دو آنالیز بدن و قفسه شخصی" data-opts="[{&quot;n&quot;:&quot;سانس&quot;,&quot;v&quot;:[&quot;آقایان&quot;,&quot;بانوان&quot;]}]">
+  <button class="card-open" type="button" aria-label="جزئیات عضویت شش‌ماهه">
+    <span class="card-img"><img src="assets/demo/gym/plan-6m.webp" alt="عضویت شش‌ماهه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>عضویت شش‌ماهه</h3>
-    <p class="desc">با دو آنالیز بدن و قفسه شخصی</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row">
+    <p class="desc">با دو آنالیز بدن و قفسه شخصی</p>    <p class="opts">سانس: آقایان، بانوان</p>    <div class="row wide">
       <span class="price">۹٬۶۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="عضویت شش‌ماهه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تک‌جلسه">
-  <img src="assets/demo/gym/session.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p141" data-id="141" data-name="تک‌جلسه" data-price="150000" data-img="/assets/demo/gym/session.webp" data-desc="برای امتحان کردن یا مهمان">
+  <button class="card-open" type="button" aria-label="جزئیات تک‌جلسه">
+    <span class="card-img"><img src="assets/demo/gym/session.webp" alt="تک‌جلسه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تک‌جلسه</h3>
-    <p class="desc">برای امتحان کردن یا مهمان</p>        <div class="row">
+    <p class="desc">برای امتحان کردن یا مهمان</p>        <div class="row wide">
       <span class="price">۱۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تک‌جلسه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-          <section class="g-cat" id="c40">
-        <h2>کلاس‌های گروهی</h2>
-        <div class="cards"><article class="card" data-name="یوگا">
-  <img src="assets/demo/gym/yoga.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+          <section class="g-cat" id="c40" aria-label="کلاس‌های گروهی">
+        <h3 class="cat-h">کلاس‌های گروهی</h3>
+        <div class="cards"><article class="card" id="p142" data-id="142" data-name="یوگا" data-price="1600000" data-img="/assets/demo/gym/yoga.webp" data-desc="۱۲ جلسه در ماه، صبح و عصر">
+  <button class="card-open" type="button" aria-label="جزئیات یوگا">
+    <span class="card-img"><img src="assets/demo/gym/yoga.webp" alt="یوگا" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>یوگا</h3>
-    <p class="desc">۱۲ جلسه در ماه، صبح و عصر</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه، صبح و عصر</p>        <div class="row wide">
       <span class="price">۱٬۶۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="یوگا">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="اسپینینگ">
-  <img src="assets/demo/gym/spinning.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p143" data-id="143" data-name="اسپینینگ" data-price="1400000" data-img="/assets/demo/gym/spinning.webp" data-desc="۱۲ جلسه در ماه">
+  <button class="card-open" type="button" aria-label="جزئیات اسپینینگ">
+    <span class="card-img"><img src="assets/demo/gym/spinning.webp" alt="اسپینینگ" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>اسپینینگ</h3>
-    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row wide">
       <span class="price">۱٬۴۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="اسپینینگ">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="کراس‌فیت">
-  <img src="assets/demo/gym/crossfit.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p144" data-id="144" data-name="کراس‌فیت" data-price="2200000" data-img="/assets/demo/gym/crossfit.webp" data-desc="۱۲ جلسه در ماه">
+  <button class="card-open" type="button" aria-label="جزئیات کراس‌فیت">
+    <span class="card-img"><img src="assets/demo/gym/crossfit.webp" alt="کراس‌فیت" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>کراس‌فیت</h3>
-    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row wide">
       <span class="price">۲٬۲۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="کراس‌فیت">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="بوکس">
-  <img src="assets/demo/gym/boxing.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p145" data-id="145" data-name="بوکس" data-price="1800000" data-img="/assets/demo/gym/boxing.webp" data-desc="۱۲ جلسه در ماه">
+  <button class="card-open" type="button" aria-label="جزئیات بوکس">
+    <span class="card-img"><img src="assets/demo/gym/boxing.webp" alt="بوکس" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>بوکس</h3>
-    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row wide">
       <span class="price">۱٬۸۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="بوکس">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="TRX">
-  <img src="assets/demo/gym/trx.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p146" data-id="146" data-name="TRX" data-price="1500000" data-img="/assets/demo/gym/trx.webp" data-desc="۱۲ جلسه در ماه">
+  <button class="card-open" type="button" aria-label="جزئیات TRX">
+    <span class="card-img"><img src="assets/demo/gym/trx.webp" alt="TRX" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>TRX</h3>
-    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row">
+    <p class="desc">۱۲ جلسه در ماه</p>        <div class="row wide">
       <span class="price">۱٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="TRX">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-          <section class="g-cat" id="c41">
-        <h2>مربی و برنامه</h2>
-        <div class="cards"><article class="card" data-name="مربی خصوصی">
-  <img src="assets/demo/gym/coach.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+          <section class="g-cat" id="c41" aria-label="مربی و برنامه">
+        <h3 class="cat-h">مربی و برنامه</h3>
+        <div class="cards"><article class="card" id="p147" data-id="147" data-name="مربی خصوصی" data-price="6500000" data-img="/assets/demo/gym/coach.webp" data-desc="۱۲ جلسه یک‌به‌یک">
+  <button class="card-open" type="button" aria-label="جزئیات مربی خصوصی">
+    <span class="card-img"><img src="assets/demo/gym/coach.webp" alt="مربی خصوصی" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>مربی خصوصی</h3>
-    <p class="desc">۱۲ جلسه یک‌به‌یک</p>        <div class="row">
+    <p class="desc">۱۲ جلسه یک‌به‌یک</p>        <div class="row wide">
       <span class="price">۶٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="مربی خصوصی">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="برنامه تمرین و تغذیه">
-  <img src="assets/demo/gym/program.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p148" data-id="148" data-name="برنامه تمرین و تغذیه" data-price="1200000" data-img="/assets/demo/gym/program.webp" data-desc="بر اساس آنالیز بدن، ماهانه">
+  <button class="card-open" type="button" aria-label="جزئیات برنامه تمرین و تغذیه">
+    <span class="card-img"><img src="assets/demo/gym/program.webp" alt="برنامه تمرین و تغذیه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>برنامه تمرین و تغذیه</h3>
-    <p class="desc">بر اساس آنالیز بدن، ماهانه</p>        <div class="row">
+    <p class="desc">بر اساس آنالیز بدن، ماهانه</p>        <div class="row wide">
       <span class="price">۱٬۲۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="برنامه تمرین و تغذیه">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="آنالیز بدن">
-  <img src="assets/demo/gym/inbody.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p149" data-id="149" data-name="آنالیز بدن" data-price="350000" data-img="/assets/demo/gym/inbody.webp" data-desc="ترکیب بدن، چربی و عضله">
+  <button class="card-open" type="button" aria-label="جزئیات آنالیز بدن">
+    <span class="card-img"><img src="assets/demo/gym/inbody.webp" alt="آنالیز بدن" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>آنالیز بدن</h3>
-    <p class="desc">ترکیب بدن، چربی و عضله</p>        <div class="row">
+    <p class="desc">ترکیب بدن، چربی و عضله</p>        <div class="row wide">
       <span class="price">۳۵۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="آنالیز بدن">ثبت‌نام</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>ثبت‌نام</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-      </section>
+            <p class="none" id="qNone" hidden>چیزی با این نام پیدا نشد. در گفتگو بپرسید؛ شاید داشته باشیم.</p>
+    <p class="how"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>روی «ثبت‌نام» بزنید؛ گفتگوی واتساپ ما با یک پیام آماده باز می‌شود.</span></p>
+  </section>
 
-  
-    <section class="view" data-view="chat" id="v-chat" aria-label="گفتگو"><div class="chat" id="chat">
-  <div class="chat-head"><img class="chat-av" src="assets/demo/gym/logo.webp" alt="باشگاه انرژی"><div><b>باشگاه انرژی</b><small id="chatState">پیام‌ها مستقیم به فروشنده می‌رسد</small></div></div>
-  <div class="chat-intro" id="chatIntro">
-    <p class="chat-note">سفارش و سؤالتان را همین‌جا بنویسید. این گفتگو روی سرور داخلی است؛ وقتی واتساپ و تلگرام قطع است هم کار می‌کند.</p>
-    <label class="field">نام<input id="chName" autocomplete="name" maxlength="60"></label>
-    <label class="field">شماره موبایل<input id="chPhone" inputmode="tel" autocomplete="tel" maxlength="20"></label>
-    <button class="pill" type="button" id="chStart">شروع گفتگو</button>
-    <p class="chat-err" id="chErr" hidden></p>
-  </div>
-  <div class="chat-log" id="chatLog" aria-live="polite"></div>
-  <form class="chat-form" id="chatForm" hidden autocomplete="off">
-    <input id="chText" maxlength="600" placeholder="پیام شما…" aria-label="پیام">
-    <button class="chat-send" type="submit" aria-label="ارسال"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4 3.5 11l7 2.5L13 20.5Z"/><path d="m10.5 13.5 4-4"/></svg></button>
-  </form>
-</div>
-</section>
-  
-  <section class="view" data-view="info" id="v-info" aria-label="تماس">
-    <h1 class="g-title">تماس و آدرس</h1>
-    <div class="group">
-      <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۷:۰۰ تا ۲۳:۰۰</small></span></div>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="#chat" data-go="chat"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg></span><span class="li-t">گفتگوی سایت<small>روی شبکه داخلی هم کار می‌کند</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>              <a href="https://wa.me/989120000000" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ</span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>
-                  <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب به‌صورت اپ<small>بدون اپ‌استور، منو آفلاین هم باز می‌شود</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+  <section class="sec about g-about-sec" id="about" aria-labelledby="about-h">
+    <div class="about-grid">
+      <div class="about-img"><img src="assets/demo/gym/plan-1m.webp" alt="" loading="lazy" decoding="async"></div>      <div class="about-tx">
+        <p class="kicker">درباره ما</p>
+        <h2 id="about-h">باشگاه انرژی</h2>
+        <p class="g-about">سالن ۸۰۰ متری با دستگاه‌های نو، مربیان دارای مدرک و سانس جدا برای آقایان و بانوان. اولین جلسه را مهمان ما باشید؛ روی هر پلن بزنید و وقت بگیرید.</p>        <dl class="facts-dl">
+          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>ساعت کاری</dt><dd>هر روز ۷:۰۰ تا ۲۳:۰۰</dd></div>          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>آدرس</dt><dd>تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰</dd></div>                            </dl>
+      </div>
     </div>
-    <a class="powered" href="https://alphawebsite.ir/?ref=demo-gym-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-white.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a>  </section>
-</main>
+  </section>
+
+    <section class="sec" aria-labelledby="gal-h">
+    <div class="sec-h"><h2 id="gal-h">گالری</h2></div>
+    <div class="gallery"><figure class="g0"><img src="assets/demo/gym/cover.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g1"><img src="assets/demo/gym/plan-1m.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g2"><img src="assets/demo/gym/plan-3m.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g3"><img src="assets/demo/gym/plan-6m.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g4"><img src="assets/demo/gym/session.webp" alt="" loading="lazy" decoding="async"></figure></div>
+  </section>
+  
+  <section class="sec contact" id="contact" aria-labelledby="contact-h">
+    <div class="sec-h"><h2 id="contact-h">تماس و آدرس</h2></div>
+    <div class="contact-grid">
+            <div class="box hours">
+        <div class="box-h"><b>ساعت کاری</b><span class="now-chip" data-hours><i aria-hidden="true"></i><span class="now-t">باز است تا ۲۳:۰۰</span></span></div>
+        <table class="week"><caption class="sr">ساعت کاری هفته</caption><tbody>
+          <tr data-dow="6"><th scope="row">شنبه</th><td>۷:۰۰ تا ۲۳:۰۰</td></tr><tr data-dow="0"><th scope="row">یکشنبه</th><td>۷:۰۰ تا ۲۳:۰۰</td></tr><tr data-dow="1"><th scope="row">دوشنبه</th><td>۷:۰۰ تا ۲۳:۰۰</td></tr><tr data-dow="2"><th scope="row">سه‌شنبه</th><td>۷:۰۰ تا ۲۳:۰۰</td></tr><tr data-dow="3"><th scope="row">چهارشنبه</th><td>۷:۰۰ تا ۲۳:۰۰</td></tr><tr data-dow="4"><th scope="row">پنجشنبه</th><td>۷:۰۰ تا ۲۳:۰۰</td></tr><tr data-dow="5"><th scope="row">جمعه</th><td>۷:۰۰ تا ۲۳:۰۰</td></tr>        </tbody></table>
+      </div>
+            <div class="box group">
+        <button class="li as-btn" type="button" data-buy-general><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ<small>سفارش و سؤال، با پیام آماده</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="https://www.google.com/maps/search/?api=1&amp;query=%D8%AA%D8%A8%D8%B1%DB%8C%D8%B2%D8%8C%20%D8%A7%D8%A6%D9%84%E2%80%8C%DA%AF%D9%84%DB%8C%D8%8C%20%D8%A8%D9%84%D9%88%D8%A7%D8%B1%20%DB%B2%DB%B9%20%D8%A8%D9%87%D9%85%D9%86%D8%8C%20%D9%BE%D9%84%D8%A7%DA%A9%20%DB%B1%DB%B0%DB%B0" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>                                        <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب روی گوشی<small>با نام و لوگوی باشگاه انرژی، مثل یک اپ</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+
+    <section class="sec faq" id="faq" aria-labelledby="faq-h">
+    <div class="sec-h"><h2 id="faq-h">سؤالات رایج</h2></div>
+    <div class="faq-list"><details open><summary>چطور ثبت‌نام کنم؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>روی دکمه «ثبت‌نام» زیر هر پلن و کلاس بزنید. گفتگوی واتساپ باشگاه انرژی با یک پیام آماده باز می‌شود؛ همان را بفرستید تا ما هماهنگ کنیم.</p></details><details><summary>پرداخت چطور است؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>بعد از هماهنگی در گفتگو، با کارت‌به‌کارت یا در محل.</p></details><details><summary>ساعت کاری‌تان چیست؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>هر روز ۷:۰۰ تا ۲۳:۰۰.</p></details><details><summary>کجا هستید؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰.</p></details></div>
+  </section>
+  </main>
+
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/gym/logo.webp" alt="باشگاه انرژی"><b>باشگاه انرژی</b></a>
+      <p>بدنسازی، فیتنس و کلاس‌های گروهی؛ سانس آقایان و بانوان</p>      <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>ثبت‌نام در واتساپ</button>    </div>
+    <nav class="ft-col" aria-label="دسترسی سریع"><b>دسترسی سریع</b><a href="#products" data-jump="products">پلن‌ها</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a><button type="button" class="ft-link" data-act="install" hidden>نصب روی گوشی</button></nav>
+    <div class="ft-col"><b>تماس</b>
+      <a href="tel:09120000000" dir="ltr" class="ltr-t">09120000000</a>      <span>تبریز، ائل‌گلی، بلوار ۲۹ بهمن، پلاک ۱۰۰</span>      <span>هر روز ۷:۰۰ تا ۲۳:۰۰</span>    </div>
+  </div>
+  <div class="ft-bottom"><span>© 1405 باشگاه انرژی. همه حقوق محفوظ است.</span><a class="powered" href="https://alphawebsite.ir/?ref=demo-gym-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-white.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a></div>
+</footer>
 
 <nav class="dock" aria-label="بخش‌ها">
-      <button type="button" data-tab="home" aria-label="خانه" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
-      <button type="button" data-tab="menu" aria-label="پلن‌ها"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>پلن‌ها</span></button>
-      <button type="button" data-tab="chat" aria-label="گفتگو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span><b class="badge" data-badge="chat" hidden>۰</b></button>
-      <button type="button" data-tab="info" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
-  </nav>
+  <button type="button" data-tab="top" class="on" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
+  <button type="button" data-tab="products"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>پلن‌ها</span></button>
+  <button type="button" data-tab="about"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8Z"/></svg><span>درباره</span></button>
+    <button type="button" data-tab="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
+</nav>
 
-<script>window.SITE={"slug":"demo-gym-1","name":"باشگاه انرژی","base":"/s/demo-gym-1","chat":true,"glass":true,"demo":true,"v":"2026.10.13-2","type":"gym","fam":"catalog","askMsg":"سلام، برای «%s» ثبت‌نام می‌کنم.","ask":"https://wa.me/989120000000","delivery":false,"fee":0,"min":0,"calls":false};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
+<dialog class="psheet" id="psheet" aria-labelledby="psName">
+  <form method="dialog" class="ps-in">
+    <button class="x" value="close" aria-label="بستن"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
+    <div class="ps-img" id="psImg"></div>
+    <div class="ps-b">
+      <h2 id="psName"></h2>
+      <p class="ps-price" id="psPrice"></p>
+      <p class="ps-desc" id="psDesc"></p>
+      <div id="psOpts"></div>
+      <p class="ps-low" id="psLow" hidden></p>
+      <p class="ps-err" id="psErr" role="alert" hidden></p>
+      <button type="button" class="ps-buy" id="psBuy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span id="psBuyT">ثبت‌نام در واتساپ</span></button>
+      <button type="button" class="ps-share" id="psShare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7h8v8"/><path d="M17 7 7 17"/></svg>اشتراک‌گذاری</button>
+      <p class="ps-note">گفتگوی واتساپ باشگاه انرژی با یک پیام آماده باز می‌شود؛ فقط «ارسال» را بزنید.</p>
+    </div>
+  </form>
+</dialog>
+
+<script>window.SITE={"slug":"demo-gym-1","name":"باشگاه انرژی","base":"/s/demo-gym-1","chat":false,"glass":true,"demo":true,"v":"2026.10.14-1","type":"gym","fam":"catalog","askMsg":"سلام، برای «%s» ثبت‌نام می‌کنم.","buy":{"ch":"whatsapp","to":"989120000000","label":"واتساپ","word":"ثبت‌نام"},"layout":"gym-1","calls":false,"hours":{"open":"07:00","close":"23:00","off":-1}};window.AWP={"scope":"site","slug":"demo-gym-1","name":"باشگاه انرژی","base":"/s/demo-gym-1","icon":"/s/demo-gym-1/icon-192.png","privacy":"https://alphawebsite.ir/privacy#visitors","api":"/api/v","demo":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/popups.js" defer></script></body>
 </html>

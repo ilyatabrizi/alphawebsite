@@ -17,237 +17,316 @@
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/glass.css">
 <link rel="stylesheet" href="assets/alpha.css">
+<link rel="stylesheet" href="assets/popups.css">
 <script src="assets/preview-shim.js"></script>
 </head>
-<body class="glass" style="--bg:#F1F7FA;--surface:#FFFFFF;--ink:#0F2330;--muted:#5A7180;--line:#DCE9F0;--accent:#0077B6;--onaccent:#FFFFFF;--glass:rgba(241,247,250,0.72);--glass-strong:rgba(255,255,255,0.86);--glass-line:rgba(15,35,48,0.1);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px rgba(15,35,48,0.16),0 3px 10px rgba(15,35,48,0.08);--pill-on:rgba(15,35,48,0.09);--pat:rgba(15,35,48,0.1);--glow:rgba(0,119,182,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
+<body class="glass pro fam-catalog" style="--bg:#F1F7FA;--surface:#FFFFFF;--ink:#0F2330;--muted:#5A7180;--line:#DCE9F0;--accent:#0077B6;--onaccent:#FFFFFF;--glass:rgba(241,247,250,0.72);--glass-strong:rgba(255,255,255,0.86);--glass-line:rgba(15,35,48,0.1);--glass-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(0,0,0,.05),0 18px 44px rgba(15,35,48,0.16),0 3px 10px rgba(15,35,48,0.08);--pill-on:rgba(15,35,48,0.09);--pat:rgba(15,35,48,0.1);--glow:rgba(0,119,182,0.22);--rk:1;--fs:1;--hw:800;--ar:1/1;--dim:0.66;">
 <script>try{if(window.top===window&&!sessionStorage.getItem('seen-demo-travel-1'))document.body.classList.add('splashing')}catch(e){}</script>
 <div id="splash" aria-hidden="true"><img class="splash-logo" src="assets/demo/travel/logo.webp" alt="آژانس مسافرتی سفرینه"><div class="splash-bar"><i></i></div></div>
-<div class="demo-bar">پیش‌نمایش قالب «آژانس مسافرتی»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div><div class="island is-open" id="island" data-open="09:00" data-close="20:00" data-off="5">
-  <button class="isl-pill" type="button" aria-expanded="false" aria-controls="islPanel">
-    <i class="isl-dot" aria-hidden="true"></i><span class="isl-status">باز است تا ۲۰:۰۰</span>    <span class="isl-news">تورهای پاییزی استانبول و آنتالیا با پرواز مستقیم از تبریز</span>  </button>
-  <div class="isl-panel" id="islPanel" hidden>
-    <div class="isl-head"><img class="isl-logo" src="assets/demo/travel/logo.webp" alt="آژانس مسافرتی سفرینه"><div><b>آژانس مسافرتی سفرینه</b><span class="isl-status">باز است تا ۲۰:۰۰</span></div>
-      <button class="isl-x" type="button" aria-label="بستن">×</button></div>
-    <p class="isl-ann">تورهای پاییزی استانبول و آنتالیا با پرواز مستقیم از تبریز</p>    <p class="isl-meta">هر روز ۹:۰۰ تا ۲۰:۰۰، جمعه‌ها تعطیل، تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰</p>    <div class="isl-acts">
-      <a href="tel:09120000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg><span>تماس</span></a>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>مسیریابی</span></a>      <button type="button" data-act="chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span></button>      <button type="button" data-act="install" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg><span>نصب اپ</span></button>
-    </div>
-    <p class="isl-ios" hidden>در سافاری دکمه اشتراک‌گذاری را بزنید و «Add to Home Screen» را انتخاب کنید.</p>
-  </div>
-</div>
-<div class="scrim" aria-hidden="true"></div>
+<a class="skip" href="#products">رفتن به تورها</a>
+<div class="demo-bar">پیش‌نمایش قالب «آژانس مسافرتی»؛ <a href="layouts.html" target="_top">همه قالب‌ها</a></div>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/travel/logo.webp" alt="آژانس مسافرتی سفرینه"><b>آژانس مسافرتی سفرینه</b></a>
+    <nav class="hdr-nav" aria-label="بخش‌های سایت"><a href="#products" data-jump="products">تورها</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a></nav>
+    <button class="hdr-cta" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span class="cta-l">رزرو در واتساپ</span><span class="cta-s">واتساپ</span></button>  </div>
+</header>
 
-<main class="views">
+<main id="top" class="site">
 
-  <section class="view on" data-view="home" id="v-home" aria-label="خانه">
-    <header class="g-hero" style="background-image:url('assets/demo/travel/cover.webp')">
-      <div class="g-hero-in">
-        <img class="g-logo" src="assets/demo/travel/logo.webp" alt="آژانس مسافرتی سفرینه">        <h1>آژانس مسافرتی سفرینه</h1>
-        <p>تور داخلی و خارجی، بلیت و ویزا</p>        <div class="g-cta">
-          <button class="pill" type="button" data-go="menu">دیدن تورها</button>
-          <button class="pill clear" type="button" data-go="chat">گفتگو</button>
-                  </div>
+  <section class="hero" aria-labelledby="hero-h">
+    <img class="hero-img" src="assets/demo/travel/cover.webp" alt="" fetchpriority="high" decoding="async">    <div class="hero-in">
+      <img class="g-logo" src="assets/demo/travel/logo.webp" alt="آژانس مسافرتی سفرینه">      <h1 id="hero-h">آژانس مسافرتی سفرینه</h1>
+      <p class="hero-tag">تور داخلی و خارجی، بلیت و ویزا</p>      <div class="hero-cta">
+        <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>رزرو در واتساپ</button>        <a class="pill clear" href="#products" data-jump="products">دیدن تورها</a>
       </div>
-    </header>
+      <p class="hero-meta"><span class="hero-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰</span></p>    </div>
+  </section>
 
-        <div class="g-sec g-picks">
-      <div class="g-sec-h"><h2>ویژه</h2><button type="button" data-go="menu">همه</button></div>
-      <div class="rail"><article class="card" data-name="تور استانبول ۴ شب">
-  <img src="assets/demo/travel/istanbul.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+  <div class="news" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg><span>تورهای پاییزی استانبول و آنتالیا با پرواز مستقیم از تبریز</span></div>
+  <ul class="hl g-facts" aria-label="چرا آژانس مسافرتی سفرینه">
+    <li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.5 3 5.5l3.5 7-3.5 7Z"/><path d="M6.5 12.5H21"/></svg></span><span>پرواز مستقیم</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-3.6 3.9-5.5 7.5-5.5s6.6 1.9 7.5 5.5"/></svg></span><span>پشتیبانی در سفر</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M3.5 10h17M7 15h4"/></svg></span><span>بهترین قیمت روز</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20Z"/><path d="M13.5 3.5v4.5H18M9.5 12.5h5M9.5 16h5"/></svg></span><span>ویزا و بیمه</span></li>  </ul>
+
+    <section class="sec" aria-labelledby="cats-h">
+    <div class="sec-h"><h2 id="cats-h">دسته‌بندی‌ها</h2></div>
+    <div class="cat-tiles">
+              <a class="cat-tile" href="#c69" data-jump="c69">
+          <img src="assets/demo/travel/istanbul.webp" alt="" loading="lazy" decoding="async">          <span><b>تور خارجی</b><small>۴ تور و خدمت</small></span>
+        </a>
+              <a class="cat-tile" href="#c70" data-jump="c70">
+          <img src="assets/demo/travel/kish.webp" alt="" loading="lazy" decoding="async">          <span><b>تور داخلی</b><small>۳ تور و خدمت</small></span>
+        </a>
+              <a class="cat-tile" href="#c71" data-jump="c71">
+          <img src="assets/demo/travel/flight.webp" alt="" loading="lazy" decoding="async">          <span><b>خدمات</b><small>۲ تور و خدمت</small></span>
+        </a>
+          </div>
+  </section>
+  
+    <section class="sec g-picks" aria-labelledby="picks-h">
+    <div class="sec-h"><h2 id="picks-h">ویژه</h2><a href="#products" data-jump="products">همه تورها</a></div>
+    <div class="rail"><article class="card" id="p224" data-id="224" data-name="تور استانبول ۴ شب" data-price="32000000" data-img="/assets/demo/travel/istanbul.webp" data-desc="پرواز مستقیم، هتل ۴ ستاره، صبحانه">
+  <button class="card-open" type="button" aria-label="جزئیات تور استانبول ۴ شب">
+    <span class="card-img"><img src="assets/demo/travel/istanbul.webp" alt="تور استانبول ۴ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور استانبول ۴ شب</h3>
     <p class="desc">پرواز مستقیم، هتل ۴ ستاره، صبحانه</p>        <div class="row">
       <span class="price">۳۲٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور استانبول ۴ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور آنتالیا ۶ شب">
-  <img src="assets/demo/travel/antalya.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p225" data-id="225" data-name="تور آنتالیا ۶ شب" data-price="58000000" data-img="/assets/demo/travel/antalya.webp" data-desc="هتل ۵ ستاره همه‌چیزتمام">
+  <button class="card-open" type="button" aria-label="جزئیات تور آنتالیا ۶ شب">
+    <span class="card-img"><img src="assets/demo/travel/antalya.webp" alt="تور آنتالیا ۶ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور آنتالیا ۶ شب</h3>
     <p class="desc">هتل ۵ ستاره همه‌چیزتمام</p>        <div class="row">
       <span class="price">۵۸٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور آنتالیا ۶ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور دبی ۴ شب">
-  <img src="assets/demo/travel/dubai.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p226" data-id="226" data-name="تور دبی ۴ شب" data-price="45000000" data-img="/assets/demo/travel/dubai.webp" data-desc="هتل ۴ ستاره، گشت شهری">
+  <button class="card-open" type="button" aria-label="جزئیات تور دبی ۴ شب">
+    <span class="card-img"><img src="assets/demo/travel/dubai.webp" alt="تور دبی ۴ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور دبی ۴ شب</h3>
     <p class="desc">هتل ۴ ستاره، گشت شهری</p>        <div class="row">
       <span class="price">۴۵٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور دبی ۴ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور تفلیس ۵ شب">
-  <img src="assets/demo/travel/tbilisi.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p227" data-id="227" data-name="تور تفلیس ۵ شب" data-price="24000000" data-img="/assets/demo/travel/tbilisi.webp" data-desc="زمینی از تبریز، هتل ۴ ستاره">
+  <button class="card-open" type="button" aria-label="جزئیات تور تفلیس ۵ شب">
+    <span class="card-img"><img src="assets/demo/travel/tbilisi.webp" alt="تور تفلیس ۵ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور تفلیس ۵ شب</h3>
     <p class="desc">زمینی از تبریز، هتل ۴ ستاره</p>        <div class="row">
       <span class="price">۲۴٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور تفلیس ۵ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور کیش ۳ شب">
-  <img src="assets/demo/travel/kish.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p228" data-id="228" data-name="تور کیش ۳ شب" data-price="16500000" data-img="/assets/demo/travel/kish.webp" data-desc="پرواز رفت و برگشت، هتل ۴ ستاره">
+  <button class="card-open" type="button" aria-label="جزئیات تور کیش ۳ شب">
+    <span class="card-img"><img src="assets/demo/travel/kish.webp" alt="تور کیش ۳ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور کیش ۳ شب</h3>
     <p class="desc">پرواز رفت و برگشت، هتل ۴ ستاره</p>        <div class="row">
       <span class="price">۱۶٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور کیش ۳ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور قشم ۳ شب">
-  <img src="assets/demo/travel/qeshm.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p229" data-id="229" data-name="تور قشم ۳ شب" data-price="13800000" data-img="/assets/demo/travel/qeshm.webp" data-desc="طبیعت‌گردی و دره ستارگان">
+  <button class="card-open" type="button" aria-label="جزئیات تور قشم ۳ شب">
+    <span class="card-img"><img src="assets/demo/travel/qeshm.webp" alt="تور قشم ۳ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور قشم ۳ شب</h3>
     <p class="desc">طبیعت‌گردی و دره ستارگان</p>        <div class="row">
       <span class="price">۱۳٬۸۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور قشم ۳ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور ماسوله یک‌روزه">
-  <img src="assets/demo/travel/masuleh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p230" data-id="230" data-name="تور ماسوله یک‌روزه" data-price="2200000" data-img="/assets/demo/travel/masuleh.webp" data-desc="اتوبوس و ناهار">
+  <button class="card-open" type="button" aria-label="جزئیات تور ماسوله یک‌روزه">
+    <span class="card-img"><img src="assets/demo/travel/masuleh.webp" alt="تور ماسوله یک‌روزه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور ماسوله یک‌روزه</h3>
     <p class="desc">اتوبوس و ناهار</p>        <div class="row">
       <span class="price">۲٬۲۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور ماسوله یک‌روزه">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="بلیت هواپیما">
-  <img src="assets/demo/travel/flight.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p231" data-id="231" data-name="بلیت هواپیما" data-price="0" data-img="/assets/demo/travel/flight.webp" data-desc="داخلی و خارجی، بهترین قیمت روز">
+  <button class="card-open" type="button" aria-label="جزئیات بلیت هواپیما">
+    <span class="card-img"><img src="assets/demo/travel/flight.webp" alt="بلیت هواپیما" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>بلیت هواپیما</h3>
     <p class="desc">داخلی و خارجی، بهترین قیمت روز</p>        <div class="row">
       <span class="price"><small>قیمت در گفتگو</small></span>
-      <button class="add ask" type="button" data-ask="بلیت هواپیما">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
 </div>
-    </div>
-    
-    <div class="g-sec g-facts">
-      <div class="group">
-        <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۹:۰۰ تا ۲۰:۰۰، جمعه‌ها تعطیل</small></span></div>        <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">آدرس<small>تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      </div>
-    </div>
-
-    <div class="g-sec g-about-sec"><div class="g-sec-h"><h2>درباره ما</h2></div><p class="g-about">بیش از پانزده سال تجربه در تورهای داخلی و خارجی، با پشتیبانی تلفنی در تمام طول سفر. قیمت‌ها برای هر نفر در اتاق دوتخته است. روی هر تور بزنید و جای خودتان را رزرو کنید.</p></div>  </section>
-
-  <section class="view" data-view="menu" id="v-menu" aria-label="تورها">
-    <h1 class="g-title">تورها</h1>
-    <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="q" placeholder="جستجو در تورها" aria-label="جستجو"></label>    <nav class="g-chips" aria-label="دسته‌بندی‌ها">
-      <a href="#c69" data-cat="c69">تور خارجی</a><a href="#c70" data-cat="c70">تور داخلی</a><a href="#c71" data-cat="c71">خدمات</a>    </nav>
-          <section class="g-cat" id="c69">
-        <h2>تور خارجی</h2>
-        <div class="cards"><article class="card" data-name="تور استانبول ۴ شب">
-  <img src="assets/demo/travel/istanbul.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+  </section>
+  
+  <section class="sec" id="products" aria-labelledby="products-h">
+    <div class="sec-h"><h2 id="products-h">تورها</h2><span class="count">۹ مورد</span></div>
+        <nav class="g-chips" aria-label="دسته‌بندی‌ها"><a href="#c69" data-cat="c69">تور خارجی</a><a href="#c70" data-cat="c70">تور داخلی</a><a href="#c71" data-cat="c71">خدمات</a></nav>          <section class="g-cat" id="c69" aria-label="تور خارجی">
+        <h3 class="cat-h">تور خارجی</h3>
+        <div class="cards"><article class="card" id="p224" data-id="224" data-name="تور استانبول ۴ شب" data-price="32000000" data-img="/assets/demo/travel/istanbul.webp" data-desc="پرواز مستقیم، هتل ۴ ستاره، صبحانه">
+  <button class="card-open" type="button" aria-label="جزئیات تور استانبول ۴ شب">
+    <span class="card-img"><img src="assets/demo/travel/istanbul.webp" alt="تور استانبول ۴ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور استانبول ۴ شب</h3>
     <p class="desc">پرواز مستقیم، هتل ۴ ستاره، صبحانه</p>        <div class="row">
       <span class="price">۳۲٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور استانبول ۴ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور آنتالیا ۶ شب">
-  <img src="assets/demo/travel/antalya.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p225" data-id="225" data-name="تور آنتالیا ۶ شب" data-price="58000000" data-img="/assets/demo/travel/antalya.webp" data-desc="هتل ۵ ستاره همه‌چیزتمام">
+  <button class="card-open" type="button" aria-label="جزئیات تور آنتالیا ۶ شب">
+    <span class="card-img"><img src="assets/demo/travel/antalya.webp" alt="تور آنتالیا ۶ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور آنتالیا ۶ شب</h3>
     <p class="desc">هتل ۵ ستاره همه‌چیزتمام</p>        <div class="row">
       <span class="price">۵۸٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور آنتالیا ۶ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور دبی ۴ شب">
-  <img src="assets/demo/travel/dubai.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p226" data-id="226" data-name="تور دبی ۴ شب" data-price="45000000" data-img="/assets/demo/travel/dubai.webp" data-desc="هتل ۴ ستاره، گشت شهری">
+  <button class="card-open" type="button" aria-label="جزئیات تور دبی ۴ شب">
+    <span class="card-img"><img src="assets/demo/travel/dubai.webp" alt="تور دبی ۴ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور دبی ۴ شب</h3>
     <p class="desc">هتل ۴ ستاره، گشت شهری</p>        <div class="row">
       <span class="price">۴۵٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور دبی ۴ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور تفلیس ۵ شب">
-  <img src="assets/demo/travel/tbilisi.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p227" data-id="227" data-name="تور تفلیس ۵ شب" data-price="24000000" data-img="/assets/demo/travel/tbilisi.webp" data-desc="زمینی از تبریز، هتل ۴ ستاره">
+  <button class="card-open" type="button" aria-label="جزئیات تور تفلیس ۵ شب">
+    <span class="card-img"><img src="assets/demo/travel/tbilisi.webp" alt="تور تفلیس ۵ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور تفلیس ۵ شب</h3>
     <p class="desc">زمینی از تبریز، هتل ۴ ستاره</p>        <div class="row">
       <span class="price">۲۴٬۰۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور تفلیس ۵ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-          <section class="g-cat" id="c70">
-        <h2>تور داخلی</h2>
-        <div class="cards"><article class="card" data-name="تور کیش ۳ شب">
-  <img src="assets/demo/travel/kish.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+          <section class="g-cat" id="c70" aria-label="تور داخلی">
+        <h3 class="cat-h">تور داخلی</h3>
+        <div class="cards"><article class="card" id="p228" data-id="228" data-name="تور کیش ۳ شب" data-price="16500000" data-img="/assets/demo/travel/kish.webp" data-desc="پرواز رفت و برگشت، هتل ۴ ستاره">
+  <button class="card-open" type="button" aria-label="جزئیات تور کیش ۳ شب">
+    <span class="card-img"><img src="assets/demo/travel/kish.webp" alt="تور کیش ۳ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور کیش ۳ شب</h3>
     <p class="desc">پرواز رفت و برگشت، هتل ۴ ستاره</p>        <div class="row">
       <span class="price">۱۶٬۵۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور کیش ۳ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور قشم ۳ شب">
-  <img src="assets/demo/travel/qeshm.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p229" data-id="229" data-name="تور قشم ۳ شب" data-price="13800000" data-img="/assets/demo/travel/qeshm.webp" data-desc="طبیعت‌گردی و دره ستارگان">
+  <button class="card-open" type="button" aria-label="جزئیات تور قشم ۳ شب">
+    <span class="card-img"><img src="assets/demo/travel/qeshm.webp" alt="تور قشم ۳ شب" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور قشم ۳ شب</h3>
     <p class="desc">طبیعت‌گردی و دره ستارگان</p>        <div class="row">
       <span class="price">۱۳٬۸۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور قشم ۳ شب">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="تور ماسوله یک‌روزه">
-  <img src="assets/demo/travel/masuleh.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p230" data-id="230" data-name="تور ماسوله یک‌روزه" data-price="2200000" data-img="/assets/demo/travel/masuleh.webp" data-desc="اتوبوس و ناهار">
+  <button class="card-open" type="button" aria-label="جزئیات تور ماسوله یک‌روزه">
+    <span class="card-img"><img src="assets/demo/travel/masuleh.webp" alt="تور ماسوله یک‌روزه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>تور ماسوله یک‌روزه</h3>
     <p class="desc">اتوبوس و ناهار</p>        <div class="row">
       <span class="price">۲٬۲۰۰٬۰۰۰ <small>تومان</small></span>
-      <button class="add ask" type="button" data-ask="تور ماسوله یک‌روزه">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-          <section class="g-cat" id="c71">
-        <h2>خدمات</h2>
-        <div class="cards"><article class="card" data-name="بلیت هواپیما">
-  <img src="assets/demo/travel/flight.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+          <section class="g-cat" id="c71" aria-label="خدمات">
+        <h3 class="cat-h">خدمات</h3>
+        <div class="cards"><article class="card" id="p231" data-id="231" data-name="بلیت هواپیما" data-price="0" data-img="/assets/demo/travel/flight.webp" data-desc="داخلی و خارجی، بهترین قیمت روز">
+  <button class="card-open" type="button" aria-label="جزئیات بلیت هواپیما">
+    <span class="card-img"><img src="assets/demo/travel/flight.webp" alt="بلیت هواپیما" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>بلیت هواپیما</h3>
     <p class="desc">داخلی و خارجی، بهترین قیمت روز</p>        <div class="row">
       <span class="price"><small>قیمت در گفتگو</small></span>
-      <button class="add ask" type="button" data-ask="بلیت هواپیما">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
-<article class="card" data-name="اخذ ویزا">
-  <img src="assets/demo/travel/visa.webp" alt="" loading="lazy" width="480" height="480">  <div class="card-b">
+<article class="card" id="p232" data-id="232" data-name="اخذ ویزا" data-price="0" data-img="/assets/demo/travel/visa.webp" data-desc="شنگن، ترکیه، امارات و گرجستان">
+  <button class="card-open" type="button" aria-label="جزئیات اخذ ویزا">
+    <span class="card-img"><img src="assets/demo/travel/visa.webp" alt="اخذ ویزا" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
+  <div class="card-b">
     <h3>اخذ ویزا</h3>
     <p class="desc">شنگن، ترکیه، امارات و گرجستان</p>        <div class="row">
       <span class="price"><small>قیمت در گفتگو</small></span>
-      <button class="add ask" type="button" data-ask="اخذ ویزا">رزرو</button>    </div>
+      <button class="buy" type="button" data-buy><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>رزرو</span></button>    </div>
   </div>
 </article>
 </div>
       </section>
-      </section>
+            <p class="none" id="qNone" hidden>چیزی با این نام پیدا نشد. در گفتگو بپرسید؛ شاید داشته باشیم.</p>
+    <p class="how"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span>روی «رزرو» بزنید؛ گفتگوی واتساپ ما با یک پیام آماده باز می‌شود.</span></p>
+  </section>
 
-  
-    <section class="view" data-view="chat" id="v-chat" aria-label="گفتگو"><div class="chat" id="chat">
-  <div class="chat-head"><img class="chat-av" src="assets/demo/travel/logo.webp" alt="آژانس مسافرتی سفرینه"><div><b>آژانس مسافرتی سفرینه</b><small id="chatState">پیام‌ها مستقیم به فروشنده می‌رسد</small></div></div>
-  <div class="chat-intro" id="chatIntro">
-    <p class="chat-note">سفارش و سؤالتان را همین‌جا بنویسید. این گفتگو روی سرور داخلی است؛ وقتی واتساپ و تلگرام قطع است هم کار می‌کند.</p>
-    <label class="field">نام<input id="chName" autocomplete="name" maxlength="60"></label>
-    <label class="field">شماره موبایل<input id="chPhone" inputmode="tel" autocomplete="tel" maxlength="20"></label>
-    <button class="pill" type="button" id="chStart">شروع گفتگو</button>
-    <p class="chat-err" id="chErr" hidden></p>
-  </div>
-  <div class="chat-log" id="chatLog" aria-live="polite"></div>
-  <form class="chat-form" id="chatForm" hidden autocomplete="off">
-    <input id="chText" maxlength="600" placeholder="پیام شما…" aria-label="پیام">
-    <button class="chat-send" type="submit" aria-label="ارسال"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4 3.5 11l7 2.5L13 20.5Z"/><path d="m10.5 13.5 4-4"/></svg></button>
-  </form>
-</div>
-</section>
-  
-  <section class="view" data-view="info" id="v-info" aria-label="تماس">
-    <h1 class="g-title">تماس و آدرس</h1>
-    <div class="group">
-      <div class="li"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span class="li-t">ساعت کاری<small>هر روز ۹:۰۰ تا ۲۰:۰۰، جمعه‌ها تعطیل</small></span></div>      <a href="https://nshn.ir/" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>      <a href="#chat" data-go="chat"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg></span><span class="li-t">گفتگوی سایت<small>روی شبکه داخلی هم کار می‌کند</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>              <a href="https://wa.me/989120000000" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ</span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>
-                  <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب به‌صورت اپ<small>بدون اپ‌استور، منو آفلاین هم باز می‌شود</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+  <section class="sec about g-about-sec" id="about" aria-labelledby="about-h">
+    <div class="about-grid">
+      <div class="about-img"><img src="assets/demo/travel/istanbul.webp" alt="" loading="lazy" decoding="async"></div>      <div class="about-tx">
+        <p class="kicker">درباره ما</p>
+        <h2 id="about-h">آژانس مسافرتی سفرینه</h2>
+        <p class="g-about">بیش از پانزده سال تجربه در تورهای داخلی و خارجی، با پشتیبانی تلفنی در تمام طول سفر. قیمت‌ها برای هر نفر در اتاق دوتخته است. روی هر تور بزنید و جای خودتان را رزرو کنید.</p>        <dl class="facts-dl">
+          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>ساعت کاری</dt><dd>هر روز ۹:۰۰ تا ۲۰:۰۰، جمعه‌ها تعطیل</dd></div>          <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>آدرس</dt><dd>تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰</dd></div>                            </dl>
+      </div>
     </div>
-    <a class="powered" href="https://alphawebsite.ir/?ref=demo-travel-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-black.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a>  </section>
-</main>
+  </section>
+
+    <section class="sec" aria-labelledby="gal-h">
+    <div class="sec-h"><h2 id="gal-h">گالری</h2></div>
+    <div class="gallery"><figure class="g0"><img src="assets/demo/travel/cover.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g1"><img src="assets/demo/travel/istanbul.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g2"><img src="assets/demo/travel/antalya.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g3"><img src="assets/demo/travel/dubai.webp" alt="" loading="lazy" decoding="async"></figure><figure class="g4"><img src="assets/demo/travel/tbilisi.webp" alt="" loading="lazy" decoding="async"></figure></div>
+  </section>
+  
+  <section class="sec contact" id="contact" aria-labelledby="contact-h">
+    <div class="sec-h"><h2 id="contact-h">تماس و آدرس</h2></div>
+    <div class="contact-grid">
+            <div class="box hours">
+        <div class="box-h"><b>ساعت کاری</b><span class="now-chip" data-hours><i aria-hidden="true"></i><span class="now-t">بسته است؛ فردا از ۹:۰۰</span></span></div>
+        <table class="week"><caption class="sr">ساعت کاری هفته</caption><tbody>
+          <tr data-dow="6"><th scope="row">شنبه</th><td>۹:۰۰ تا ۲۰:۰۰</td></tr><tr data-dow="0"><th scope="row">یکشنبه</th><td>۹:۰۰ تا ۲۰:۰۰</td></tr><tr data-dow="1"><th scope="row">دوشنبه</th><td>۹:۰۰ تا ۲۰:۰۰</td></tr><tr data-dow="2"><th scope="row">سه‌شنبه</th><td>۹:۰۰ تا ۲۰:۰۰</td></tr><tr data-dow="3"><th scope="row">چهارشنبه</th><td>۹:۰۰ تا ۲۰:۰۰</td></tr><tr data-dow="4"><th scope="row">پنجشنبه</th><td>۹:۰۰ تا ۲۰:۰۰</td></tr><tr data-dow="5" class="offd"><th scope="row">جمعه</th><td>تعطیل</td></tr>        </tbody></table>
+      </div>
+            <div class="box group">
+        <button class="li as-btn" type="button" data-buy-general><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span class="li-t">واتساپ<small>سفارش و سؤال، با پیام آماده</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>        <a href="tel:09120000000"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a11 11 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z"/></svg></span><span class="li-t">تماس تلفنی<small dir="ltr">09120000000</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>        <a href="https://www.google.com/maps/search/?api=1&amp;query=%D8%AA%D8%A8%D8%B1%DB%8C%D8%B2%D8%8C%20%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86%20%D8%A7%D9%85%D8%A7%D9%85%D8%8C%20%DA%86%D9%87%D8%A7%D8%B1%D8%B1%D8%A7%D9%87%20%D8%B4%D8%B1%DB%8C%D8%B9%D8%AA%DB%8C%D8%8C%20%D9%BE%D9%84%D8%A7%DA%A9%20%DB%B1%DB%B2%DB%B0" target="_blank" rel="noopener"><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span class="li-t">مسیریابی<small>تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></a>                                        <button class="li as-btn" type="button" data-act="install" hidden><span class="li-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span class="li-t">نصب روی گوشی<small>با نام و لوگوی آژانس مسافرتی سفرینه، مثل یک اپ</small></span><span class="chev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5-5.5 5.5 5.5 5.5"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+
+    <section class="sec faq" id="faq" aria-labelledby="faq-h">
+    <div class="sec-h"><h2 id="faq-h">سؤالات رایج</h2></div>
+    <div class="faq-list"><details open><summary>چطور رزرو کنم؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>روی دکمه «رزرو» زیر هر تور و خدمت بزنید. گفتگوی واتساپ آژانس مسافرتی سفرینه با یک پیام آماده باز می‌شود؛ همان را بفرستید تا ما هماهنگ کنیم.</p></details><details><summary>پرداخت چطور است؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>بعد از هماهنگی در گفتگو، با کارت‌به‌کارت یا در محل.</p></details><details><summary>ساعت کاری‌تان چیست؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>هر روز ۹:۰۰ تا ۲۰:۰۰، جمعه‌ها تعطیل.</p></details><details><summary>کجا هستید؟<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></svg></summary><p>تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰.</p></details></div>
+  </section>
+  </main>
+
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/travel/logo.webp" alt="آژانس مسافرتی سفرینه"><b>آژانس مسافرتی سفرینه</b></a>
+      <p>تور داخلی و خارجی، بلیت و ویزا</p>      <button class="pill" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>رزرو در واتساپ</button>    </div>
+    <nav class="ft-col" aria-label="دسترسی سریع"><b>دسترسی سریع</b><a href="#products" data-jump="products">تورها</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a><button type="button" class="ft-link" data-act="install" hidden>نصب روی گوشی</button></nav>
+    <div class="ft-col"><b>تماس</b>
+      <a href="tel:09120000000" dir="ltr" class="ltr-t">09120000000</a>      <span>تبریز، خیابان امام، چهارراه شریعتی، پلاک ۱۲۰</span>      <span>هر روز ۹:۰۰ تا ۲۰:۰۰، جمعه‌ها تعطیل</span>    </div>
+  </div>
+  <div class="ft-bottom"><span>© 1405 آژانس مسافرتی سفرینه. همه حقوق محفوظ است.</span><a class="powered" href="https://alphawebsite.ir/?ref=demo-travel-1" target="_blank" rel="noopener" dir="ltr" lang="en"><img class="alpha-mark" src="assets/alpha-black.png" alt="Alpha Agency" width="58" height="44"><span class="powered-txt"><span class="pb">POWERED BY</span><span class="pa">Alpha Agency</span></span></a></div>
+</footer>
 
 <nav class="dock" aria-label="بخش‌ها">
-      <button type="button" data-tab="home" aria-label="خانه" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
-      <button type="button" data-tab="menu" aria-label="تورها"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>تورها</span></button>
-      <button type="button" data-tab="chat" aria-label="گفتگو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg><span>گفتگو</span><b class="badge" data-badge="chat" hidden>۰</b></button>
-      <button type="button" data-tab="info" aria-label="تماس"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
-  </nav>
+  <button type="button" data-tab="top" class="on" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"/></svg><span>خانه</span></button>
+  <button type="button" data-tab="products"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>تورها</span></button>
+  <button type="button" data-tab="about"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8Z"/></svg><span>درباره</span></button>
+    <button type="button" data-tab="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>تماس</span></button>
+</nav>
 
-<script>window.SITE={"slug":"demo-travel-1","name":"آژانس مسافرتی سفرینه","base":"/s/demo-travel-1","chat":true,"glass":true,"demo":true,"v":"2026.10.13-2","type":"travel","fam":"catalog","askMsg":"سلام، برای «%s» رزرو می‌خواهم.","ask":"https://wa.me/989120000000","delivery":false,"fee":0,"min":0,"calls":false};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/chat.js" defer></script></body>
+<dialog class="psheet" id="psheet" aria-labelledby="psName">
+  <form method="dialog" class="ps-in">
+    <button class="x" value="close" aria-label="بستن"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg></button>
+    <div class="ps-img" id="psImg"></div>
+    <div class="ps-b">
+      <h2 id="psName"></h2>
+      <p class="ps-price" id="psPrice"></p>
+      <p class="ps-desc" id="psDesc"></p>
+      <div id="psOpts"></div>
+      <p class="ps-low" id="psLow" hidden></p>
+      <p class="ps-err" id="psErr" role="alert" hidden></p>
+      <button type="button" class="ps-buy" id="psBuy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg><span id="psBuyT">رزرو در واتساپ</span></button>
+      <button type="button" class="ps-share" id="psShare"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7h8v8"/><path d="M17 7 7 17"/></svg>اشتراک‌گذاری</button>
+      <p class="ps-note">گفتگوی واتساپ آژانس مسافرتی سفرینه با یک پیام آماده باز می‌شود؛ فقط «ارسال» را بزنید.</p>
+    </div>
+  </form>
+</dialog>
+
+<script>window.SITE={"slug":"demo-travel-1","name":"آژانس مسافرتی سفرینه","base":"/s/demo-travel-1","chat":false,"glass":true,"demo":true,"v":"2026.10.14-1","type":"travel","fam":"catalog","askMsg":"سلام، برای «%s» رزرو می‌خواهم.","buy":{"ch":"whatsapp","to":"989120000000","label":"واتساپ","word":"رزرو"},"layout":"travel-1","calls":false,"hours":{"open":"09:00","close":"20:00","off":5}};window.AWP={"scope":"site","slug":"demo-travel-1","name":"آژانس مسافرتی سفرینه","base":"/s/demo-travel-1","icon":"/s/demo-travel-1/icon-192.png","privacy":"https://alphawebsite.ir/privacy#visitors","api":"/api/v","demo":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/popups.js" defer></script></body>
 </html>

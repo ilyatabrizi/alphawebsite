@@ -307,6 +307,7 @@ html.ds-lock,html.ds-lock body{overflow:hidden}
 .fs legend{float:right;width:100%;padding:0;font-size:18px;font-weight:800;line-height:1.6}
 .steps-form{counter-reset:f}
 .steps-form .fs legend{display:flex;align-items:center;gap:12px;counter-increment:f}
+.steps-form .fs legend[data-n]::before{content:attr(data-n)}   /* hidden steps do not count, so each step carries its own number */
 .steps-form .fs legend::before{content:counter(f,persian);display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-size:13.5px;font-weight:700;line-height:1}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
 label.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;color:var(--ink2)}
@@ -1213,3 +1214,59 @@ div.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;
 .dchoices{margin:6px 0 10px;padding-inline-start:22px;display:grid;gap:6px}
 .dchoices li{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .dchoices li>span:first-child{font-weight:700}
+
+/* ---------- 2026-10-14: messenger orders, the Zarinpal add-on, visitors ---------- */
+.ext-pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ext-pick label{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ext-pick input{position:absolute;opacity:0;pointer-events:none}
+.ext-pick span{display:grid;gap:2px;padding:12px 16px;border:1px solid var(--line2);border-radius:var(--r2);background:var(--field);transition:border-color .2s,background .2s}
+.ext-pick b{font-size:18px;text-align:right}
+.ext-pick em{font-style:normal;font-size:12.5px;color:var(--muted)}
+.ext-pick input:checked+span{border-color:var(--ink);background:#fff;box-shadow:inset 0 0 0 1px var(--ink),var(--sh1)}
+.ext-pick input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
+.och{display:grid;gap:12px}
+.och-demo{display:grid;gap:6px;justify-items:start;padding:14px;border-radius:var(--r2);background:#ECE5DD}
+.och-b{max-width:92%;padding:9px 13px;border-radius:16px 16px 16px 5px;background:#DCF8C6;color:#111;font-size:13.5px;line-height:1.85;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.och-demo.tg{background:#D6E4EE}.och-demo.tg .och-b{background:#EFFDDE}
+.och-demo small{font-size:12px;color:var(--muted)}
+.addon-pick{position:relative;display:block;cursor:pointer;margin-top:4px}
+.addon-pick input{position:absolute;opacity:0;pointer-events:none}
+.addon-pick>span{display:grid;gap:6px;padding:16px 16px 16px 52px;border:1px dashed var(--line2);border-radius:var(--r2);background:var(--field);transition:border-color .2s,background .2s}
+.addon-pick>span::after{content:"";position:absolute;left:16px;top:18px;width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line2);background:#fff}
+.addon-pick input:checked+span{border-style:solid;border-color:var(--ink);background:#fff;box-shadow:inset 0 0 0 1px var(--ink)}
+.addon-pick input:checked+span::after{background:var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/16px no-repeat;border-color:var(--ink)}
+.addon-pick input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
+.ad-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
+.ad-top b{font-size:15.5px}.ad-top .ad-price{font-weight:800}
+.addon-pick em{font-style:normal;font-size:13px;line-height:1.9;color:var(--muted)}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start;margin-top:16px}
+@media(max-width:960px){.grid-3{grid-template-columns:1fr}}
+.seg-links{display:inline-flex;gap:2px;padding:4px;border-radius:999px;background:var(--bg2)}
+.seg-links a{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--ink2)}
+.seg-links a.on{background:#fff;color:var(--ink);box-shadow:var(--sh1)}
+.hbar.funnel{grid-template-columns:minmax(120px,170px) minmax(0,1fr) 72px}
+.hbar b small{font-weight:500;color:var(--muted);font-size:12px}
+.tbl.vis td{white-space:nowrap}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}
+.dl dt{color:var(--muted);font-size:13.5px}
+.dl dd{margin:0;font-size:14px;overflow-wrap:anywhere}
+.small{font-size:12px}
+.taps{list-style:none;margin:0;padding:0;display:grid}
+.taps li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.taps li:last-child{border-bottom:0}
+.taps img,.tap-ic{width:44px;height:44px;flex:none;border-radius:12px;object-fit:cover;background:var(--bg2)}
+.tap-ic{display:grid;place-items:center}
+.tap-ic svg{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.taps li>span{display:grid;line-height:1.6}
+.taps small{color:var(--muted);font-size:12.5px}
+.zp-card{margin-top:16px;display:grid;gap:10px}
+.zp-card p{color:var(--ink2);line-height:1.9}
+/* the signature's home-screen art */
+.art-home{background:linear-gradient(140deg,#20232B,#3B4256 55%,#7A86A8)}
+.hs{display:grid;grid-template-columns:repeat(4,44px);gap:12px}
+.hs i,.hs-me{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.18)}
+.hs-me{display:grid;place-items:center;background:#fff;color:#131312;font-size:20px;font-weight:800;box-shadow:0 10px 24px rgba(0,0,0,.35);animation:hsPop 2.6s cubic-bezier(.34,1.4,.44,1) infinite}
+.hs-cap{color:#fff;font-size:12px;font-weight:600;margin-top:-4px;transform:translateX(26px)}
+@keyframes hsPop{0%,60%,100%{transform:none}70%{transform:scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.hs-me{animation:none}}
+.kpis.vk{grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}

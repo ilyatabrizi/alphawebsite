@@ -210,29 +210,18 @@
     try { if (pvf.contentDocument && pvf.contentDocument.readyState === 'complete') arm(); } catch (e) {}
   }
 
-  /* home: pick a niche and layout 1 or 2; the phone loads that demo */
+  /* home: pick a niche; the phone loads its demo */
   var tryer = d.querySelector('.tryer');
   if (tryer && lv) {
-    var tns = $$('.tn', tryer), tls = $$('.try-l button', tryer), go = d.getElementById('tryGo'), more = d.getElementById('tryMore');
-    var num = 1, cur = tns.filter(function (t) { return t.getAttribute('aria-pressed') === 'true'; })[0] || tns[0];
-    var show = function () {
-      var lay = cur.getAttribute('data-l' + num), name = cur.getAttribute('data-n' + num);
-      live(lv, lay, name, cur.getAttribute('data-s' + num), cur.getAttribute('data-b' + num));
-      if (go) go.href = window.AW_STATIC ? 'start.html' : '/start?layout=' + lay;
-      if (more) more.href = window.AW_STATIC ? 'layout-' + lay + '.html' : '/layouts/' + lay;
-    };
+    var tns = $$('.tn', tryer), go = d.getElementById('tryGo'), more = d.getElementById('tryMore');
     tns.forEach(function (b) {
       b.addEventListener('click', function () {
-        if (b === cur) return;
-        cur = b; tns.forEach(function (t) { t.setAttribute('aria-pressed', t === b ? 'true' : 'false'); });
-        show();
-      });
-    });
-    tls.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var n = +b.getAttribute('data-n'); if (n === num) return;
-        num = n; tls.forEach(function (t) { t.setAttribute('aria-pressed', t === b ? 'true' : 'false'); });
-        show();
+        if (b.getAttribute('aria-pressed') === 'true') return;
+        tns.forEach(function (t) { t.setAttribute('aria-pressed', t === b ? 'true' : 'false'); });
+        var lay = b.getAttribute('data-l');
+        live(lv, lay, b.getAttribute('data-n'), b.getAttribute('data-s'), b.getAttribute('data-b'));
+        if (go) go.href = window.AW_STATIC ? 'start.html' : '/start?layout=' + lay;
+        if (more) more.href = window.AW_STATIC ? 'layout-' + lay + '.html' : '/layouts/' + lay;
       });
     });
   }

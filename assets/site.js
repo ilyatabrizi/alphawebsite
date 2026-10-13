@@ -135,12 +135,12 @@
     if (pick.showModal) pick.showModal(); else pick.setAttribute('open', '');
   }
 
-  /* Real estate and gyms: no cart. «درخواست بازدید» / «ثبت‌نام» opens the site chat with the message ready, or
+  /* Catalogs and services (cars, real estate, salons, clinics, gyms, courses, repairs, tours…): no cart. «درخواست بازدید» / «ثبت‌نام» opens the site chat with the message ready, or
      WhatsApp (or a call) when the chat is off. */
   document.querySelectorAll('.add[data-ask]').forEach(function (b) {
     b.addEventListener('click', function () {
       var n = b.getAttribute('data-ask');
-      var msg = S.type === 'realestate' ? 'سلام، برای بازدید «' + n + '» وقت می‌خواهم.' : S.type === 'gym' ? 'سلام، برای «' + n + '» ثبت‌نام می‌کنم.' : 'سلام، درباره «' + n + '» سؤال دارم.';
+      var msg = (S.askMsg || 'سلام، درباره «%s» سؤال دارم.').replace('%s', n);
       if (S.chat && window.AlphaUI) {
         window.AlphaUI.openChat();
         setTimeout(function () { var t = $('chText'), f = $('chatForm'); if (t) t.value = msg; var el = f && !f.hidden ? t : $('chName'); if (el) el.focus(); }, 120);

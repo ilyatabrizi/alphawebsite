@@ -280,7 +280,9 @@ html.ds-lock,html.ds-lock body{overflow:hidden}
 .foot-brand p{max-width:34ch;line-height:2;color:#A3A199}
 .brand.light{color:#fff;padding-inline:0}
 .brand.light b{color:#fff}
-.foot-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.foot-cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
+.foot-cols .fc-niche{grid-column:span 2;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
+.foot-cols .fc-niche b{grid-column:1/-1}
 .foot-cols div{display:grid;gap:4px;align-content:start}
 .foot-cols b{margin-bottom:6px;font-size:13px;font-weight:700;color:#fff}
 .foot-cols a{display:flex;align-items:center;min-height:34px;line-height:1.6;color:#C9C7BF}
@@ -982,8 +984,6 @@ a.kpi{transition:border-color .2s,box-shadow .2s}
 @media(max-width:620px){.layouts.pair{grid-template-columns:minmax(0,1fr)}}
 .lay-type{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .lay-num{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:var(--bg2);color:var(--ink);font-size:12px;font-weight:700}
-.diff .tbl th[scope=row]{color:var(--muted);font-weight:600}
-.diff .tbl td{font-weight:500;color:var(--ink)}
 .chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 
 /* ---------- signup: type first, then its two layouts; one step at a time ---------- */

@@ -703,6 +703,7 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.spin{animation:none}}
 .warnline{color:var(--warn)}
+.c2c-note{padding:12px 16px;border-radius:var(--r2);background:var(--badw);color:var(--bad);font-size:14px;line-height:1.9}
 .c2c-claim{display:grid;gap:12px}
 
 /* ---------- sign in ---------- */

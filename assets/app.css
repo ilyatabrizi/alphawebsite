@@ -1108,7 +1108,7 @@ a.kpi{transition:border-color .2s,box-shadow .2s}
 .checks .pill{flex:none}
 .foot-contact{margin:14px 0 0;font-size:13px;line-height:1.9;color:#B9B7AF}
 .foot-contact a{color:#E9E7E1}
-.trust .enamad img{display:block;width:90px;height:90px;border-radius:12px;background:#fff}
+.trust img{display:block;width:90px;height:auto;border-radius:12px;background:#fff}
 .contact-card .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 
 /* ---------- panel → look: the look editor (colours with RGB, shape, text, background, sections) ---------- */

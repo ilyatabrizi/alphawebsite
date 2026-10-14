@@ -22,6 +22,21 @@
     });
   });
 
+  /* the card-to-card pay page: ask every few seconds whether the bank's SMS has confirmed the payment, and move on
+     once it has. Stops after 45 minutes; a hidden tab asks again as soon as it is shown. */
+  var poll = d.querySelector('[data-poll]');
+  if (poll && window.fetch) {
+    var pUrl = poll.getAttribute('data-poll'), pT0 = Date.now(), pBusy = false;
+    var pTick = function () {
+      if (pBusy || d.hidden || Date.now() - pT0 > 45 * 60000) return;
+      pBusy = true;
+      fetch(pUrl, { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.json(); })
+        .then(function (j) { if (j && j.paid && j.go) location.href = j.go; }).catch(function () {}).then(function () { pBusy = false; });
+    };
+    setInterval(pTick, 6000);
+    d.addEventListener('visibilitychange', pTick);
+  }
+
   /* the template gallery: a search box and a category menu (home #niches, /layouts). Every word typed must appear in
      the card's name, kind or description; Arabic ي/ك/ى, أ/إ/آ, ة and the half-space don't matter. */
   var norm = function (t) { return String(t || '').toLowerCase().replace(/[يى]/g, 'ی').replace(/ك/g, 'ک').replace(/[\u200c\u200f\u200e\u064b-\u065f]/g, '').replace(/[آأإ]/g, 'ا').replace(/ة/g, 'ه'); };

@@ -660,7 +660,7 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 
 /* ---------- payment + welcome ---------- */
 .pay-page,.welcome-page{padding-bottom:64px}
-.pay-page .wrap,.welcome-page .wrap{display:grid;gap:18px}
+.pay-page .wrap,.welcome-page .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
 .invoice{display:grid;gap:16px}
 .inv-h{display:flex;justify-content:space-between;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
 .inv-h div{display:grid;gap:2px}
@@ -676,6 +676,34 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .nx .ic,.empty>svg,.created .ic{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--bg2)}
 .nx .ic svg,.created .ic svg{width:21px;height:21px;fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:720px){.next{grid-template-columns:1fr}}
+/* card-to-card (card2card.php): the exact amount, the card, the Sheba, «واریز کردم», the waiting note */
+.c2c{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.c2c h2{font-size:19px}
+.c2c-amt{display:grid;gap:6px;padding:16px 18px;border-radius:var(--r2);background:var(--bg2)}
+.c2c-amt .lbl{font-size:13px;color:var(--muted)}
+.c2c-big{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.c2c-big b{font-size:34px;font-weight:800;line-height:1.25}
+.c2c-big small{font-size:15px;color:var(--ink2)}
+.c2c-big .copy{margin-inline-start:auto;align-self:center}
+.c2c-rial{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2)}
+.bankcard{display:grid;align-content:space-between;gap:14px;width:100%;max-width:400px;aspect-ratio:1.586;justify-self:center;padding:20px 22px;border-radius:22px;background:radial-gradient(120% 140% at 100% 0%,#3B3A35 0%,#131312 62%);color:#fff;box-shadow:var(--sh2)}
+.bc-bank{font-weight:700;font-size:15px}
+.bc-pan{font-size:clamp(17px,5.1vw,25px);letter-spacing:.04em;text-align:center;white-space:nowrap}
+.bc-name{font-size:14px;opacity:.86}
+.copy.light{justify-self:start;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.26);color:#fff}
+.c2c-iban summary{cursor:pointer;font-weight:600}
+.c2c-iban p{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}
+.c2c-iban p b{font-size:15px;word-break:break-all}
+.c2c-steps{margin:0;padding-inline-start:20px;display:grid;gap:4px;font-size:14.5px;color:var(--ink2)}
+.c2c-wait{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-radius:var(--r2);background:var(--warnw)}
+.c2c-wait b{display:block;margin-bottom:4px}
+.c2c-wait p{font-size:14px;line-height:1.9}
+.c2c-wait p+p{margin-top:6px}
+.spin{flex:none;width:22px;height:22px;margin-top:4px;border-radius:50%;border:2.5px solid rgba(138,83,0,.22);border-top-color:var(--warn);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.warnline{color:var(--warn)}
+.c2c-claim{display:grid;gap:12px}
 
 /* ---------- sign in ---------- */
 .auth-wrap{padding-block:clamp(22px,4vw,56px) 72px}
@@ -1425,3 +1453,11 @@ div.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;
 .rs-row{display:grid;gap:12px;padding:16px;border-radius:var(--r2);border:1px solid var(--line);background:var(--field)}
 .rs-acts{display:flex;gap:6px;justify-content:flex-end}
 .btn.danger.ghost{color:var(--bad)}
+/* /admin/launch payments + /admin/bank (card2card.php) */
+.steps-sm{margin:8px 0 4px;padding-inline-start:20px;display:grid;gap:6px;font-size:14px;line-height:1.9;color:var(--ink2)}
+details>summary{cursor:pointer}
+#sms details,#telegram form,#sms form{margin-top:4px}
+#sms,#telegram{display:grid;gap:12px;align-content:start}
+pre.sms{margin:8px 0 4px;padding:10px 12px;border-radius:var(--r1);background:var(--bg2);font:inherit;font-size:13px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}
+.match-form{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.match-form select{max-width:260px;min-height:34px;font-size:13px}

@@ -28,7 +28,7 @@
 <header class="hdr" id="hdr">
   <div class="hdr-in">
     <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/gold/logo.webp" alt="طلا و جواهر آذر"><b>طلا و جواهر آذر</b></a>
-    <nav class="hdr-nav" aria-label="بخش‌های سایت"><a href="#products" data-jump="products">محصولات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a></nav>
+    <nav class="hdr-nav" aria-label="بخش‌های سایت"><a href="#gold" data-jump="gold">قیمت طلا</a><a href="#products" data-jump="products">محصولات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a></nav>
     <button class="hdr-cta hdr-bag" type="button" data-bag-open aria-label="سبد خرید"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cta-l">سبد خرید</span><b class="bag-n" data-bag-n hidden>۰</b></button>
   </div>
 </header>
@@ -44,9 +44,31 @@
       <p class="hero-meta"><span class="hero-addr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>تبریز، بازار امیر، راسته زرگرها، پلاک ۲۳</span></p>    </div>
   </section>
 
-  <div class="news" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg><span>قیمت‌ها هر روز با نرخ روز طلا به‌روز می‌شود</span></div>
+  <div class="news" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3.5 5.5 13.5H12l-1 7 7.5-10H12Z"/></svg><span>قیمت هر قطعه با نرخ لحظه‌ای طلای ۱۸ عیار حساب می‌شود</span></div>
   <ul class="hl g-facts" aria-label="چرا طلا و جواهر آذر">
     <li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 5 6.2v5.4c0 4.1 2.9 7.5 7 8.9 4.1-1.4 7-4.8 7-8.9V6.2Z"/><path d="m9 12.2 2.2 2.2 3.9-4.2"/></svg></span><span>فاکتور رسمی و ضمانت</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10l4 5-9 11L3 9Z"/><path d="M3 9h18M9.5 4 8 9l4 11 4-11-1.5-5"/></svg></span><span>عیار تضمینی</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg></span><span>ارسال بیمه‌شده</span></li><li><span class="hl-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg></span><span>قیمت روز در پیام‌رسان</span></li>  </ul>
+
+  <section class="sec gold-sec" id="gold" aria-labelledby="gold-h">
+  <div class="sec-h"><h2 id="gold-h">قیمت طلا و ماشین‌حساب</h2></div>
+  <div class="gold-grid">
+    <div class="box gold-now">
+      <div class="box-h"><b>طلای ۱۸ عیار، هر گرم</b><span class="now-chip gold-chip is-closed"><i aria-hidden="true"></i><span data-gold-when>در دسترس نیست</span></span></div>
+      <p class="gold-p"><b data-gold-p18>در گفتگو بپرسید</b></p>
+      <p class="gold-src" data-gold-src>نرخ روز الان در دسترس نیست؛ قیمت را در گفتگو بپرسید.</p>
+          </div>
+    <form class="box gold-calc" id="goldCalc" novalidate>
+      <h3>ماشین‌حساب قیمت طلا</h3>
+      <div class="gc-f">
+        <label class="bf"><span>وزن (گرم)</span><input id="gcW" inputmode="decimal" autocomplete="off" placeholder="مثلاً ۳٫۲۵" dir="ltr"></label>
+        <label class="bf"><span>عیار</span><select id="gcP"><option value="750">۱۸ عیار</option><option value="875">۲۱ عیار</option><option value="1000">۲۴ عیار</option></select></label>
+        <label class="bf"><span>اجرت ساخت (٪)</span><input id="gcM" inputmode="decimal" autocomplete="off" value="۱۸" dir="ltr"></label>
+        <label class="bf"><span>سود فروشنده (٪)</span><input id="gcS" inputmode="decimal" autocomplete="off" value="۷" dir="ltr"></label>
+      </div>
+      <dl class="gc-out" id="gcOut" aria-live="polite"><div class="gc-empty"><dt>وزن را بنویسید تا قیمت حساب شود.</dt><dd></dd></div></dl>
+      <p class="hint">مالیات بر ارزش افزوده (۱۰٪) فقط روی اجرت و سود است، نه روی خود طلا. قیمت نهایی هنگام خرید با نرخ همان لحظه تأیید می‌شود.</p>
+    </form>
+  </div>
+</section>
 
     <section class="sec" aria-labelledby="cats-h">
     <div class="sec-h"><h2 id="cats-h">دسته‌بندی‌ها</h2></div>
@@ -65,83 +87,83 @@
   
     <section class="sec g-picks" aria-labelledby="picks-h">
     <div class="sec-h"><h2 id="picks-h">پرفروش‌ها</h2><a href="#products" data-jump="products">همه محصولات</a></div>
-    <div class="rail"><article class="card" id="p47" data-id="47" data-name="انگشتر نگین‌دار زنانه" data-price="107900000" data-img="/assets/demo/gold/ring-stone.webp" data-desc="وزن ۳٫۲ گرم، نگین زیرکونیا" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۲&quot;,&quot;۵۴&quot;,&quot;۵۶&quot;]}]" data-stock="3">
+    <div class="rail"><article class="card" id="r47" data-id="47" data-name="انگشتر نگین‌دار زنانه" data-price="0" data-img="/assets/demo/gold/ring-stone.webp" data-desc="نگین زیرکونیا، طرح تک‌نگین" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۲&quot;,&quot;۵۴&quot;,&quot;۵۶&quot;]}]" data-stock="3" data-gk="weight" data-gw="3200" data-gp="750" data-gm="2000" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات انگشتر نگین‌دار زنانه">
     <span class="card-img"><img src="assets/demo/gold/ring-stone.webp" alt="انگشتر نگین‌دار زنانه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>انگشتر نگین‌دار زنانه</h3>
-    <p class="desc">وزن ۳٫۲ گرم، نگین زیرکونیا</p>    <p class="opts">سایز: ۵۰، ۵۲، ۵۴، ۵۶</p><p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
-      <span class="price">۱۰۷٬۹۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">نگین زیرکونیا، طرح تک‌نگین</p>    <p class="gw">۳٫۲ گرم، ۱۸ عیار، اجرت ۲۰٪</p>    <p class="opts">سایز: ۵۰، ۵۲، ۵۴، ۵۶</p><p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن انگشتر نگین‌دار زنانه"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p48" data-id="48" data-name="انگشتر مردانه" data-price="161000000" data-img="/assets/demo/gold/ring-men.webp" data-desc="وزن ۵ گرم، طرح ساده مات" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۸&quot;,&quot;۶۰&quot;,&quot;۶۲&quot;,&quot;۶۴&quot;]}]" data-stock="2">
+<article class="card" id="r48" data-id="48" data-name="انگشتر مردانه" data-price="0" data-img="/assets/demo/gold/ring-men.webp" data-desc="طرح ساده مات" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۸&quot;,&quot;۶۰&quot;,&quot;۶۲&quot;,&quot;۶۴&quot;]}]" data-stock="2" data-gk="weight" data-gw="5000" data-gp="750" data-gm="1500" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات انگشتر مردانه">
     <span class="card-img"><img src="assets/demo/gold/ring-men.webp" alt="انگشتر مردانه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>انگشتر مردانه</h3>
-    <p class="desc">وزن ۵ گرم، طرح ساده مات</p>    <p class="opts">سایز: ۵۸، ۶۰، ۶۲، ۶۴</p><p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
-      <span class="price">۱۶۱٬۰۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">طرح ساده مات</p>    <p class="gw">۵ گرم، ۱۸ عیار، اجرت ۱۵٪</p>    <p class="opts">سایز: ۵۸، ۶۰، ۶۲، ۶۴</p><p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن انگشتر مردانه"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p49" data-id="49" data-name="حلقه ساده" data-price="80500000" data-img="/assets/demo/gold/ring-plain.webp" data-desc="وزن ۲٫۵ گرم، رینگ صاف" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۴&quot;,&quot;۵۸&quot;,&quot;۶۲&quot;]}]" data-stock="6">
+<article class="card" id="r49" data-id="49" data-name="حلقه ساده" data-price="0" data-img="/assets/demo/gold/ring-plain.webp" data-desc="رینگ صاف، مناسب حلقه ازدواج" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۴&quot;,&quot;۵۸&quot;,&quot;۶۲&quot;]}]" data-stock="6" data-gk="weight" data-gw="2500" data-gp="750" data-gm="1200" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات حلقه ساده">
     <span class="card-img"><img src="assets/demo/gold/ring-plain.webp" alt="حلقه ساده" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>حلقه ساده</h3>
-    <p class="desc">وزن ۲٫۵ گرم، رینگ صاف</p>    <p class="opts">سایز: ۵۰، ۵۴، ۵۸، ۶۲</p>    <div class="row wide">
-      <span class="price">۸۰٬۵۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">رینگ صاف، مناسب حلقه ازدواج</p>    <p class="gw">۲٫۵ گرم، ۱۸ عیار، اجرت ۱۲٪</p>    <p class="opts">سایز: ۵۰، ۵۴، ۵۸، ۶۲</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن حلقه ساده"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p50" data-id="50" data-name="گردنبند پلاک" data-price="134800000" data-img="/assets/demo/gold/necklace-pendant.webp" data-desc="وزن ۴ گرم، زنجیر ۴۵ سانتی" data-stock="4">
+<article class="card" id="r50" data-id="50" data-name="گردنبند پلاک" data-price="0" data-img="/assets/demo/gold/necklace-pendant.webp" data-desc="زنجیر ۴۵ سانتی با پلاک" data-stock="4" data-gk="weight" data-gw="4000" data-gp="750" data-gm="1800" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات گردنبند پلاک">
     <span class="card-img"><img src="assets/demo/gold/necklace-pendant.webp" alt="گردنبند پلاک" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>گردنبند پلاک</h3>
-    <p class="desc">وزن ۴ گرم، زنجیر ۴۵ سانتی</p>        <div class="row wide">
-      <span class="price">۱۳۴٬۸۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">زنجیر ۴۵ سانتی با پلاک</p>    <p class="gw">۴ گرم، ۱۸ عیار، اجرت ۱۸٪</p>        <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن گردنبند پلاک"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p51" data-id="51" data-name="زنجیر ونیزی" data-price="193200000" data-img="/assets/demo/gold/chain.webp" data-desc="وزن ۶ گرم، ۵۰ سانتی" data-stock="3">
+<article class="card" id="r51" data-id="51" data-name="زنجیر ونیزی" data-price="0" data-img="/assets/demo/gold/chain.webp" data-desc="طول ۵۰ سانتی" data-stock="3" data-gk="weight" data-gw="6000" data-gp="750" data-gm="1000" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات زنجیر ونیزی">
     <span class="card-img"><img src="assets/demo/gold/chain.webp" alt="زنجیر ونیزی" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>زنجیر ونیزی</h3>
-    <p class="desc">وزن ۶ گرم، ۵۰ سانتی</p>    <p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
-      <span class="price">۱۹۳٬۲۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">طول ۵۰ سانتی</p>    <p class="gw">۶ گرم، ۱۸ عیار، اجرت ۱۰٪</p>    <p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن زنجیر ونیزی"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p52" data-id="52" data-name="گردنبند مروارید" data-price="55000000" data-img="/assets/demo/gold/necklace-pearl.webp" data-desc="مروارید پرورشی و قفل طلا" data-stock="2">
+<article class="card" id="r52" data-id="52" data-name="گردنبند مروارید" data-price="55000000" data-img="/assets/demo/gold/necklace-pearl.webp" data-desc="مروارید پرورشی و قفل طلا" data-stock="2">
   <button class="card-open" type="button" aria-label="جزئیات گردنبند مروارید">
     <span class="card-img"><img src="assets/demo/gold/necklace-pearl.webp" alt="گردنبند مروارید" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>گردنبند مروارید</h3>
-    <p class="desc">مروارید پرورشی و قفل طلا</p>    <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
-      <span class="price">۵۵٬۰۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">مروارید پرورشی و قفل طلا</p>        <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
+      <span class="price"><span class="now-p">۵۵٬۰۰۰٬۰۰۰</span> <small>تومان</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن گردنبند مروارید"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p53" data-id="53" data-name="آویز اسم" data-price="105600000" data-img="/assets/demo/gold/pendant-name.webp" data-desc="ساخت سفارشی، حدود ۳ گرم">
+<article class="card" id="r53" data-id="53" data-name="آویز اسم" data-price="0" data-img="/assets/demo/gold/pendant-name.webp" data-desc="ساخت سفارشی؛ وزن نهایی حدود ۳ گرم" data-gk="weight" data-gw="3000" data-gp="750" data-gm="3000" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات آویز اسم">
     <span class="card-img"><img src="assets/demo/gold/pendant-name.webp" alt="آویز اسم" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>آویز اسم</h3>
-    <p class="desc">ساخت سفارشی، حدود ۳ گرم</p>        <div class="row wide">
-      <span class="price">۱۰۵٬۶۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">ساخت سفارشی؛ وزن نهایی حدود ۳ گرم</p>    <p class="gw">۳ گرم، ۱۸ عیار، اجرت ۳۰٪</p>        <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن آویز اسم"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p54" data-id="54" data-name="النگو" data-price="257700000" data-img="/assets/demo/gold/bangle.webp" data-desc="وزن ۸ گرم، طرح ساده" data-stock="2">
+<article class="card" id="r54" data-id="54" data-name="النگو" data-price="0" data-img="/assets/demo/gold/bangle.webp" data-desc="طرح ساده، ماشینی" data-stock="2" data-gk="weight" data-gw="8000" data-gp="750" data-gm="800" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات النگو">
     <span class="card-img"><img src="assets/demo/gold/bangle.webp" alt="النگو" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>النگو</h3>
-    <p class="desc">وزن ۸ گرم، طرح ساده</p>    <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
-      <span class="price">۲۵۷٬۷۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">طرح ساده، ماشینی</p>    <p class="gw">۸ گرم، ۱۸ عیار، اجرت ۸٪</p>    <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن النگو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
@@ -152,33 +174,33 @@
     <div class="sec-h"><h2 id="products-h">محصولات</h2><span class="count">۱۲ مورد</span></div>
     <label class="g-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="q" placeholder="جست‌وجو در محصولات" aria-label="جست‌وجو" autocomplete="off"></label>    <nav class="g-chips" aria-label="دسته‌بندی‌ها"><a href="#c14" data-cat="c14">انگشتر</a><a href="#c15" data-cat="c15">گردنبند</a><a href="#c16" data-cat="c16">دستبند و گوشواره</a></nav>          <section class="g-cat" id="c14" aria-label="انگشتر">
         <h3 class="cat-h">انگشتر</h3>
-        <div class="cards"><article class="card" id="p47" data-id="47" data-name="انگشتر نگین‌دار زنانه" data-price="107900000" data-img="/assets/demo/gold/ring-stone.webp" data-desc="وزن ۳٫۲ گرم، نگین زیرکونیا" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۲&quot;,&quot;۵۴&quot;,&quot;۵۶&quot;]}]" data-stock="3">
+        <div class="cards"><article class="card" id="p47" data-id="47" data-name="انگشتر نگین‌دار زنانه" data-price="0" data-img="/assets/demo/gold/ring-stone.webp" data-desc="نگین زیرکونیا، طرح تک‌نگین" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۲&quot;,&quot;۵۴&quot;,&quot;۵۶&quot;]}]" data-stock="3" data-gk="weight" data-gw="3200" data-gp="750" data-gm="2000" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات انگشتر نگین‌دار زنانه">
     <span class="card-img"><img src="assets/demo/gold/ring-stone.webp" alt="انگشتر نگین‌دار زنانه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>انگشتر نگین‌دار زنانه</h3>
-    <p class="desc">وزن ۳٫۲ گرم، نگین زیرکونیا</p>    <p class="opts">سایز: ۵۰، ۵۲، ۵۴، ۵۶</p><p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
-      <span class="price">۱۰۷٬۹۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">نگین زیرکونیا، طرح تک‌نگین</p>    <p class="gw">۳٫۲ گرم، ۱۸ عیار، اجرت ۲۰٪</p>    <p class="opts">سایز: ۵۰، ۵۲، ۵۴، ۵۶</p><p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن انگشتر نگین‌دار زنانه"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p48" data-id="48" data-name="انگشتر مردانه" data-price="161000000" data-img="/assets/demo/gold/ring-men.webp" data-desc="وزن ۵ گرم، طرح ساده مات" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۸&quot;,&quot;۶۰&quot;,&quot;۶۲&quot;,&quot;۶۴&quot;]}]" data-stock="2">
+<article class="card" id="p48" data-id="48" data-name="انگشتر مردانه" data-price="0" data-img="/assets/demo/gold/ring-men.webp" data-desc="طرح ساده مات" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۸&quot;,&quot;۶۰&quot;,&quot;۶۲&quot;,&quot;۶۴&quot;]}]" data-stock="2" data-gk="weight" data-gw="5000" data-gp="750" data-gm="1500" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات انگشتر مردانه">
     <span class="card-img"><img src="assets/demo/gold/ring-men.webp" alt="انگشتر مردانه" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>انگشتر مردانه</h3>
-    <p class="desc">وزن ۵ گرم، طرح ساده مات</p>    <p class="opts">سایز: ۵۸، ۶۰، ۶۲، ۶۴</p><p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
-      <span class="price">۱۶۱٬۰۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">طرح ساده مات</p>    <p class="gw">۵ گرم، ۱۸ عیار، اجرت ۱۵٪</p>    <p class="opts">سایز: ۵۸، ۶۰، ۶۲، ۶۴</p><p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن انگشتر مردانه"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p49" data-id="49" data-name="حلقه ساده" data-price="80500000" data-img="/assets/demo/gold/ring-plain.webp" data-desc="وزن ۲٫۵ گرم، رینگ صاف" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۴&quot;,&quot;۵۸&quot;,&quot;۶۲&quot;]}]" data-stock="6">
+<article class="card" id="p49" data-id="49" data-name="حلقه ساده" data-price="0" data-img="/assets/demo/gold/ring-plain.webp" data-desc="رینگ صاف، مناسب حلقه ازدواج" data-opts="[{&quot;n&quot;:&quot;سایز&quot;,&quot;v&quot;:[&quot;۵۰&quot;,&quot;۵۴&quot;,&quot;۵۸&quot;,&quot;۶۲&quot;]}]" data-stock="6" data-gk="weight" data-gw="2500" data-gp="750" data-gm="1200" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات حلقه ساده">
     <span class="card-img"><img src="assets/demo/gold/ring-plain.webp" alt="حلقه ساده" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>حلقه ساده</h3>
-    <p class="desc">وزن ۲٫۵ گرم، رینگ صاف</p>    <p class="opts">سایز: ۵۰، ۵۴، ۵۸، ۶۲</p>    <div class="row wide">
-      <span class="price">۸۰٬۵۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">رینگ صاف، مناسب حلقه ازدواج</p>    <p class="gw">۲٫۵ گرم، ۱۸ عیار، اجرت ۱۲٪</p>    <p class="opts">سایز: ۵۰، ۵۴، ۵۸، ۶۲</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن حلقه ساده"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
@@ -186,23 +208,23 @@
       </section>
           <section class="g-cat" id="c15" aria-label="گردنبند">
         <h3 class="cat-h">گردنبند</h3>
-        <div class="cards"><article class="card" id="p50" data-id="50" data-name="گردنبند پلاک" data-price="134800000" data-img="/assets/demo/gold/necklace-pendant.webp" data-desc="وزن ۴ گرم، زنجیر ۴۵ سانتی" data-stock="4">
+        <div class="cards"><article class="card" id="p50" data-id="50" data-name="گردنبند پلاک" data-price="0" data-img="/assets/demo/gold/necklace-pendant.webp" data-desc="زنجیر ۴۵ سانتی با پلاک" data-stock="4" data-gk="weight" data-gw="4000" data-gp="750" data-gm="1800" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات گردنبند پلاک">
     <span class="card-img"><img src="assets/demo/gold/necklace-pendant.webp" alt="گردنبند پلاک" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>گردنبند پلاک</h3>
-    <p class="desc">وزن ۴ گرم، زنجیر ۴۵ سانتی</p>        <div class="row wide">
-      <span class="price">۱۳۴٬۸۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">زنجیر ۴۵ سانتی با پلاک</p>    <p class="gw">۴ گرم، ۱۸ عیار، اجرت ۱۸٪</p>        <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن گردنبند پلاک"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p51" data-id="51" data-name="زنجیر ونیزی" data-price="193200000" data-img="/assets/demo/gold/chain.webp" data-desc="وزن ۶ گرم، ۵۰ سانتی" data-stock="3">
+<article class="card" id="p51" data-id="51" data-name="زنجیر ونیزی" data-price="0" data-img="/assets/demo/gold/chain.webp" data-desc="طول ۵۰ سانتی" data-stock="3" data-gk="weight" data-gw="6000" data-gp="750" data-gm="1000" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات زنجیر ونیزی">
     <span class="card-img"><img src="assets/demo/gold/chain.webp" alt="زنجیر ونیزی" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>زنجیر ونیزی</h3>
-    <p class="desc">وزن ۶ گرم، ۵۰ سانتی</p>    <p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
-      <span class="price">۱۹۳٬۲۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">طول ۵۰ سانتی</p>    <p class="gw">۶ گرم، ۱۸ عیار، اجرت ۱۰٪</p>    <p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن زنجیر ونیزی"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
@@ -211,18 +233,18 @@
     <span class="card-img"><img src="assets/demo/gold/necklace-pearl.webp" alt="گردنبند مروارید" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>گردنبند مروارید</h3>
-    <p class="desc">مروارید پرورشی و قفل طلا</p>    <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
-      <span class="price">۵۵٬۰۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">مروارید پرورشی و قفل طلا</p>        <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
+      <span class="price"><span class="now-p">۵۵٬۰۰۰٬۰۰۰</span> <small>تومان</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن گردنبند مروارید"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p53" data-id="53" data-name="آویز اسم" data-price="105600000" data-img="/assets/demo/gold/pendant-name.webp" data-desc="ساخت سفارشی، حدود ۳ گرم">
+<article class="card" id="p53" data-id="53" data-name="آویز اسم" data-price="0" data-img="/assets/demo/gold/pendant-name.webp" data-desc="ساخت سفارشی؛ وزن نهایی حدود ۳ گرم" data-gk="weight" data-gw="3000" data-gp="750" data-gm="3000" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات آویز اسم">
     <span class="card-img"><img src="assets/demo/gold/pendant-name.webp" alt="آویز اسم" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>آویز اسم</h3>
-    <p class="desc">ساخت سفارشی، حدود ۳ گرم</p>        <div class="row wide">
-      <span class="price">۱۰۵٬۶۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">ساخت سفارشی؛ وزن نهایی حدود ۳ گرم</p>    <p class="gw">۳ گرم، ۱۸ عیار، اجرت ۳۰٪</p>        <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن آویز اسم"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
@@ -230,53 +252,53 @@
       </section>
           <section class="g-cat" id="c16" aria-label="دستبند و گوشواره">
         <h3 class="cat-h">دستبند و گوشواره</h3>
-        <div class="cards"><article class="card" id="p54" data-id="54" data-name="النگو" data-price="257700000" data-img="/assets/demo/gold/bangle.webp" data-desc="وزن ۸ گرم، طرح ساده" data-stock="2">
+        <div class="cards"><article class="card" id="p54" data-id="54" data-name="النگو" data-price="0" data-img="/assets/demo/gold/bangle.webp" data-desc="طرح ساده، ماشینی" data-stock="2" data-gk="weight" data-gw="8000" data-gp="750" data-gm="800" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات النگو">
     <span class="card-img"><img src="assets/demo/gold/bangle.webp" alt="النگو" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>النگو</h3>
-    <p class="desc">وزن ۸ گرم، طرح ساده</p>    <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
-      <span class="price">۲۵۷٬۷۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">طرح ساده، ماشینی</p>    <p class="gw">۸ گرم، ۱۸ عیار، اجرت ۸٪</p>    <p class="low">فقط ۲ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن النگو"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p55" data-id="55" data-name="دستبند زنجیری" data-price="165500000" data-img="/assets/demo/gold/bracelet-chain.webp" data-desc="وزن ۵ گرم، قفل ایمنی" data-stock="3">
+<article class="card" id="p55" data-id="55" data-name="دستبند زنجیری" data-price="0" data-img="/assets/demo/gold/bracelet-chain.webp" data-desc="قفل ایمنی" data-stock="3" data-gk="weight" data-gw="5000" data-gp="750" data-gm="1200" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات دستبند زنجیری">
     <span class="card-img"><img src="assets/demo/gold/bracelet-chain.webp" alt="دستبند زنجیری" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>دستبند زنجیری</h3>
-    <p class="desc">وزن ۵ گرم، قفل ایمنی</p>    <p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
-      <span class="price">۱۶۵٬۵۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">قفل ایمنی</p>    <p class="gw">۵ گرم، ۱۸ عیار، اجرت ۱۲٪</p>    <p class="low">فقط ۳ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن دستبند زنجیری"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p56" data-id="56" data-name="گوشواره حلقه‌ای" data-price="67400000" data-img="/assets/demo/gold/earring-hoop.webp" data-desc="وزن ۲ گرم، قطر ۲ سانتی" data-stock="5">
+<article class="card" id="p56" data-id="56" data-name="گوشواره حلقه‌ای" data-price="0" data-img="/assets/demo/gold/earring-hoop.webp" data-desc="قطر ۲ سانتی" data-stock="5" data-gk="weight" data-gw="2000" data-gp="750" data-gm="1800" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات گوشواره حلقه‌ای">
     <span class="card-img"><img src="assets/demo/gold/earring-hoop.webp" alt="گوشواره حلقه‌ای" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>گوشواره حلقه‌ای</h3>
-    <p class="desc">وزن ۲ گرم، قطر ۲ سانتی</p>        <div class="row wide">
-      <span class="price">۶۷٬۴۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">قطر ۲ سانتی</p>    <p class="gw">۲ گرم، ۱۸ عیار، اجرت ۱۸٪</p>        <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن گوشواره حلقه‌ای"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p57" data-id="57" data-name="گوشواره میخی نگین‌دار" data-price="52800000" data-img="/assets/demo/gold/earring-stud.webp" data-desc="وزن ۱٫۵ گرم" data-stock="6">
+<article class="card" id="p57" data-id="57" data-name="گوشواره میخی نگین‌دار" data-price="0" data-img="/assets/demo/gold/earring-stud.webp" data-desc="نگین زیرکونیا؛ سنگ جداگانه حساب می‌شود" data-stock="6" data-gk="weight" data-gw="1500" data-gp="750" data-gm="2200" data-gs="700" data-gx="1500000">
   <button class="card-open" type="button" aria-label="جزئیات گوشواره میخی نگین‌دار">
     <span class="card-img"><img src="assets/demo/gold/earring-stud.webp" alt="گوشواره میخی نگین‌دار" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>گوشواره میخی نگین‌دار</h3>
-    <p class="desc">وزن ۱٫۵ گرم</p>        <div class="row wide">
-      <span class="price">۵۲٬۸۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">نگین زیرکونیا؛ سنگ جداگانه حساب می‌شود</p>    <p class="gw">۱٫۵ گرم، ۱۸ عیار، اجرت ۲۲٪</p>        <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن گوشواره میخی نگین‌دار"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
-<article class="card" id="p58" data-id="58" data-name="نیم‌ست" data-price="337100000" data-img="/assets/demo/gold/half-set.webp" data-desc="گردنبند و گوشواره، حدود ۱۰ گرم" data-stock="1">
+<article class="card" id="p58" data-id="58" data-name="نیم‌ست" data-price="0" data-img="/assets/demo/gold/half-set.webp" data-desc="گردنبند و گوشواره، ست" data-stock="1" data-gk="weight" data-gw="10000" data-gp="750" data-gm="2000" data-gs="700" data-gx="0">
   <button class="card-open" type="button" aria-label="جزئیات نیم‌ست">
     <span class="card-img"><img src="assets/demo/gold/half-set.webp" alt="نیم‌ست" loading="lazy" decoding="async" width="480" height="480"></span>  </button>
   <div class="card-b">
     <h3>نیم‌ست</h3>
-    <p class="desc">گردنبند و گوشواره، حدود ۱۰ گرم</p>    <p class="low">فقط ۱ عدد مانده</p>    <div class="row wide">
-      <span class="price">۳۳۷٬۱۰۰٬۰۰۰ <small>تومان</small></span>
+    <p class="desc">گردنبند و گوشواره، ست</p>    <p class="gw">۱۰ گرم، ۱۸ عیار، اجرت ۲۰٪</p>    <p class="low">فقط ۱ عدد مانده</p>    <div class="row wide">
+      <span class="price"><small>قیمت روز در گفتگو</small></span>
       <button class="buy" type="button" data-buy aria-label="افزودن نیم‌ست"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>افزودن</span></button>    </div>
   </div>
 </article>
@@ -328,7 +350,7 @@
       <a class="hdr-brand" href="#top" data-jump="top"><img class="hdr-logo" src="assets/demo/gold/logo.webp" alt="طلا و جواهر آذر"><b>طلا و جواهر آذر</b></a>
       <p>طلای ۱۸ عیار با فاکتور رسمی و ضمانت بازخرید</p>      <div class="ft-acts"><button class="pill" type="button" data-bag-open><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>سبد خرید</button><button class="pill clear" type="button" data-buy-general><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>پیام در واتساپ</button></div>
     </div>
-    <nav class="ft-col" aria-label="دسترسی سریع"><b>دسترسی سریع</b><a href="#products" data-jump="products">محصولات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a><button type="button" class="ft-link" data-act="install" hidden>نصب روی گوشی</button></nav>
+    <nav class="ft-col" aria-label="دسترسی سریع"><b>دسترسی سریع</b><a href="#gold" data-jump="gold">قیمت طلا</a><a href="#products" data-jump="products">محصولات</a><a href="#about" data-jump="about">درباره ما</a><a href="#contact" data-jump="contact">تماس</a><a href="#faq" data-jump="faq">سؤالات</a><button type="button" class="ft-link" data-act="install" hidden>نصب روی گوشی</button></nav>
     <div class="ft-col"><b>تماس</b>
       <a href="tel:09120000000" dir="ltr" class="ltr-t">09120000000</a>      <span>تبریز، بازار امیر، راسته زرگرها، پلاک ۲۳</span>      <span>هر روز ۱۰:۰۰ تا ۲۱:۰۰، جمعه‌ها تعطیل</span>    </div>
   </div>
@@ -349,6 +371,7 @@
     <div class="ps-b">
       <h2 id="psName"></h2>
       <p class="ps-price" id="psPrice"></p>
+      <dl class="ps-gold" id="psGold" hidden></dl>
       <p class="ps-desc" id="psDesc"></p>
       <div id="psOpts"></div>
       <p class="ps-low" id="psLow" hidden></p>
@@ -371,14 +394,15 @@
       <div class="bag-main" id="bagMain">
         <ul class="bag-lines" id="bagLines"></ul>
         <div class="bag-empty" id="bagEmpty" hidden><span class="be-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span><p>سبد شما خالی است.</p><button type="button" class="pill" data-bag-shop>دیدن محصولات</button></div>
+        <p class="bag-closed" id="bagClosed" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span></span></p>
         <form class="bag-form" id="bagForm" novalidate>
-          <fieldset class="bag-sec" id="bagModeBox"><legend>نحوه تحویل</legend><div class="bag-modes" id="bagModes"></div><p class="bag-hint" id="bagModeHint" hidden></p></fieldset>          <fieldset class="bag-sec"><legend>مشخصات شما</legend>
+          <fieldset class="bag-sec" id="bagModeBox"><legend>نحوه تحویل</legend><div class="bag-modes" id="bagModes"></div><p class="bag-hint" id="bagModeHint" hidden></p></fieldset>                    <fieldset class="bag-sec"><legend>مشخصات شما</legend>
             <div class="bag-two">
               <label class="bf"><span>نام و نام خانوادگی</span><input name="name" autocomplete="name" maxlength="60"></label>
               <label class="bf"><span>شماره موبایل</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="14" dir="ltr" placeholder="09121234567"></label>
             </div>
             <label class="bf" id="bagAddr" hidden><span>آدرس کامل</span><textarea name="address" rows="2" maxlength="200" autocomplete="street-address" placeholder="شهر، خیابان، کوچه، پلاک، واحد"></textarea></label>
-            <label class="bf"><span>توضیح سفارش (اختیاری)</span><textarea name="note" rows="2" maxlength="200" placeholder="مثلاً «بدون شکر» یا «زنگ واحد ۳»"></textarea></label>
+            <label class="bf"><span>توضیح سفارش (اختیاری)</span><textarea name="note" rows="2" maxlength="200" placeholder="مثلاً «کادو پیچ شود» یا «زنگ واحد ۳»"></textarea></label>
           </fieldset>
           <fieldset class="bag-sec"><legend>پیام سفارش به کدام پیام‌رسان برود؟</legend>
             <div class="bag-chs" id="bagChs"><label><input type="radio" name="ch" value="whatsapp" checked><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.5L4 19.5l1-3.3A8 8 0 0 1 4 12Z"/></svg>واتساپ</span></label><label><input type="radio" name="ch" value="telegram"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4 3.5 11l7 2.5L13 20.5Z"/><path d="m10.5 13.5 4-4"/></svg>تلگرام</span></label><label><input type="radio" name="ch" value="instagram"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r=".6"/></svg>اینستاگرام</span></label><label><input type="radio" name="ch" value="bale"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg>بله</span></label><label><input type="radio" name="ch" value="rubika"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg>روبیکا</span></label><label><input type="radio" name="ch" value="eitaa"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4.5 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M8.5 10.5h7"/></svg>ایتا</span></label></div>
@@ -403,5 +427,5 @@
 </dialog>
 <div class="bag-toast" id="bagToast" role="status" aria-live="polite" hidden><span id="bagToastT"></span><button type="button" data-bag-open>دیدن سبد خرید</button></div>
 
-<script>window.SITE={"slug":"demo-gold-1","name":"طلا و جواهر آذر","base":"/s/demo-gold-1","chat":false,"glass":true,"demo":true,"v":"2026.10.15-1","type":"gold","fam":"shop","askMsg":"سلام، درباره «%s» سؤال دارم.","buy":{"ch":"whatsapp","to":"989120000000","label":"واتساپ","word":"خرید","url":"https://wa.me/989120000000","pre":true},"chans":[{"ch":"whatsapp","to":"989120000000","label":"واتساپ","url":"https://wa.me/989120000000","pre":true},{"ch":"telegram","to":"sample_gold_1","label":"تلگرام","url":"https://t.me/sample_gold_1","pre":true},{"ch":"instagram","to":"sample.gold1","label":"اینستاگرام","url":"https://ig.me/m/sample.gold1","pre":false},{"ch":"bale","to":"sample_gold_1","label":"بله","url":"https://ble.ir/sample_gold_1","pre":false},{"ch":"rubika","to":"sample_gold_1","label":"روبیکا","url":"https://rubika.ir/sample_gold_1","pre":false},{"ch":"eitaa","to":"sample_gold_1","label":"ایتا","url":"https://eitaa.com/sample_gold_1","pre":false}],"words":{"add":"افزودن","bag":"سبد خرید","send":"ثبت سفارش","order":"سفارش","empty":"سبد شما خالی است.","online":"خرید آنلاین"},"del":{"on":true,"fee":0,"min":0,"area":"تحویل حضوری؛ ارسال بیمه‌شده در تبریز با هماهنگی"},"zp":"","tel":"09120000000","layout":"gold-1","calls":false,"hours":{"open":"10:00","close":"21:00","off":5}};window.AWP={"scope":"site","slug":"demo-gold-1","name":"طلا و جواهر آذر","base":"/s/demo-gold-1","icon":"/s/demo-gold-1/icon-192.png","privacy":"https://alphawebsite.ir/privacy#visitors","api":"/api/v","demo":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/popups.js" defer></script></body>
+<script>window.SITE={"slug":"demo-gold-1","name":"طلا و جواهر آذر","base":"/s/demo-gold-1","chat":false,"glass":true,"demo":true,"v":"2026.10.16-1","type":"gold","fam":"shop","askMsg":"سلام، درباره «%s» سؤال دارم.","buy":{"ch":"whatsapp","to":"989120000000","label":"واتساپ","word":"خرید","url":"https://wa.me/989120000000","pre":true},"chans":[{"ch":"whatsapp","to":"989120000000","label":"واتساپ","url":"https://wa.me/989120000000","pre":true},{"ch":"telegram","to":"sample_gold_1","label":"تلگرام","url":"https://t.me/sample_gold_1","pre":true},{"ch":"instagram","to":"sample.gold1","label":"اینستاگرام","url":"https://ig.me/m/sample.gold1","pre":false},{"ch":"bale","to":"sample_gold_1","label":"بله","url":"https://ble.ir/sample_gold_1","pre":false},{"ch":"rubika","to":"sample_gold_1","label":"روبیکا","url":"https://rubika.ir/sample_gold_1","pre":false},{"ch":"eitaa","to":"sample_gold_1","label":"ایتا","url":"https://eitaa.com/sample_gold_1","pre":false}],"words":{"add":"افزودن","bag":"سبد خرید","send":"ثبت سفارش","order":"سفارش","empty":"سبد شما خالی است.","online":"خرید آنلاین"},"del":{"on":true,"fee":0,"min":0,"area":"تحویل حضوری؛ ارسال بیمه‌شده در تبریز با هماهنگی"},"zp":"","gold":{"p18":0,"coins":{},"at":"","src":"","vat":1000,"making":1800,"profit":700,"ok":false},"book":null,"tel":"09120000000","layout":"gold-1","calls":false,"hours":{"open":"10:00","close":"21:00","off":5}};window.AWP={"scope":"site","slug":"demo-gold-1","name":"طلا و جواهر آذر","base":"/s/demo-gold-1","icon":"/s/demo-gold-1/icon-192.png","privacy":"https://alphawebsite.ir/privacy#visitors","api":"/api/v","demo":true};</script><script src="assets/site.js" defer></script><script src="assets/alpha.js" defer></script><script src="assets/popups.js" defer></script></body>
 </html>

@@ -84,7 +84,8 @@
     chatSheet.addEventListener('click', function (e) { if (e.target === chatSheet) closeChat(); });
     $$('[data-act="chat"]').forEach(function (b) { b.addEventListener('click', openChat); });
   }
-  window.AlphaUI = { openChat: openChat, current: function () { return chatOpen ? 'chat' : ''; } };
+  window.AlphaUI = { openChat: openChat, current: function () { return chatOpen ? 'chat' : ''; },
+    hours: function () { return S.hours ? status(S.hours) : null; } };   // the bag's «closed right now» note (site.js)
 
   /* ---------- sections: jump links, the header's nav and the dock follow the scroll ---------- */
   var dock = $('.dock');

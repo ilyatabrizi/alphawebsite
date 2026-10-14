@@ -1302,3 +1302,17 @@ div.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;
 .seo-card summary{cursor:pointer;font-weight:700;padding:6px 0}
 .seo-card .ticks{margin:8px 0}
 .adc .ic svg,.can .ic svg,.seo2 .ic svg,.och-ic svg,.warnbox>svg,.o-who svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* orders: the requested day and time; the gold rate the order was priced at (v12) */
+.o-when{gap:6px;height:auto;min-height:26px;padding:3px 11px}
+.o-when svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.o-gold{display:flex;align-items:center;gap:6px;margin:0;font-size:12.5px}
+.o-gold svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bad-t{color:#C0262D;font-weight:600}
+/* panel: gold prices and an item's price fields (v12) */
+.big-n{margin:4px 0 2px;font-size:30px;font-weight:900;letter-spacing:-.4px;line-height:1.3}
+.gold-p{align-items:start}
+.gold-p .tbl{margin-top:12px}
+.price-fs .seg{justify-self:start;max-width:100%}
+.pk-sec{display:grid;gap:10px}
+.pk-out:empty{display:none}
+.mi-tx p s{color:var(--muted)}

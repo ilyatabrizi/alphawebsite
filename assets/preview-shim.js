@@ -57,7 +57,16 @@
       });
       var mode = bo.get('mode') || '', fee = mode === 'delivery' && window.SITE && window.SITE.del ? +window.SITE.del.fee || 0 : 0;
       var no = 0; try { no = (+sessionStorage.getItem('aw-pv-no') || 100) + 1; sessionStorage.setItem('aw-pv-no', no); } catch (e) { no = 101; }
-      return json({ ok: true, no: (window.SITE && window.SITE.demo) ? 0 : no, lines: lines, sum: sum, fee: fee, total: sum + fee, mode: mode, table: bo.get('table') || '', channel: bo.get('channel') || '' });
+      var bk = window.SITE && window.SITE.book, when = '';
+      if (bk && bo.get('when_date')) { try { var dt = new Date(bo.get('when_date') + 'T12:00:00Z'), sl = bk.slots.filter(function (s) { return s.s === bo.get('when_slot'); })[0];
+        when = bk.label + ': ' + new Intl.DateTimeFormat('fa-IR-u-ca-persian', { timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long' }).format(dt) + '، ساعت ' + (sl ? sl.l : ''); } catch (e) {} }
+      return json({ ok: true, no: (window.SITE && window.SITE.demo) ? 0 : no, lines: lines, sum: sum, fee: fee, total: sum + fee, mode: mode, table: bo.get('table') || '', channel: bo.get('channel') || '', when: when, gold: '', repriced: false });
+    }
+    if (/\/api\/gold/.test(u)) {
+      /* the gold layout's 2-minute refresh: the price the preview was built with, and the cards' own prices */
+      var g = (window.SITE && window.SITE.gold) || {}, its = {};
+      Array.prototype.forEach.call(document.querySelectorAll('.card[data-gk]'), function (c) { its[c.dataset.id] = +c.dataset.price || 0; });
+      return json({ p18: g.p18 || 0, coins: g.coins || {}, at: g.at || '', src: g.src || '', vat: g.vat || 0, making: g.making || 0, profit: g.profit || 0, ok: !!g.ok, when: 'نمونه', items: its });
     }
     if (/\/api\/call/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));
     if (/\/api\/(v|tap)(\?|$)/.test(u)) return Promise.resolve(new Response(null, { status: 204 }));

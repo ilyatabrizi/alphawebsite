@@ -6,7 +6,10 @@
    can't, so the message is copied first and the customer pastes it.
    Also: the product sheet (photo, description, choices, quantity, stock, a question in the messenger, share), search,
    the table bar that calls the waiter from a QR card, and a privacy-light tap log for the owner's «most wanted» list.
-   Sample sites run the whole flow but save nothing and open no real chat. */
+   Sample sites run the whole flow but save nothing and open no real chat.
+   2026-10-14: gold and jewellery prices by weight at the live gram price (refreshed every 2 minutes, the same integer
+   maths as gold_calc in lib/gold.php), the gold calculator, a day and time picker for the services that receive
+   people (book_cfg), and a note in the bag when the shop is closed right now. */
 (function () {
   var S = window.SITE || {}, B = S.buy || {}, W = S.words || { add: 'افزودن', bag: 'سبد خرید', send: 'ثبت سفارش', order: 'سفارش' };
   var CH = (S.chans && S.chans.length) ? S.chans : (B.ch && B.ch !== 'chat' && B.ch !== 'call' ? [B] : []);
@@ -65,11 +68,113 @@
   function item(card) {
     var d = card.dataset, o = [];
     try { o = d.opts ? JSON.parse(d.opts) : []; } catch (e) { o = []; }
-    return { id: +d.id, n: d.name, p: +d.price || 0, img: d.img || '', desc: d.desc || '', opts: o, stock: d.stock === undefined ? null : +d.stock, off: !!d.off };
+    var g = d.gk ? { k: d.gk, w: +d.gw || 0, pur: +d.gp || 750, m: +d.gm || 0, s: +d.gs || 0, x: +d.gx || 0, c: d.gc || '' } : null;
+    return { id: +d.id, n: d.name, p: +d.price || 0, img: d.img || '', desc: d.desc || '', opts: o, stock: d.stock === undefined ? null : +d.stock, off: !!d.off, g: g };
   }
   var ITEMS = {};
   all('.card[data-id]').forEach(function (c) { var it = item(c); if (!ITEMS[it.id]) ITEMS[it.id] = it; });
   var optText = function (o) { var k = o ? Object.keys(o) : []; return k.length ? ' (' + k.map(function (g) { return o[g]; }).join('، ') + ')' : ''; };
+
+  /* ---------- gold: prices by weight at the live gram price ---------- */
+  var G = S.gold || null;
+  var PUR = { 750: '۱۸ عیار', 875: '۲۱ عیار', 1000: '۲۴ عیار' };
+  /* round(num / den) half up, whole numbers: lib/gold.php gold_div */
+  function gdiv(num, den) { return (BigInt(2) * num + den) / (BigInt(2) * den); }
+  /* lib/gold.php gold_calc: weight in mg, purity in thousandths, percentages in hundredths of a percent */
+  function goldCalc(w, pur, p18, mk, pf, vat, stone) {
+    var B = BigInt, gold = gdiv(B(w) * B(p18) * B(pur), B(750000)), making = gdiv(gold * B(mk), B(10000));
+    var profit = gdiv((gold + making) * B(pf), B(10000)), tax = gdiv((making + profit) * B(vat), B(10000));
+    var o = { gold: Number(gold), making: Number(making), profit: Number(profit), vat: Number(tax), stone: stone || 0 };
+    o.total = o.gold + o.making + o.profit + o.vat + o.stone; return o;
+  }
+  function goldPrice(it) {
+    if (!G || !it.g) return it.p;
+    if (it.g.k === 'coin') { var base = +((G.coins || {})[it.g.c] || 0); return base > 0 ? base + it.g.x : 0; }
+    return G.ok && G.p18 > 0 && it.g.w > 0 ? goldCalc(it.g.w, it.g.pur, G.p18, it.g.m, it.g.s, G.vat, it.g.x).total : 0;
+  }
+  /* views_site.php price_html for a gold item */
+  function goldPriceHtml(p) { return p > 0 ? '<span class="now-p">' + fa(p) + '</span> <small>تومان</small>' : '<small>قیمت روز در گفتگو</small>'; }
+  var pct = function (bp) { return (bp / 100).toLocaleString('fa-IR', { maximumFractionDigits: 2 }); };
+  var grams = function (mg) { return (mg / 1000).toLocaleString('fa-IR', { maximumFractionDigits: 3 }); };
+  /* the same parsing as gold_parse_weight / gold_parse_pct (gold_clean: spaces and direction marks dropped anywhere) */
+  var gclean = function (v) { return en(v).replace(/[\s\u00A0\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g, ''); };
+  function parseWeight(v) {
+    var m = /^(\d{1,4})(?:\.(\d{1,3}))?$/.exec(gclean(v).replace(/[٫\/,،]/g, '.'));
+    if (!m) return null; var mg = (+m[1]) * 1000 + +((m[2] || '') + '000').slice(0, 3);
+    return mg > 0 && mg <= 1000000 ? mg : null;
+  }
+  function parsePct(v, max) {
+    var m = /^(\d{1,3})(?:\.(\d{1,2}))?$/.exec(gclean(v).replace(/[٫\/,]/g, '.').replace(/[٪%]/g, ''));
+    if (!m) return null; var bp = (+m[1]) * 100 + +((m[2] || '') + '00').slice(0, 2);
+    return bp <= max * 100 ? bp : null;
+  }
+  function paintGold(serverItems) {
+    if (!G) return;
+    all('.card[data-gk]').forEach(function (card) {
+      var it = ITEMS[+card.dataset.id]; if (!it || it.off) return;
+      var p = serverItems && serverItems[it.id] !== undefined ? +serverItems[it.id] : goldPrice(it);
+      it.p = p; card.dataset.price = p;
+      var el = card.querySelector('.price'); if (el) el.innerHTML = goldPriceHtml(p);
+    });
+    var live = G.ok && G.p18 > 0;
+    all('.gold-p').forEach(function (el) { el.innerHTML = live ? '<b data-gold-p18>' + fa(G.p18) + '</b> <small>تومان</small>' : '<b data-gold-p18>در گفتگو بپرسید</b>'; });
+    all('[data-gold-src]').forEach(function (el) { el.textContent = !live ? 'نرخ روز الان در دسترس نیست؛ قیمت را در گفتگو بپرسید.' : (G.src === 'shop' ? 'نرخ امروز فروشگاه' : 'نرخ لحظه‌ای بازار؛ هر چند دقیقه خودکار به‌روز می‌شود'); });
+    /* a coin the latest answer lacks is not shown at an old price */
+    all('[data-coin]').forEach(function (el) { var v = live ? +((G.coins || {})[el.getAttribute('data-coin')] || 0) : 0; el.innerHTML = v > 0 ? fa(v) + ' <small>تومان</small>' : '<small>در گفتگو</small>'; });
+    calc();
+  }
+  function pollGold() {
+    if (!G || document.hidden) return;
+    fetch('/api/gold?slug=' + encodeURIComponent(S.slug), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (!j || typeof j.p18 !== 'number') return;
+      G.p18 = j.p18; G.coins = j.coins || {}; G.ok = !!j.ok; G.vat = j.vat; G.src = j.src; G.at = j.at;
+      all('[data-gold-when]').forEach(function (el) {
+        el.textContent = j.ok ? 'به‌روز: ' + j.when : 'در دسترس نیست';
+        var chip = el.closest('.gold-chip'); if (chip) { chip.classList.toggle('is-open', !!j.ok); chip.classList.toggle('is-closed', !j.ok); }
+      });
+      paintGold(j.items || null);
+      if (bagEl && bagEl.open) renderBag();
+    }).catch(function () {});
+  }
+  /* the calculator */
+  var gc = $('goldCalc');
+  function calc() {
+    if (!gc || !G) return;
+    var out = $('gcOut'), w = parseWeight($('gcW').value), mk = parsePct($('gcM').value, 100), pf = parsePct($('gcS').value, 50), rows = [];
+    $('gcW').toggleAttribute('aria-invalid', $('gcW').value.trim() !== '' && w === null);
+    $('gcM').toggleAttribute('aria-invalid', mk === null); $('gcS').toggleAttribute('aria-invalid', pf === null);
+    if (!G.ok || !(G.p18 > 0)) rows = [['نرخ روز طلا الان در دسترس نیست؛ در گفتگو بپرسید.', '', 'gc-empty']];
+    else if (w === null) rows = [[$('gcW').value.trim() === '' ? 'وزن را بنویسید تا قیمت حساب شود.' : 'وزن را به گرم بنویسید؛ مثل ۳٫۲۵ (تا ۱۰۰۰ گرم).', '', 'gc-empty']];
+    else if (mk === null || pf === null) rows = [[mk === null ? 'اجرت ساخت را بین ۰ تا ۱۰۰ درصد بنویسید.' : 'سود فروشنده را بین ۰ تا ۵۰ درصد بنویسید.', '', 'gc-empty']];
+    else {
+      var pur = +$('gcP').value || 750, b = goldCalc(w, pur, G.p18, mk, pf, G.vat, 0);
+      rows = [['ارزش طلا (' + grams(w) + ' گرم ' + PUR[pur] + ')', fa(b.gold)], ['اجرت ساخت ' + pct(mk) + '٪', fa(b.making)], ['سود فروشنده ' + pct(pf) + '٪', fa(b.profit)],
+              ['مالیات ' + pct(G.vat) + '٪ روی اجرت و سود', fa(b.vat)], ['قیمت نهایی', fa(b.total) + ' تومان', 'tot']];
+    }
+    out.innerHTML = '';
+    rows.forEach(function (r) { var d = document.createElement('div'); if (r[2]) d.className = r[2]; d.innerHTML = '<dt></dt><dd></dd>'; d.firstChild.textContent = r[0]; d.lastChild.textContent = r[1]; out.appendChild(d); });
+  }
+  if (gc) { gc.addEventListener('input', calc); gc.addEventListener('change', calc); gc.addEventListener('submit', function (e) { e.preventDefault(); }); }
+  /* the product sheet's breakdown */
+  function goldSheet(it) {
+    var dl = $('psGold'); if (!dl) return;
+    dl.innerHTML = ''; dl.hidden = true;
+    if (!G || !it.g || it.p <= 0) return;
+    var rows;
+    if (it.g.k === 'coin') {
+      var base = +((G.coins || {})[it.g.c] || 0); if (base + it.g.x !== it.p) return;
+      rows = [['نرخ روز', fa(base)]]; if (it.g.x > 0) rows.push(['حق فروشنده', fa(it.g.x)]);
+    } else {
+      var b = goldCalc(it.g.w, it.g.pur, G.p18, it.g.m, it.g.s, G.vat, it.g.x);
+      if (b.total !== it.p) return;   // the owner changed this piece while the page was open: the price alone, never rows that don't add up
+      rows = [['وزن و عیار', grams(it.g.w) + ' گرم، ' + PUR[it.g.pur]], ['نرخ هر گرم ۱۸ عیار', fa(G.p18)], ['ارزش طلا', fa(b.gold)], ['اجرت ساخت ' + pct(it.g.m) + '٪', fa(b.making)],
+              ['سود فروشنده ' + pct(it.g.s) + '٪', fa(b.profit)], ['مالیات ' + pct(G.vat) + '٪ (روی اجرت و سود)', fa(b.vat)]];
+      if (b.stone > 0) rows.push(['سنگ', fa(b.stone)]);
+    }
+    rows.push(['قیمت نهایی', fa(it.p) + ' تومان', 'tot']);
+    rows.forEach(function (r) { var d = document.createElement('div'); if (r[2]) d.className = r[2]; d.innerHTML = '<dt></dt><dd></dd>'; d.firstChild.textContent = r[0]; d.lastChild.textContent = r[1]; dl.appendChild(d); });
+    dl.hidden = false;
+  }
 
   /* A question about one product (or the shop) straight in the main messenger: the old one-tap message. */
   function askMessage(it, choice) {
@@ -142,6 +247,7 @@
   }
   function add(it, choice, q) {
     q = q || 1;
+    if (it.g && it.p <= 0) { toast('قیمت روز «' + it.n + '» الان در دسترس نیست؛ قیمتش را در گفتگو بپرسید.'); return false; }
     var k = lineKey({ id: it.id, o: choice }), have = qtyOf(it.id), can = room(it, have);
     if (can <= 0) { toast('از «' + it.n + '» بیشتر از این موجود نیست.'); return false; }
     q = Math.min(q, can);
@@ -202,6 +308,55 @@
     return m;
   }
   function fee() { return mode === 'delivery' && S.del ? S.del.fee : 0; }
+  /* a day and a time window (book_cfg in lib/bootstrap.php; the server checks it again with book_check) */
+  var BK = S.book || null, bkDay = '', bkSlot = '';
+  function tehranToday() {
+    var p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' })
+      .formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+    return { y: +p.year, mo: +p.month, d: +p.day, m: (+p.hour % 24) * 60 + (+p.minute) };
+  }
+  function bookDays() {
+    var n = tehranToday(), out = [], wd = new Intl.DateTimeFormat('fa-IR', { timeZone: 'UTC', weekday: 'long' }), dm = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { timeZone: 'UTC', day: 'numeric', month: 'long' });
+    for (var i = 0; i < BK.days; i++) {
+      var dt = new Date(Date.UTC(n.y, n.mo - 1, n.d + i, 12)), dow = dt.getUTCDay();
+      if (dow === BK.off) continue;
+      var slots = BK.slots.filter(function (s) { return i > 0 || s.e > n.m + 30; });
+      if (!slots.length) continue;
+      out.push({ v: dt.toISOString().slice(0, 10), top: i === 0 ? 'امروز' : (i === 1 ? 'فردا' : wd.format(dt)), sub: dm.format(dt), slots: slots });
+    }
+    return out;
+  }
+  function chip(name, value, top, sub, on, fn) {
+    var lb = document.createElement('label'), r = document.createElement('input'), sp = document.createElement('span');
+    r.type = 'radio'; r.name = name; r.value = value; r.checked = on;
+    sp.innerHTML = '<b></b>' + (sub ? '<small></small>' : ''); sp.firstChild.textContent = top; if (sub) sp.lastChild.textContent = sub;
+    r.addEventListener('change', fn); lb.appendChild(r); lb.appendChild(sp); return lb;
+  }
+  var bkKey = '';
+  function renderBook() {
+    if (!BK || !$('bkDays')) return;
+    var days = bookDays(), dbox = $('bkDays'), sbox = $('bkSlots');
+    if (!days.some(function (d) { return d.v === bkDay; })) { bkDay = ''; bkSlot = ''; }
+    /* the day chips are rebuilt only when the days themselves change (a new day, today's last window gone), so the
+       row keeps its scroll and the keyboard focus */
+    var key = days.map(function (d) { return d.v + d.slots.length; }).join();
+    if (key !== bkKey) {
+      bkKey = key; dbox.innerHTML = '';
+      days.forEach(function (d) { dbox.appendChild(chip('bkd', d.v, d.top, d.sub, d.v === bkDay, function () { bkDay = d.v; renderBook(); })); });
+    } else all('input', dbox).forEach(function (r) { r.checked = r.value === bkDay; });
+    sbox.innerHTML = '';
+    var day = days.filter(function (d) { return d.v === bkDay; })[0];
+    if (!day) { var h = document.createElement('p'); h.className = 'bk-pick'; h.textContent = 'اول روز را انتخاب کنید.'; sbox.appendChild(h); return; }
+    if (!day.slots.some(function (s) { return s.s === bkSlot; })) bkSlot = '';
+    day.slots.forEach(function (s) { sbox.appendChild(chip('bks', s.s, s.l, '', s.s === bkSlot, function () { bkSlot = s.s; })); });
+  }
+  /* closed right now: the order still goes in, and the customer knows when it is seen */
+  function renderClosed() {
+    var el = $('bagClosed'); if (!el) return;
+    var st = null; try { st = window.AlphaUI && window.AlphaUI.hours ? window.AlphaUI.hours() : null; } catch (e) {}
+    el.hidden = !st || st.open || mode === 'table';
+    if (!el.hidden) el.lastChild.textContent = S.name + (/^امروز/.test(st.text) ? ' ' : ' الان ') + st.text + '. ' + W.order + ' شما همین الان ثبت می‌شود و در ساعت کاری پیگیری می‌شود.';
+  }
   function pickedCh() { var r = form && form.querySelector('input[name=ch]:checked'); return r ? chan(r.value) : (CH[0] || null); }
   function renderBag() {
     if (!bagEl) return;
@@ -228,7 +383,9 @@
     });
     var empty = !bag.length;
     $('bagEmpty').hidden = !empty; form.hidden = empty; ul.hidden = empty;
+    if ($('bagClosed')) $('bagClosed').hidden = true;
     if (empty) return;
+    renderBook();
     /* how it is received */
     var ms = modes(), box = $('bagModes');
     if (box) {
@@ -261,6 +418,7 @@
     $('bagGo').disabled = low || sending;
     var c = pickedCh();
     $('bagGoT').textContent = W.send + (c ? ' و ارسال در ' + c.label : '');
+    renderClosed();
   }
   function openBag() {
     if (!bagEl) return;
@@ -301,8 +459,10 @@
     var L = [], word = W.order;
     L.push('سلام، ' + word + ' جدید از سایت ' + S.name + (r.no ? '\n' + 'شماره ' + word + ': ' + fa(r.no) : ''));
     r.lines.forEach(function (l) { L.push('• ' + (CAT ? '' : fa(l.q) + '× ') + l.n + (l.p > 0 ? '، ' + fa(l.p * l.q) + ' تومان' : '')); });
+    if (r.gold) L.push(r.gold);
     if (r.mode === 'delivery') L.push('هزینه ارسال: ' + (r.fee > 0 ? fa(r.fee) + ' تومان' : 'رایگان'));
     if (r.total > 0) L.push('جمع کل: ' + fa(r.total) + ' تومان');
+    if (r.when) L.push(r.when);
     if (r.mode === 'table') L.push('سر میز ' + fa(r.table));
     else if (r.mode === 'pickup') L.push('تحویل: حضوری');
     else if (r.mode === 'delivery') L.push('ارسال به: ' + f.address);
@@ -322,15 +482,22 @@
       if (!/^09\d{9}$/.test(f.phone)) return fail('شماره موبایل را درست بنویسید؛ مثل ۰۹۱۲۱۲۳۴۵۶۷.', 'phone');
     } else if (f.phone && !/^09\d{9}$/.test(f.phone)) return fail('شماره موبایل را درست بنویسید یا خالی بگذارید.', 'phone');
     if (mode === 'delivery' && f.address.length < 8) return fail('آدرس کامل را بنویسید.', 'address');
+    if (BK && (!bkDay || !bkSlot)) { fail(bkDay ? 'ساعت را انتخاب کنید.' : 'روز را انتخاب کنید.'); var bb = $('bagBook'); if (bb) bb.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
     var c = pickedCh();
     sending = true; $('bagGo').disabled = true; $('bagGo').classList.add('busy');
-    var body = new URLSearchParams({ slug: S.slug, v: '2', items: JSON.stringify(bag.map(function (l) { return { id: l.id, q: l.q, o: l.o || {} }; })),
+    var body = new URLSearchParams({ slug: S.slug, v: '2', items: JSON.stringify(bag.map(function (l) { var it = ITEMS[l.id]; return { id: l.id, q: l.q, o: l.o || {}, p: it ? it.p : 0 }; })),
       mode: mode, table: table, name: f.name, phone: f.phone, address: mode === 'delivery' ? f.address : '', note: f.note, channel: c ? c.ch : (B.ch || '') });
+    if (BK) { body.set('bk', '1'); body.set('when_date', bkDay); body.set('when_slot', bkSlot); }
     fetch('/api/order', { method: 'POST', body: body })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { s: r.status, j: j }; }); })
       .then(function (x) {
         sending = false; $('bagGo').classList.remove('busy');
-        if (x.s !== 200 || !x.j.ok) { renderBag(); return fail(x.j.error || (x.s === 429 ? 'چند لحظه دیگر دوباره بزنید.' : 'ثبت نشد؛ دوباره امتحان کنید.')); }
+        if (x.s !== 200 || !x.j.ok) {
+          /* the gold price moved: take the server's prices, show the new total, and let the customer send again */
+          if (x.j.prices) { paintGold(x.j.prices); refresh(); pollGold(); }
+          else if (G) pollGold();
+          renderBag(); return fail(x.j.error || (x.s === 429 ? 'چند لحظه دیگر دوباره بزنید.' : 'ثبت نشد؛ دوباره امتحان کنید.'));
+        }
         me = { name: f.name, phone: f.phone, address: f.address || me.address || '', mode: mode }; store('aw-me', me);
         if (c) store('aw-ch-' + S.slug, c.ch);
         done(x.j, f, c);
@@ -339,7 +506,7 @@
   }
   function done(r, f, c) {
     var text = orderMessage(r, f), word = W.order;
-    if (!S.demo) { bag = []; saveBag(); refresh(); }
+    if (!S.demo) { bag = []; saveBag(); refresh(); bkDay = ''; bkSlot = ''; bkKey = ''; }
     /* the order is done: coming back from the messenger must not reopen an empty bag */
     if (pushed) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} pushed = false; }
     $('bagMain').hidden = true; var d = $('bagDone'); d.hidden = false;
@@ -356,6 +523,7 @@
       if (c && c.pre) $('bdP').textContent = 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید؛ زمان و پرداخت همان‌جا هماهنگ می‌شود.';
       else if (c) $('bdP').textContent = c.label + ' پیام آماده را در لینک نمی‌پذیرد: پیام را کپی می‌کنیم، گفتگوی ما باز می‌شود، آن را بچسبانید (Paste) و بفرستید.';
       else $('bdP').textContent = S.name + ' به‌زودی با شما تماس می‌گیرد.' + (S.tel ? ' عجله دارید؟ تماس بگیرید.' : '');
+      if (r.repriced) $('bdP').textContent = 'نرخ طلا از وقتی صفحه را باز کردید تغییر کرده بود؛ قیمت‌ها با نرخ همین لحظه ثبت شد. ' + $('bdP').textContent;
       send.target = '_blank';
       if (c) {
         var url = link(c.pre ? text : '', c);
@@ -381,11 +549,12 @@
   function setPsQ(q) { psQ = Math.max(1, Math.min(99, q, cur ? room(cur, qtyOf(cur.id)) || 1 : 99)); if ($('psQn')) $('psQn').textContent = fa(psQ); }
   function openSheet(card) {
     if (!ps) return;
-    var it = cur = item(card);
+    var it = cur = ITEMS[+card.dataset.id] || item(card);
     $('psImg').innerHTML = '';
     if (it.img) { var im = document.createElement('img'); im.src = it.img; im.alt = it.n; $('psImg').appendChild(im); }
     $('psName').textContent = it.n;
     var pr = card.querySelector('.price'); $('psPrice').innerHTML = pr ? pr.innerHTML : '';
+    goldSheet(ITEMS[it.id] || it);
     $('psDesc').textContent = it.desc;
     $('psErr').hidden = true;
     var low = $('psLow'); low.hidden = !(it.stock !== null && it.stock > 0 && it.stock <= 3); if (!low.hidden) low.textContent = 'فقط ' + fa(it.stock) + ' عدد مانده';
@@ -497,6 +666,8 @@
   }
 
   loadBag(); refresh();
+  /* the cards come priced from the server; a page kept by the browser for a while catches up a few seconds after it opens */
+  if (G) { calc(); setTimeout(pollGold, 4000); setInterval(pollGold, 120000); document.addEventListener('visibilitychange', function () { if (!document.hidden) pollGold(); }); }
   if (location.hash === '#bag') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} if (bag.length) setTimeout(openBag, 300); }
   window.AlphaBuy = { message: askMessage, link: link, go: ask, add: add, open: openBag, bag: function () { return bag.slice(); } };
 })();

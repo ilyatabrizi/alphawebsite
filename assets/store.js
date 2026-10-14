@@ -22,14 +22,24 @@
     });
   });
 
-  /* layout filter chips */
-  var chips = $$('button.chip[data-f]');
-  chips.forEach(function (c) {
-    c.addEventListener('click', function () {
-      chips.forEach(function (x) { x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
-      var f = c.getAttribute('data-f');
-      $$('.lay').forEach(function (l) { l.hidden = f !== 'all' && l.getAttribute('data-type') !== f; });
-    });
+  /* the template gallery: a search box and a category menu (home #niches, /layouts). Every word typed must appear in
+     the card's name, kind or description; Arabic ي/ك/ى, أ/إ/آ, ة and the half-space don't matter. */
+  var norm = function (t) { return String(t || '').toLowerCase().replace(/[يى]/g, 'ی').replace(/ك/g, 'ک').replace(/[\u200c\u200f\u200e\u064b-\u065f]/g, '').replace(/[آأإ]/g, 'ا').replace(/ة/g, 'ه'); };
+  $$('.tpl-tools').forEach(function (tools) {
+    var box = tools.parentNode, cards = $$('.tpl', box), none = box.querySelector('.tpl-none');
+    var qi = tools.querySelector('[data-tpl-q]'), ci = tools.querySelector('[data-tpl-c]');
+    cards.forEach(function (c) { c._q = norm(c.getAttribute('data-q') + ' ' + c.textContent); });
+    var run = function () {
+      var words = norm(qi.value).split(/\s+/).filter(Boolean), cat = ci.value, n = 0;
+      cards.forEach(function (c) {
+        var ok = (cat === 'all' || c.getAttribute('data-cat') === cat) && words.every(function (w) { return c._q.indexOf(w) > -1; });
+        c.hidden = !ok; if (ok) n++;
+      });
+      if (none) none.hidden = n > 0;
+    };
+    qi.addEventListener('input', run); ci.addEventListener('change', run);
+    qi.addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
+    if (qi.value || ci.value !== 'all') run();
   });
 
   /* ---------- phones: live demos you can scroll and tap ----------

@@ -45,6 +45,7 @@
     }
     if (/\/api\/domain/.test(u)) { var l = ''; try { l = new URL(u, location.href).searchParams.get('l') || ''; } catch (e) {}
       return json({ status: /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(l) ? (l.length < 5 ? 'taken' : 'free') : 'invalid' }); }
+    if (/\/api\/contact/.test(u)) return json({ ok: true, demo: true });   // the personal site's contact form (v13)
     if (/\/api\/order/.test(u)) {
       /* the bag: answer like the server, from the page's own cards (prices as shown), number 101 and up */
       var bo = body(opt), items = []; try { items = JSON.parse(bo.get('items') || '[]'); } catch (e) {}
@@ -90,7 +91,7 @@
   }
   document.addEventListener('submit', function (e) {
     var f = e.target;
-    if (!f || f.method === 'dialog' || f.id === 'reply' || f.id === 'chatForm') return;
+    if (!f || f.method === 'dialog' || f.id === 'reply' || f.id === 'chatForm' || f.id === 'cvForm') return;
     e.preventDefault(); e.stopImmediatePropagation();
     toast('پیش‌نمایش است؛ روی سرور واقعی همین دکمه ذخیره و اعمال می‌شود.');
   }, true);

@@ -416,6 +416,13 @@
     else if (err.dataset.kind === 'min') err.hidden = true;
     err.dataset.kind = low ? 'min' : '';
     $('bagGo').disabled = low || sending;
+    /* the customer club (crm.php): what this order earns once it is done */
+    var earnEl = $('bagEarn'), CL = S.club;
+    if (earnEl) {
+      var earn = !CL ? 0 : (CL.mode === 'stamps' ? (sum > 0 && sum >= CL.min ? 1 : 0) : Math.floor(sum / CL.per));
+      earnEl.hidden = !earn;
+      if (earn) earnEl.lastChild.textContent = 'با این ' + W.order + ' ' + fa(earn) + ' ' + (CL.mode === 'stamps' ? 'مهر' : 'امتیاز') + ' در باشگاه مشتریان ' + S.name + ' می‌گیرید (' + fa(CL.goal) + ' ' + (CL.mode === 'stamps' ? 'مهر' : 'امتیاز') + ' = ' + CL.reward + ')؛ بعد از تحویل ثبت می‌شود.';
+    }
     var c = pickedCh();
     $('bagGoT').textContent = W.send + (c ? ' و ارسال در ' + c.label : '');
     renderClosed();
@@ -488,6 +495,7 @@
     var body = new URLSearchParams({ slug: S.slug, v: '2', items: JSON.stringify(bag.map(function (l) { var it = ITEMS[l.id]; return { id: l.id, q: l.q, o: l.o || {}, p: it ? it.p : 0 }; })),
       mode: mode, table: table, name: f.name, phone: f.phone, address: mode === 'delivery' ? f.address : '', note: f.note, channel: c ? c.ch : (B.ch || '') });
     if (BK) { body.set('bk', '1'); body.set('when_date', bkDay); body.set('when_slot', bkSlot); }
+    if (form.elements.bd_d && form.elements.bd_d.value && form.elements.bd_m.value) { body.set('bd_d', form.elements.bd_d.value); body.set('bd_m', form.elements.bd_m.value); }
     fetch('/api/order', { method: 'POST', body: body })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { s: r.status, j: j }; }); })
       .then(function (x) {

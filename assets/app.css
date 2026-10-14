@@ -147,6 +147,12 @@ main.page{padding-block:34px 72px;display:flex;flex-direction:column;gap:28px}
 .vp iframe{position:absolute;inset:0;z-index:1;width:402px;height:820px;border:0;opacity:0;transition:opacity .4s var(--ease);pointer-events:none;background:var(--stage,#fff)}
 .vp iframe.ready{opacity:1}
 .hi{position:absolute;bottom:8px;left:50%;z-index:4;width:140px;height:5px;margin-left:-70px;border-radius:3px;background:rgba(0,0,0,.82);pointer-events:none}
+/* A dark layout gets the dark titanium band (Ilya, 2026-10-15: on dark cards the light band read as "a white outline over
+   the phone frame"), as Apple's black models sit on dark product pages. */
+.phone.dk{--ti:#2E2E30;background:linear-gradient(150deg,#58585C 0%,#232325 20%,#3E3E41 44%,#18181A 70%,#4A4A4E 100%);
+  box-shadow:inset 0 0 0 calc(1px*var(--s)) rgba(255,255,255,.12),inset 0 0 calc(3px*var(--s)) rgba(0,0,0,.7),
+    0 calc(44px*var(--s)) calc(80px*var(--s)) calc(-30px*var(--s)) rgba(0,0,0,.55),0 calc(14px*var(--s)) calc(26px*var(--s)) calc(-14px*var(--s)) rgba(0,0,0,.35)}
+.phone.dk::after{background:linear-gradient(var(--ti) 0 calc(100px*var(--s)),transparent 0 calc(276px*var(--s)),#232325 0)}
 .phone.dk .sb,.phone.bdk .sb{color:#fff}
 .phone.dk .hi{background:rgba(255,255,255,.88)}
 .phone.on .vp iframe{pointer-events:auto}   /* a live demo you can scroll and tap (mouse); on touch screens it opens full screen */
@@ -705,6 +711,15 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .warnline{color:var(--warn)}
 .c2c-note{padding:12px 16px;border-radius:var(--r2);background:var(--badw);color:var(--bad);font-size:14px;line-height:1.9}
 .c2c-claim{display:grid;gap:12px}
+/* v17: the owner's card-to-card setup (signup step 3 and /panel/payments) */
+.c2c-setup{display:grid;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.c2c-setup[hidden]{display:none}
+.c2c-fields{display:grid;gap:10px}
+.c2c-fields[hidden]{display:none}
+.c2c-on b{font-weight:800}
+.o-pay{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:6px 0 0;font-size:13.5px}
+.o-pay svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.o-pay-acts{display:flex;gap:6px;margin-inline-start:auto}
 .inv-code{margin-top:-4px}
 /* the CEO's dashboard: card payments */
 .c2c-dash{display:grid;gap:16px}
@@ -1447,8 +1462,9 @@ div.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;
 .crm-tbl td a{text-decoration:none}
 .crm-set .crm-prog{padding:16px 18px;border-radius:var(--r2);border:1px solid var(--line);background:var(--field);transition:background .2s,border-color .2s}
 .crm-set .crm-prog.on{background:var(--card);border-color:var(--line2)}
-.crm-set .crm-prog:not(.on)>*:not(legend){display:none}
-.crm-set legend{float:none;width:auto;margin-bottom:6px}
+.crm-set .crm-prog:not(.on)>*:not(legend):not(.crm-why){display:none}
+.crm-set legend{float:right;width:100%;margin-bottom:0}
+.crm-set .crm-why{margin:0;font-size:13.5px;line-height:1.8;color:var(--muted)}
 .switch{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-weight:800;font-size:16px}
 .switch input{appearance:none;-webkit-appearance:none;width:44px;height:26px;border-radius:999px;background:var(--line2);position:relative;cursor:pointer;transition:background .2s;margin:0}
 .switch input::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:inset-inline-start .2s}

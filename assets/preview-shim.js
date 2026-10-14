@@ -46,6 +46,7 @@
     if (/\/api\/domain/.test(u)) { var l = ''; try { l = new URL(u, location.href).searchParams.get('l') || ''; } catch (e) {}
       return json({ status: /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(l) ? (l.length < 5 ? 'taken' : 'free') : 'invalid' }); }
     if (/\/api\/contact/.test(u)) return json({ ok: true, demo: true });   // the personal site's contact form (v13)
+    if (/\/api\/order-pay/.test(u)) { var bp = body(opt); return json({ ok: true, status: 'claimed', ref: (bp.get('ref') || '').replace(/\D/g, '') }); }   // v17 «واریز کردم»
     if (/\/api\/order/.test(u)) {
       /* the bag: answer like the server, from the page's own cards (prices as shown), number 101 and up */
       var bo = body(opt), items = []; try { items = JSON.parse(bo.get('items') || '[]'); } catch (e) {}
@@ -61,7 +62,10 @@
       var bk = window.SITE && window.SITE.book, when = '';
       if (bk && bo.get('when_date')) { try { var dt = new Date(bo.get('when_date') + 'T12:00:00Z'), sl = bk.slots.filter(function (s) { return s.s === bo.get('when_slot'); })[0];
         when = bk.label + ': ' + new Intl.DateTimeFormat('fa-IR-u-ca-persian', { timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long' }).format(dt) + '، ساعت ' + (sl ? sl.l : ''); } catch (e) {} }
-      return json({ ok: true, no: (window.SITE && window.SITE.demo) ? 0 : no, lines: lines, sum: sum, fee: fee, total: sum + fee, mode: mode, table: bo.get('table') || '', channel: bo.get('channel') || '', when: when, gold: '', repriced: false });
+      var out = { ok: true, no: (window.SITE && window.SITE.demo) ? 0 : no, lines: lines, sum: sum, fee: fee, total: sum + fee, mode: mode, table: bo.get('table') || '', channel: bo.get('channel') || '', when: when, gold: '', repriced: false };
+      /* v17: a demo shows the card-to-card box without a card (the preview has no real shop card) */
+      if (bo.get('pay') === 'card' && sum + fee > 0 && sum + fee <= ((window.SITE && window.SITE.payMax) || 5e8) && window.SITE && window.SITE.demo) out.pay = { demo: true, amount: sum + fee };
+      return json(out);
     }
     if (/\/api\/gold/.test(u)) {
       /* the gold layout's 2-minute refresh: the price the preview was built with, and the cards' own prices */

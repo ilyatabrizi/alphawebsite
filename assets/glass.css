@@ -366,6 +366,33 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .bag-copy svg{width:18px;height:18px}
 .bd-note{color:#18794E;font-weight:700;font-size:13.5px}
 .dark .bd-note{color:#6EE7A8}
+/* v17: how the customer pays (bag) and the shop's card after a card-to-card order (done screen) */
+.bag-pays{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:8px}
+.bag-pays label{position:relative;cursor:pointer}
+.bag-pays input{position:absolute;opacity:0;pointer-events:none}
+.bag-pays span{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:10px;row-gap:1px;height:100%;padding:11px 14px;border-radius:calc(18px*var(--rk,1));border:1px solid var(--line);transition:background .2s,border-color .2s,color .2s}
+.bag-pays span svg{grid-row:span 2;width:22px;height:22px}
+.bag-pays b{font-size:calc(14.5px*var(--fs,1));font-weight:800}
+.bag-pays small{font-size:12px;color:var(--muted);line-height:1.6}
+.bag-pays input:checked+span{border-color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.bag-pays input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.bd-pay{display:grid;gap:10px;text-align:start}
+.bp-h{margin:0 2px 2px;font-size:.84rem;font-weight:700;color:var(--ink)}
+.bp-amt{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:12px 14px;border-radius:calc(18px*var(--rk,1));background:var(--surface,#fff);border:1px solid var(--line)}
+.bp-amt span{flex:1 1 100%;font-size:12.5px;color:var(--muted)}
+.bp-amt b{font-size:calc(22px*var(--fs,1));font-weight:800;letter-spacing:0}
+.bp-card{position:relative;display:grid;gap:6px;padding:16px 18px;border-radius:calc(20px*var(--rk,1));background:linear-gradient(135deg,#1B1B1D,#3A3A3E);color:#fff;box-shadow:0 10px 24px -12px rgba(0,0,0,.5)}
+.bp-bank{font-size:13px;font-weight:700;opacity:.9}
+.bp-pan{font:600 clamp(17px,5.4vw,22px)/1.4 var(--latin,system-ui);letter-spacing:.04em;text-align:center;white-space:nowrap;direction:ltr}
+.bp-name{font-size:13px;opacity:.85}
+.bp-copy{justify-self:start;display:inline-flex;align-items:center;min-height:38px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.bp-card .bp-copy{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1)}
+.bp-iban{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.bp-iban b{color:var(--ink);font:600 14px/1.6 var(--latin,system-ui);word-break:break-all}
+.bp-note{font-size:13px;line-height:1.9;color:var(--muted);padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.bp-form{display:grid;gap:10px}
+.bp-ok{padding:12px 14px;border-radius:14px;background:#E6F6EA;color:#14532D;font-size:14px;line-height:1.9}
+.dark .bp-ok{background:rgba(110,231,168,.14);color:#BBF7D0}
 .bag-done .pill{justify-self:center}
 .bag-toast{position:fixed;z-index:70;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom,0px));width:min(calc(100% - 24px),440px);display:flex;align-items:center;gap:10px;padding:10px 10px 10px 16px;border-radius:20px;background:var(--ink);color:var(--bg);font-size:13.5px;line-height:1.6;box-shadow:0 10px 30px rgba(0,0,0,.25);animation:toastIn .32s var(--ease)}
 .bag-toast span{flex:1;min-width:0}

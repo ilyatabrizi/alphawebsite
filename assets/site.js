@@ -368,7 +368,7 @@
       li.innerHTML = (it.img ? '<img alt="" loading="lazy">' : '<span class="bl-ph"></span>')
         + '<div class="bl-t"><b></b><small></small></div>'
         + (CAT ? '' : '<div class="qty sm" role="group"><button type="button" data-d="1" aria-label="یکی بیشتر">+</button><output></output><button type="button" data-d="-1" aria-label="یکی کمتر">−</button></div>')
-        + '<span class="bl-p"></span><button type="button" class="bl-x" aria-label="حذف"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></svg></button>';
+        + '<span class="bl-p"></span><button type="button" class="bl-x" aria-label="حذف"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>';
       if (it.img) li.querySelector('img').src = it.img;
       li.querySelector('b').textContent = it.n + optText(l.o);
       li.querySelector('small').textContent = it.p > 0 ? fa(it.p) + ' تومان' : 'قیمت در گفتگو';
@@ -410,6 +410,7 @@
     if (!CAT || sum > 0) rows.push(['مبلغ کل', sum > 0 ? fa(sum + f) + ' تومان' : 'در گفتگو', 1]);
     dl.innerHTML = '';
     rows.forEach(function (r) { var d = document.createElement('div'); if (r[2]) d.className = 'tot'; d.innerHTML = '<dt></dt><dd></dd>'; d.firstChild.textContent = r[0]; d.lastChild.textContent = r[1]; dl.appendChild(d); });
+    var pb = $('bagPayBox'); if (pb) pb.hidden = !(sum > 0 && sum + f <= (S.payMax || 5e8));   // big orders: arranged in the conversation
     var low = mode === 'delivery' && S.del && S.del.min > 0 && sum < S.del.min;
     var err = $('bagErr');
     if (low) { err.hidden = false; err.textContent = 'برای ارسال، حداقل سفارش ' + toman(S.del.min) + ' است؛ ' + toman(S.del.min - sum) + ' دیگر اضافه کنید یا «تحویل حضوری» را انتخاب کنید.'; }
@@ -462,6 +463,8 @@
     if (field && form.elements[field]) { form.elements[field].focus(); form.elements[field].setAttribute('aria-invalid', 'true'); }
     else err.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
+  /* v17: «کارت‌به‌کارت» (to the owner's card, shown after the order) or «هماهنگی در گفتگو» */
+  function payChoice() { var pb = $('bagPayBox'), p = pb && !pb.hidden ? pb.querySelector('input[name=pay]:checked') : null; return p ? p.value : ''; }
   function orderMessage(r, f) {
     var L = [], word = W.order;
     L.push('سلام، ' + word + ' جدید از سایت ' + S.name + (r.no ? '\n' + 'شماره ' + word + ': ' + fa(r.no) : ''));
@@ -475,13 +478,15 @@
     else if (r.mode === 'delivery') L.push('ارسال به: ' + f.address);
     if (f.name || f.phone) L.push('نام: ' + [f.name, f.phone].filter(Boolean).join('، '));
     if (f.note) L.push((CAT ? 'زمان و توضیح: ' : 'توضیح: ') + f.note);
+    if (r.pay) L.push('پرداخت: کارت‌به‌کارت' + (r.payRef ? '، واریز شد؛ شماره پیگیری ' + r.payRef : '، بعد از ثبت ' + word));
+    else if (f.pay === 'msg') L.push('پرداخت: هماهنگی در گفتگو');
     L.push(siteUrl(0));
     return L.join('\n');
   }
   function submit() {
     if (sending || !bag.length) return;
     all('[aria-invalid]', form).forEach(function (i) { i.removeAttribute('aria-invalid'); });
-    var f = { name: form.elements.name.value.trim(), phone: en(form.elements.phone.value).replace(/\D/g, '').replace(/^98/, '0'), address: form.elements.address ? form.elements.address.value.trim() : '', note: form.elements.note.value.trim() };
+    var f = { pay: payChoice(), name: form.elements.name.value.trim(), phone: en(form.elements.phone.value).replace(/\D/g, '').replace(/^98/, '0'), address: form.elements.address ? form.elements.address.value.trim() : '', note: form.elements.note.value.trim() };
     if (f.phone && f.phone.charAt(0) === '9') f.phone = '0' + f.phone;
     if (!CAT && !mode) return fail('نحوه تحویل را انتخاب کنید.');
     if (mode !== 'table') {
@@ -495,6 +500,7 @@
     var body = new URLSearchParams({ slug: S.slug, v: '2', items: JSON.stringify(bag.map(function (l) { var it = ITEMS[l.id]; return { id: l.id, q: l.q, o: l.o || {}, p: it ? it.p : 0 }; })),
       mode: mode, table: table, name: f.name, phone: f.phone, address: mode === 'delivery' ? f.address : '', note: f.note, channel: c ? c.ch : (B.ch || '') });
     if (BK) { body.set('bk', '1'); body.set('when_date', bkDay); body.set('when_slot', bkSlot); }
+    if (payChoice()) body.set('pay', payChoice());
     if (form.elements.bd_d && form.elements.bd_d.value && form.elements.bd_m.value) { body.set('bd_d', form.elements.bd_d.value); body.set('bd_m', form.elements.bd_m.value); }
     fetch('/api/order', { method: 'POST', body: body })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { s: r.status, j: j }; }); })
@@ -520,15 +526,17 @@
     $('bagMain').hidden = true; var d = $('bagDone'); d.hidden = false;
     $('bdMsg').textContent = text;
     var send = $('bdSend'), note = $('bdNote'), cp = $('bdCopy');
+    payBox(r, function () { text = orderMessage(r, f); $('bdMsg').textContent = text; if (c && c.pre && !S.demo) send.href = link(text, c); });
     note.hidden = true; cp.hidden = false;
     if (S.demo) {
       $('bdH').textContent = 'در سایت واقعی، ' + word + ' این‌جا با شماره ثبت می‌شود';
-      $('bdP').textContent = 'و به پنل فروشنده می‌رود؛ مشتری هم با یک لمس به ' + (c ? c.label : 'پیام‌رسان') + ' فروشنده می‌رود و این پیام آماده است:';
+      $('bdP').textContent = 'و به پنل فروشنده می‌رود؛ مشتری هم با یک لمس به ' + (c ? c.label : 'پیام‌رسان') + ' فروشنده می‌رود و پیام آماده پایین همین صفحه را می‌فرستد.';
       send.textContent = 'همین را برای کسب‌وکارم می‌خواهم'; send.href = '/start?layout=' + encodeURIComponent(S.layout || ''); send.target = '_top'; send.onclick = null;
       cp.hidden = true;
     } else {
       $('bdH').textContent = word + ' شماره ' + fa(r.no) + ' ثبت شد';
-      if (c && c.pre) $('bdP').textContent = 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید؛ زمان و پرداخت همان‌جا هماهنگ می‌شود.';
+      if (r.pay) $('bdP').textContent = 'مبلغ را به کارت زیر کارت‌به‌کارت کنید و شماره پیگیری رسید را بنویسید؛ بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
+      else if (c && c.pre) $('bdP').textContent = 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید؛ زمان و پرداخت همان‌جا هماهنگ می‌شود.';
       else if (c) $('bdP').textContent = c.label + ' پیام آماده را در لینک نمی‌پذیرد: پیام را کپی می‌کنیم، گفتگوی ما باز می‌شود، آن را بچسبانید (Paste) و بفرستید.';
       else $('bdP').textContent = S.name + ' به‌زودی با شما تماس می‌گیرد.' + (S.tel ? ' عجله دارید؟ تماس بگیرید.' : '');
       if (r.repriced) $('bdP').textContent = 'نرخ طلا از وقتی صفحه را باز کردید تغییر کرده بود؛ قیمت‌ها با نرخ همین لحظه ثبت شد. ' + $('bdP').textContent;
@@ -543,13 +551,59 @@
           if (mobile) { e.preventDefault(); location.href = url; }
         };
         /* phones: WhatsApp and Telegram open right away; the button stays for a second try */
-        if (c.pre && mobile) setTimeout(function () { logTap(0, c.ch); location.href = url; }, 700);
+        if (c.pre && mobile && !r.pay) setTimeout(function () { logTap(0, c.ch); location.href = url; }, 700);   // with card-to-card the customer pays first
       } else if (S.tel) { send.textContent = 'تماس با ' + S.name; send.href = 'tel:' + S.tel; send.target = ''; send.onclick = null; }
       else send.hidden = true;
     }
     cp.onclick = function () { if (copy(text)) { cp.lastChild.textContent = 'کپی شد'; setTimeout(function () { cp.lastChild.textContent = 'کپی پیام ' + word; }, 1800); } };
     try { d.focus({ preventScroll: true }); } catch (e) {}
     $('bagBody').scrollTop = 0;
+  }
+
+  /* v17: the shop's card after a card-to-card order: the exact amount and the card (copy buttons), the Sheba above the
+     daily card limit, then «واریز کردم» with the receipt's tracking number. The owner confirms it in the panel; the
+     claim never marks anything paid by itself. Demos show the same box without a card number. */
+  function payBox(r, again) {
+    var box = $('bdPay'); if (!box) return;
+    box.innerHTML = ''; box.hidden = !r.pay; if (!r.pay) return;
+    var P = r.pay, mk = function (tag, cls, txt) { var x = document.createElement(tag); if (cls) x.className = cls; if (txt !== undefined) x.textContent = txt; return x; };
+    var cbtn = function (val, label) { var b = mk('button', 'bp-copy', label); b.type = 'button'; b.onclick = function () { if (copy(val)) { b.textContent = 'کپی شد'; setTimeout(function () { b.textContent = label; }, 1600); } }; return b; };
+    var amt = mk('div', 'bp-amt'); amt.appendChild(mk('span', '', 'مبلغ دقیق واریز')); amt.appendChild(mk('b', '', fa(P.amount) + ' تومان'));
+    if (!P.demo) amt.appendChild(cbtn(String(P.amount), 'کپی مبلغ'));
+    box.appendChild(amt);
+    if (P.demo) { box.insertBefore(mk('p', 'bp-h', 'اگر مشتری «کارت‌به‌کارت» را انتخاب کند:'), amt); box.appendChild(mk('p', 'bp-note', 'در سایت واقعی شماره کارت فروشگاه همین‌جا با دکمه کپی می‌آید؛ مشتری واریز می‌کند، شماره پیگیری رسید را می‌نویسد و «واریز کردم» را می‌زند، و فروشنده در پنلش «رسید» را تأیید می‌کند.')); return; }
+    var card = mk('div', 'bp-card'), pan = String(P.card).replace(/(\d{4})(?=\d)/g, '$1 ');
+    if (P.bank) card.appendChild(mk('span', 'bp-bank', P.bank));
+    var pn = mk('b', 'bp-pan', pan); pn.dir = 'ltr'; card.appendChild(pn);
+    if (P.holder) card.appendChild(mk('span', 'bp-name', 'به نام ' + P.holder));
+    card.appendChild(cbtn(String(P.card), 'کپی شماره کارت'));
+    box.appendChild(card);
+    if (P.iban) { var ib = mk('p', 'bp-iban', ''); ib.appendChild(mk('span', '', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ با پایا به این شبا هم می‌شود: ')); var ibv = mk('b', '', P.iban); ibv.dir = 'ltr'; ib.appendChild(ibv); ib.appendChild(cbtn(P.iban, 'کپی شبا')); box.appendChild(ib); }
+    else if (P.big) box.appendChild(mk('p', 'bp-note', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ می‌توانید در دو روز بفرستید یا در گفتگو هماهنگ کنید.'));
+    var fm = mk('form', 'bp-form'); fm.noValidate = true;
+    fm.innerHTML = '<label class="bf"><span>شماره پیگیری رسید</span><input name="ref" inputmode="numeric" autocomplete="off" maxlength="40" dir="ltr" placeholder="123456"></label>'
+      + '<label class="bf"><span>۴ رقم آخر کارت شما (اختیاری)</span><input name="last4" inputmode="numeric" autocomplete="off" maxlength="4" dir="ltr" placeholder="1234"></label>'
+      + '<p class="bag-err" role="alert" hidden></p><button class="bag-go" type="submit"></button>';
+    fm.querySelector('button').textContent = 'واریز کردم';
+    var er = fm.querySelector('.bag-err'), go = fm.querySelector('button'), busy = false;
+    fm.addEventListener('submit', function (e) {
+      e.preventDefault(); if (busy) return;
+      var ref = en(fm.elements.ref.value).replace(/[\s\-_.\/:#]/g, '');
+      if (!/^[0-9A-Za-z]{4,34}$/.test(ref) || (ref.match(/\d/g) || []).length < 4) { er.hidden = false; er.textContent = 'شماره پیگیری رسید بانک را بنویسید (دست‌کم ۴ رقم).'; fm.elements.ref.focus(); return; }
+      busy = true; go.classList.add('busy');
+      fetch('/api/order-pay', { method: 'POST', body: new URLSearchParams({ slug: S.slug, order: P.order, key: P.key, ref: ref, last4: en(fm.elements.last4.value).replace(/\D/g, '') }) })
+        .then(function (x) { return x.json().catch(function () { return {}; }).then(function (j) { return { s: x.status, j: j }; }); })
+        .then(function (x) {
+          busy = false; go.classList.remove('busy');
+          if (!x.j.ok) { er.hidden = false; er.textContent = x.j.error || 'ثبت نشد؛ دوباره امتحان کنید.'; return; }
+          r.payRef = x.j.ref || ref;
+          var ok = mk('p', 'bp-ok', ''); ok.appendChild(mk('b', '', 'واریز ثبت شد')); ok.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.'));
+          fm.replaceWith(ok);
+          if (again) again();
+        })
+        .catch(function () { busy = false; go.classList.remove('busy'); er.hidden = false; er.textContent = 'اینترنت قطع است؛ دوباره امتحان کنید.'; });
+    });
+    box.appendChild(fm);
   }
 
   /* ---------- product sheet ---------- */

@@ -82,12 +82,12 @@
     root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'false'); root.setAttribute('aria-labelledby', 'awpH');
     var box = el('div', 'awp-card'), top = el('div', 'awp-top');
     if (opts.icon) { var im = el('img', 'awp-ic'); im.src = opts.icon; im.alt = ''; im.width = 48; im.height = 48; top.appendChild(im); }
-    else { var ic = el('span', 'awp-ic awp-ic-c'); ic.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5c1.6.6 2.3 2 2 3.6M14 9.5c1.4-.4 2.6.3 3 1.6M6 14c1.5-.2 2.6.7 2.8 2.1M12.5 16.5c.9-.9 2.3-.9 3.2 0"/><circle cx="12" cy="12" r="8.5"/></svg>'; top.appendChild(ic); }
+    else { var ic = el('span', 'awp-ic awp-ic-c'); ic.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 17h.01"/><path d="M11.496 2c.324-.016.558.292.529.615a4 4 0 004.235 4.368.713.713 0 01.758.757 4 4 0 004.366 4.237c.323-.03.63.204.614.527a10 10 0 01-2.915 6.566A1 1 0 114.93 4.918 10 10 0 0111.496 2"/><path d="M12 12h.01"/><path d="M16 16h.01"/><path d="M16 3h.01"/><path d="M21 4h.01"/><path d="M21 8h.01"/><path d="M7 14h.01"/><path d="M9 8h.01"/></svg>'; top.appendChild(ic); }
     var tx = el('div', 'awp-tx'), h = el('b', '', opts.title); h.id = 'awpH'; tx.appendChild(h);
     var p = el('p', '', opts.text);
     if (opts.link) { p.appendChild(document.createTextNode(' ')); var a = el('a', '', opts.link[0]); a.href = opts.link[1]; a.target = '_blank'; a.rel = 'noopener'; p.appendChild(a); }
     tx.appendChild(p); top.appendChild(tx);
-    var x = el('button', 'awp-x'); x.type = 'button'; x.setAttribute('aria-label', 'بستن'); x.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>';
+    var x = el('button', 'awp-x'); x.type = 'button'; x.setAttribute('aria-label', 'بستن'); x.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
     x.addEventListener('click', function () { (opts.onX || opts.onNo || close)(); });
     top.appendChild(x); box.appendChild(top);
     if (opts.steps) {
@@ -124,8 +124,8 @@
   }
 
   /* ---------- 2. add to home screen ---------- */
-  var SHARE = '<svg class="awp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3.5M8 7l4-4 4 4"/><path d="M7 10.5H5.5v10h13v-10H17"/></svg>';
-  var PLUS = '<svg class="awp-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/></svg>';
+  var SHARE = '<svg class="awp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v13"/><path d="m16 6-4-4-4 4"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>';
+  var PLUS = '<svg class="awp-i" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>';
   function installCard(force) {
     if (standalone || (!force && store(IK + '_done') === '1')) return;
     var title = site ? nameFa + ' را روی گوشی‌ات نصب کن' : 'آلفا وب‌سایت را روی گوشی‌ات نصب کن';

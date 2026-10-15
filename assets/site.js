@@ -410,7 +410,8 @@
     if (!CAT || sum > 0) rows.push(['مبلغ کل', sum > 0 ? fa(sum + f) + ' تومان' : 'در گفتگو', 1]);
     dl.innerHTML = '';
     rows.forEach(function (r) { var d = document.createElement('div'); if (r[2]) d.className = 'tot'; d.innerHTML = '<dt></dt><dd></dd>'; d.firstChild.textContent = r[0]; d.lastChild.textContent = r[1]; dl.appendChild(d); });
-    var pb = $('bagPayBox'); if (pb) pb.hidden = !(sum > 0 && sum + f <= (S.payMax || 5e8));   // big orders: arranged in the conversation
+    var unpriced = bag.some(function (l) { return ITEMS[l.id] && !(ITEMS[l.id].p > 0); });
+    var pb = $('bagPayBox'); if (pb) pb.hidden = !(sum > 0 && !unpriced && sum + f <= (S.payMax || 5e8));   // big orders and «قیمت در گفتگو» items: arranged in the conversation
     var low = mode === 'delivery' && S.del && S.del.min > 0 && sum < S.del.min;
     var err = $('bagErr');
     if (low) { err.hidden = false; err.textContent = 'برای ارسال، حداقل سفارش ' + toman(S.del.min) + ' است؛ ' + toman(S.del.min - sum) + ' دیگر اضافه کنید یا «تحویل حضوری» را انتخاب کنید.'; }
@@ -428,11 +429,30 @@
     $('bagGoT').textContent = W.send + (c ? ' و ارسال در ' + c.label : '');
     renderClosed();
   }
+  /* A card-to-card order survives closing the bag or a reload (customers leave for the bank app and come back): its
+     card, amount and «واریز کردم» are kept 48 hours in this browser (review of 2026-10-15). */
+  var PKEY = 'aw-pay-' + S.slug;
+  function pending() {
+    var p = store(PKEY);
+    if (!p || !p.r || !p.r.pay || !p.f || Date.now() - (+p.at || 0) > 48 * 3600e3) { if (p) store(PKEY, null); return null; }
+    return p;
+  }
+  function resumePay(p) { openBag(); done(p.r, p.f, p.ch ? chan(p.ch) : null, true); }
+  function resumeLine() {
+    var p = pending(), m = $('bagMain'), el = $('bagResume');
+    if (!p) { if (el) el.hidden = true; return; }
+    if (!el) { el = document.createElement('div'); el.id = 'bagResume'; el.className = 'bag-resume'; m.insertBefore(el, m.firstChild); }
+    el.hidden = false; el.innerHTML = '';
+    var t = document.createElement('span'); t.textContent = W.order + ' شماره ' + fa(p.r.no) + (p.r.payRef ? '؛ واریزش ثبت شده.' : '؛ منتظر واریز شما.');
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'bp-copy'; b.textContent = p.r.payRef ? 'دیدن ' + W.order : 'کارت و ثبت واریز';
+    b.onclick = function () { done(p.r, p.f, p.ch ? chan(p.ch) : null, true); };
+    el.appendChild(t); el.appendChild(b);
+  }
   function openBag() {
     if (!bagEl) return;
     var ps = $('psheet'); if (ps && ps.open) ps.close();
     $('bagMain').hidden = false; $('bagDone').hidden = true;
-    renderBag();
+    renderBag(); resumeLine();
     if (!bagEl.open) { if (bagEl.showModal) bagEl.showModal(); else bagEl.setAttribute('open', ''); }
     if (!pushed) { try { history.pushState({ awbag: 1 }, '', '#bag'); pushed = true; } catch (e) {} }
     var tb = $('bagToast'); if (tb) tb.hidden = true;
@@ -457,6 +477,11 @@
     form.addEventListener('input', function () { var err = $('bagErr'); if (err.dataset.kind === 'v') { err.hidden = true; err.dataset.kind = ''; } });
   }
   all('[data-bag-open]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); openBag(); }); });
+  if (bagEl && !S.demo) (function () {
+    var p = pending(); if (!p || p.r.payRef || Date.now() - p.at > 3600e3 || /[?&]p=/.test(location.search)) return;
+    var go = function () { if (!bagEl.open) resumePay(p); };
+    setTimeout(function () { if (document.body.classList.contains('splashing')) document.addEventListener('splash:done', go, { once: true }); else go(); }, 700);
+  })();
 
   function fail(msg, field) {
     var err = $('bagErr'); err.hidden = false; err.textContent = msg; err.dataset.kind = 'v';
@@ -518,9 +543,10 @@
       })
       .catch(function () { sending = false; $('bagGo').classList.remove('busy'); renderBag(); fail('اینترنت قطع است؛ دوباره امتحان کنید.'); });
   }
-  function done(r, f, c) {
+  function done(r, f, c, resumed) {
     var text = orderMessage(r, f), word = W.order;
-    if (!S.demo) { bag = []; saveBag(); refresh(); bkDay = ''; bkSlot = ''; bkKey = ''; }
+    if (!S.demo && !resumed) { bag = []; saveBag(); refresh(); bkDay = ''; bkSlot = ''; bkKey = ''; }
+    if (!S.demo && !resumed && r.pay) store(PKEY, { r: r, f: f, ch: c ? c.ch : '', at: Date.now() });
     /* the order is done: coming back from the messenger must not reopen an empty bag */
     if (pushed) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} pushed = false; }
     $('bagMain').hidden = true; var d = $('bagDone'); d.hidden = false;
@@ -580,6 +606,7 @@
     box.appendChild(card);
     if (P.iban) { var ib = mk('p', 'bp-iban', ''); ib.appendChild(mk('span', '', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ با پایا به این شبا هم می‌شود: ')); var ibv = mk('b', '', P.iban); ibv.dir = 'ltr'; ib.appendChild(ibv); ib.appendChild(cbtn(P.iban, 'کپی شبا')); box.appendChild(ib); }
     else if (P.big) box.appendChild(mk('p', 'bp-note', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ می‌توانید در دو روز بفرستید یا در گفتگو هماهنگ کنید.'));
+    if (r.payRef) { var was = mk('p', 'bp-ok', ''); was.appendChild(mk('b', '', 'واریز ثبت شد')); was.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.')); box.appendChild(was); return; }
     var fm = mk('form', 'bp-form'); fm.noValidate = true;
     fm.innerHTML = '<label class="bf"><span>شماره پیگیری رسید</span><input name="ref" inputmode="numeric" autocomplete="off" maxlength="40" dir="ltr" placeholder="123456"></label>'
       + '<label class="bf"><span>۴ رقم آخر کارت شما (اختیاری)</span><input name="last4" inputmode="numeric" autocomplete="off" maxlength="4" dir="ltr" placeholder="1234"></label>'
@@ -597,6 +624,7 @@
           busy = false; go.classList.remove('busy');
           if (!x.j.ok) { er.hidden = false; er.textContent = x.j.error || 'ثبت نشد؛ دوباره امتحان کنید.'; return; }
           r.payRef = x.j.ref || ref;
+          var kept = pending(); if (kept && kept.r.no === r.no) { kept.r.payRef = r.payRef; store(PKEY, kept); }
           var ok = mk('p', 'bp-ok', ''); ok.appendChild(mk('b', '', 'واریز ثبت شد')); ok.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.'));
           fm.replaceWith(ok);
           if (again) again();

@@ -720,6 +720,8 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .o-pay{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:6px 0 0;font-size:13.5px}
 .o-pay svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
 .o-pay-acts{display:flex;gap:6px;margin-inline-start:auto}
+.o-pay-twin{flex-basis:100%;display:flex;gap:6px;align-items:flex-start;color:#8A4B00;font-size:13px;line-height:1.8}
+.o-pay-twin svg{flex:none;margin-top:3px}
 .inv-code{margin-top:-4px}
 /* the CEO's dashboard: card payments */
 .c2c-dash{display:grid;gap:16px}

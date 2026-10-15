@@ -1498,3 +1498,12 @@ details>summary{cursor:pointer}
 pre.sms{margin:8px 0 4px;padding:10px 12px;border-radius:var(--r1);background:var(--bg2);font:inherit;font-size:13px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}
 .match-form{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
 .match-form select{max-width:260px;min-height:34px;font-size:13px}
+
+/* sms.ir: the signup's code step and the CEO's SMS card (2026-10-15) */
+.otp-box{margin-top:14px}
+.otp-row{display:flex;gap:8px;align-items:center}
+.otp-row input{flex:1;min-width:0}
+.otp-row .btn{flex:none}
+.otp-msg{display:block;margin-top:6px;font-size:13px;line-height:1.8;color:var(--ink2)}
+.otp-msg:empty{display:none}
+.inline-test{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}

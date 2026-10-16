@@ -322,7 +322,7 @@
       th.line = mix(th.ink, th.bg, 0.9);
     }
     var dark = isDark(th.bg);
-    th.glass = dark ? rgba(th.surface, 0.64) : rgba(th.bg, 0.72);
+    th.glass = dark ? rgba(th.surface, 0.93) : rgba(th.bg, 0.9);   // = site_theme() in views_site.php
     th['glass-strong'] = dark ? rgba(th.surface, 0.82) : rgba(th.surface, 0.86);
     th['glass-line'] = dark ? 'rgba(255,255,255,.10)' : rgba(th.ink, 0.1);
     th['glass-shadow'] = dark ? 'inset 0 1px 0 rgba(255,255,255,.08),0 18px 44px rgba(0,0,0,.45),0 3px 10px rgba(0,0,0,.3)'

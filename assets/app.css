@@ -156,8 +156,10 @@ main.page{padding-block:34px 72px;display:flex;flex-direction:column;gap:28px}
 .phone.dk .sb,.phone.bdk .sb{color:#fff}
 .phone.dk .hi{background:rgba(255,255,255,.88)}
 .phone.on .vp iframe{pointer-events:auto}   /* a live demo you can scroll and tap (mouse); on touch screens it opens full screen */
-.ph-try{position:absolute;inset:0;z-index:5;display:flex;align-items:flex-end;justify-content:center;padding:0 0 calc(44px*var(--s));border:0;border-radius:inherit;background:none;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.ph-try span{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 18px;border-radius:999px;background:rgba(17,17,17,.84);color:#fff;font-size:13.5px;font-weight:600;white-space:nowrap;box-shadow:0 10px 24px -10px rgba(0,0,0,.55);transition:transform .16s var(--ease)}
+.ph-try{position:absolute;inset:0;z-index:5;display:flex;align-items:flex-end;justify-content:center;padding:0 0 calc(112px*var(--s));border:0;border-radius:inherit;background:none;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ph-try span{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 18px;border-radius:999px;background:rgba(17,17,17,.92);color:#fff;font-size:13.5px;font-weight:600;white-space:nowrap;box-shadow:0 10px 24px -10px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.14);transition:transform .16s var(--ease)}
+/* above the layout's own dock, and light on a dark layout so it never sinks into it (2026-10-16) */
+.phone.dk .ph-try span{background:rgba(255,255,255,.95);color:#111;box-shadow:0 10px 24px -10px rgba(0,0,0,.7)}
 .ph-try:active span{transform:scale(.95)}
 .ph-try svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ph-try:focus-visible span{outline:2px solid var(--y);outline-offset:3px}

@@ -454,6 +454,11 @@ input:not([type=checkbox]):not([type=radio]):not([type=file]):focus,select:focus
 .quick{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .quick::-webkit-scrollbar{display:none}
 .quick .chip{flex:none;min-height:36px;padding:0 14px;font-size:13.5px;background:var(--card)}
+.ready-msgs{display:grid;gap:8px;margin-bottom:6px}
+.ready-msgs .f-l{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:500;color:var(--ink2)}.ready-msgs .f-l small{font-size:12.5px;font-weight:400;line-height:1.75;color:var(--muted)}
+.ready-msgs .quick{flex-wrap:wrap;overflow:visible}
+.ready-msgs .chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:var(--bg2)}
+.reply-card .quick{margin:2px 0 4px}
 .replybar{position:sticky;bottom:0;display:grid;gap:8px;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));background:var(--bg)}
 .reply{display:flex;gap:8px;align-items:flex-end}
 .reply textarea{min-height:52px;border-radius:var(--r2)}

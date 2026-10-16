@@ -498,6 +498,23 @@
 
   /* ready-made replies fill the ticket box */
   $$('[data-fill]').forEach(function (b) {
-    b.addEventListener('click', function () { var t = d.getElementById('replyBody'); if (t) { t.value = b.getAttribute('data-fill'); t.focus(); } });
+    b.addEventListener('click', function () {
+      var t = d.getElementById('replyBody'), s = b.getAttribute('data-fill'); if (!t) return;
+      var v = t.value.trim();   /* never wipe what they typed: each chip adds its line (once), so «still broken» + «screenshot attached» stack */
+      if (v.indexOf(s) < 0) t.value = v ? v + '\n' + s : s; t.focus();
+    });
+  });
+  /* a new ticket's ready messages: topic, title and text, then the cursor on the first «…» to fill in */
+  $$('[data-ready]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.closest('form'), r; if (!f) return;
+      try { r = JSON.parse(b.getAttribute('data-ready')); } catch (e) { return; }
+      if (f.topic) f.topic.value = r.t; if (f.subject) f.subject.value = r.s;
+      var t = f.body; if (!t) return;
+      var v = t.value.trim(), keep = v && v !== t._ready, at = keep ? v.length + 2 : 0;   /* their own words stay; the ready text goes under them */
+      t.value = keep ? v + '\n\n' + r.b : r.b; t._ready = r.b; t.focus();
+      var i = r.b.indexOf('…'); if (i >= 0) t.setSelectionRange(at + i, at + i + 1);
+      $$('[data-ready]', f).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    });
   });
 })();

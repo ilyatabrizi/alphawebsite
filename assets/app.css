@@ -1338,6 +1338,9 @@ div.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;
 .seg-links a.on{background:#fff;color:var(--ink);box-shadow:var(--sh1)}
 .hbar.funnel{grid-template-columns:minmax(120px,170px) minmax(0,1fr) 72px}
 .hbar b small{font-weight:500;color:var(--muted);font-size:12px}
+.hbar.city{grid-template-columns:96px minmax(0,1fr) auto;color:inherit;text-decoration:none;border-radius:10px}
+.hbar.city b{min-width:40px;white-space:nowrap}
+.hbar.city:hover span,.hbar.city:focus-visible span{text-decoration:underline}
 .tbl.vis td{white-space:nowrap}
 .dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}
 .dl dt{color:var(--muted);font-size:13.5px}

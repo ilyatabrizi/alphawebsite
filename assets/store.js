@@ -6,11 +6,21 @@
   /* mobile menu sheet */
   var mb = d.querySelector('.menu-btn'), sheet = d.getElementById('sheet');
   if (mb && sheet) {
-    var set = function (open) { mb.setAttribute('aria-expanded', open ? 'true' : 'false'); mb.setAttribute('aria-label', open ? 'بستن منو' : 'باز کردن منو'); sheet.hidden = !open; };
+    /* open: the page behind dims and stops scrolling (2026-10-20, Ilya: the mobile overlay was weak) */
+    var set = function (open) { mb.setAttribute('aria-expanded', open ? 'true' : 'false'); mb.setAttribute('aria-label', open ? 'بستن منو' : 'باز کردن منو'); sheet.hidden = !open; d.documentElement.classList.toggle('menu-open', open); };
     mb.addEventListener('click', function () { set(sheet.hidden); });
     d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) { set(false); mb.focus(); } });
     d.addEventListener('click', function (e) { if (!sheet.hidden && !sheet.contains(e.target) && !mb.contains(e.target)) set(false); });
     $$('a', sheet).forEach(function (a) { a.addEventListener('click', function () { set(false); }); });
+  }
+
+  /* phones: the bottom bar with «ساخت سایت» slides in while the page's own button is out of sight (2026-10-20) */
+  var bb = d.getElementById('buyBar'), bcta = d.querySelector('[data-buy]');
+  if (bb && bcta && 'IntersectionObserver' in window) {
+    bb.hidden = false; d.body.classList.add('has-buybar');
+    var bbSet = function (on) { bb.classList.toggle('on', on); bb.inert = !on; bb.setAttribute('aria-hidden', on ? 'false' : 'true'); };
+    bbSet(false);
+    new IntersectionObserver(function (es) { es.forEach(function (e) { bbSet(!e.isIntersecting); }); }).observe(bcta);
   }
 
   /* copy buttons */

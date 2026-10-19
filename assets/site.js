@@ -443,8 +443,9 @@
     if (!p) { if (el) el.hidden = true; return; }
     if (!el) { el = document.createElement('div'); el.id = 'bagResume'; el.className = 'bag-resume'; m.insertBefore(el, m.firstChild); }
     el.hidden = false; el.innerHTML = '';
-    var t = document.createElement('span'); t.textContent = W.order + ' شماره ' + fa(p.r.no) + (p.r.payRef ? '؛ واریزش ثبت شده.' : '؛ منتظر واریز شما.');
-    var b = document.createElement('button'); b.type = 'button'; b.className = 'bp-copy'; b.textContent = p.r.payRef ? 'دیدن ' + W.order : 'کارت و ثبت واریز';
+    var ty = p.r.pay.tayid, t = document.createElement('span');
+    t.textContent = W.order + ' شماره ' + fa(p.r.no) + (p.r.payDone ? '؛ پرداخت شد.' : (p.r.payRef || p.r.payClaim ? '؛ واریزش ثبت شده.' : (ty ? '؛ منتظر پرداخت شما.' : '؛ منتظر واریز شما.')));
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'bp-copy'; b.textContent = p.r.payRef || p.r.payDone ? 'دیدن ' + W.order : (ty ? 'پرداخت' : 'کارت و ثبت واریز');
     b.onclick = function () { done(p.r, p.f, p.ch ? chan(p.ch) : null, true); };
     el.appendChild(t); el.appendChild(b);
   }
@@ -478,7 +479,8 @@
   }
   all('[data-bag-open]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); openBag(); }); });
   if (bagEl && !S.demo) (function () {
-    var p = pending(); if (!p || p.r.payRef || Date.now() - p.at > 3600e3 || /[?&]p=/.test(location.search)) return;
+    if (/[?&]op=/.test(location.search)) return;   // back from Tayid Shod's page: payBack() below
+    var p = pending(); if (!p || p.r.payRef || p.r.payDone || Date.now() - p.at > 3600e3 || /[?&]p=/.test(location.search)) return;
     var go = function () { if (!bagEl.open) resumePay(p); };
     setTimeout(function () { if (document.body.classList.contains('splashing')) document.addEventListener('splash:done', go, { once: true }); else go(); }, 700);
   })();
@@ -503,7 +505,8 @@
     else if (r.mode === 'delivery') L.push('ارسال به: ' + f.address);
     if (f.name || f.phone) L.push('نام: ' + [f.name, f.phone].filter(Boolean).join('، '));
     if (f.note) L.push((CAT ? 'زمان و توضیح: ' : 'توضیح: ') + f.note);
-    if (r.pay) L.push('پرداخت: کارت‌به‌کارت' + (r.payRef ? '، واریز شد؛ شماره پیگیری ' + r.payRef : '، بعد از ثبت ' + word));
+    if (r.pay && r.pay.tayid) L.push('پرداخت: کارت‌به‌کارت خودکار' + (r.payDone ? '، پرداخت شد' : (r.payClaim ? '، واریز شد' : '، بعد از ثبت ' + word)));
+    else if (r.pay) L.push('پرداخت: کارت‌به‌کارت' + (r.payRef ? '، واریز شد؛ شماره پیگیری ' + r.payRef : '، بعد از ثبت ' + word));
     else if (f.pay === 'msg') L.push('پرداخت: هماهنگی در گفتگو');
     L.push(siteUrl(0));
     return L.join('\n');
@@ -561,7 +564,9 @@
       cp.hidden = true;
     } else {
       $('bdH').textContent = word + ' شماره ' + fa(r.no) + ' ثبت شد';
-      if (r.pay) $('bdP').textContent = 'مبلغ را به کارت زیر کارت‌به‌کارت کنید و شماره پیگیری رسید را بنویسید؛ بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
+      if (r.pay && r.pay.tayid) $('bdP').textContent = r.payDone ? 'پرداخت شد و ' + S.name + ' آن را تأیید کرد. پیام ' + word + ' را هم' + (c ? ' در ' + c.label : '') + ' بفرستید.'
+        : 'دکمه «پرداخت» را بزنید: مبلغ دقیق و کارت ' + S.name + ' را در صفحه امن «تأیید شد» می‌بینید و بعد از واریز به همین‌جا برمی‌گردید. بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
+      else if (r.pay) $('bdP').textContent = 'مبلغ را به کارت زیر کارت‌به‌کارت کنید و شماره پیگیری رسید را بنویسید؛ بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
       else if (c && c.pre) $('bdP').textContent = 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید؛ زمان و پرداخت همان‌جا هماهنگ می‌شود.';
       else if (c) $('bdP').textContent = c.label + ' پیام آماده را در لینک نمی‌پذیرد: پیام را کپی می‌کنیم، گفتگوی ما باز می‌شود، آن را بچسبانید (Paste) و بفرستید.';
       else $('bdP').textContent = S.name + ' به‌زودی با شما تماس می‌گیرد.' + (S.tel ? ' عجله دارید؟ تماس بگیرید.' : '');
@@ -593,6 +598,7 @@
     var box = $('bdPay'); if (!box) return;
     box.innerHTML = ''; box.hidden = !r.pay; if (!r.pay) return;
     var P = r.pay, mk = function (tag, cls, txt) { var x = document.createElement(tag); if (cls) x.className = cls; if (txt !== undefined) x.textContent = txt; return x; };
+    if (P.tayid) return tayidBox(r, box, P, mk, again);
     var cbtn = function (val, label) { var b = mk('button', 'bp-copy', label); b.type = 'button'; b.onclick = function () { if (copy(val)) { b.textContent = 'کپی شد'; setTimeout(function () { b.textContent = label; }, 1600); } }; return b; };
     var amt = mk('div', 'bp-amt'); amt.appendChild(mk('span', '', 'مبلغ دقیق واریز')); amt.appendChild(mk('b', '', fa(P.amount) + ' تومان'));
     if (!P.demo) amt.appendChild(cbtn(String(P.amount), 'کپی مبلغ'));
@@ -633,6 +639,56 @@
     });
     box.appendChild(fm);
   }
+
+  /* v20: Tayid Shod. «پرداخت» opens its payment page (/api/order-go makes the order there); the customer comes back with
+     ?op={order}.{key} and this box shows the status, asked every few seconds while it waits (/api/order-status). */
+  var payTimer = 0;
+  function payStatusText(st) {
+    return st === 'paid' ? 'پرداخت شد؛ ' + S.name + ' آن را تأیید کرد.' : (st === 'claimed' ? 'واریز شما اعلام شد؛ ' + S.name + ' به‌زودی تأییدش می‌کند. همین صفحه خودش به‌روز می‌شود.'
+      : (st === 'unpaid' ? S.name + ' هنوز این واریز را ندیده؛ اگر واریز کرده‌اید در گفتگو خبر بدهید، وگرنه دوباره «پرداخت» را بزنید.' : ''));
+  }
+  function tayidBox(r, box, P, mk, again) {
+    var amt = mk('div', 'bp-amt'); amt.appendChild(mk('span', '', 'مبلغ ' + W.order)); amt.appendChild(mk('b', '', fa(P.amount) + ' تومان'));
+    box.appendChild(amt);
+    if (P.demo) {
+      box.insertBefore(mk('p', 'bp-h', 'اگر مشتری «کارت‌به‌کارت» را انتخاب کند:'), amt);
+      box.appendChild(mk('p', 'bp-note', 'در سایت واقعی دکمه «پرداخت» این‌جاست: مشتری در صفحه امن «تأیید شد» مبلغ دقیق و کارت فروشگاه را می‌بیند، واریز می‌کند و «واریز کردم» را می‌زند؛ فروشنده با یک لمس در بله تأیید می‌کند و سفارش خودش «پرداخت شد» می‌شود.'));
+      return;
+    }
+    var stEl = mk('p', 'bp-ok', ''), go = mk('a', 'bag-go bp-pay', '');
+    go.href = '/api/order-go?' + new URLSearchParams({ s: S.slug, o: P.order, k: P.key }).toString();
+    go.appendChild(document.createTextNode('پرداخت ' + fa(P.amount) + ' تومان'));
+    var how = mk('p', 'bp-note', 'کارت‌به‌کارت خودکار با «تأیید شد»: مبلغ دقیق (با سه رقم کد آخرش) و کارت ' + S.name + ' را با دکمه کپی می‌بینید.');
+    function paint(st) {
+      if (st === 'paid') r.payDone = true; if (st === 'claimed') r.payClaim = true;
+      var tx = payStatusText(st); stEl.hidden = !tx; stEl.textContent = tx; stEl.className = st === 'paid' ? 'bp-ok' : 'bp-note';
+      go.hidden = st === 'paid' || st === 'claimed'; how.hidden = go.hidden;
+      var kept = pending(); if (kept && kept.r.no === r.no) { kept.r.payDone = r.payDone; kept.r.payClaim = r.payClaim; store(PKEY, kept); }
+      if (again) again();
+    }
+    box.appendChild(go); box.appendChild(how); box.appendChild(stEl);
+    paint(r.payDone ? 'paid' : (r.payClaim ? 'claimed' : 'wait'));
+    clearTimeout(payTimer);
+    var tries = 0, ask = function () {
+      if (!bagEl.open || !document.body.contains(box) || box.hidden || r.payDone || tries++ > 180) return;
+      if (document.hidden) { payTimer = setTimeout(ask, 5000); return; }
+      fetch('/api/order-status?' + new URLSearchParams({ s: S.slug, o: P.order, k: P.key }).toString(), { cache: 'no-store' })
+        .then(function (x) { return x.ok ? x.json() : null; }).then(function (j) { if (j && j.ok) paint(j.status); })
+        .catch(function () {}).then(function () { if (!r.payDone) payTimer = setTimeout(ask, r.payClaim ? 5000 : 8000); });
+    };
+    if (r.payBack || r.payClaim) ask(); else payTimer = setTimeout(ask, 8000);
+  }
+  /* back from the payment page: the order this browser kept, or (another browser) just its number and amount */
+  (function payBack() {
+    var m = /[?&]op=(\d+)\.([a-f0-9]{32})/.exec(location.search); if (!m || !bagEl || S.demo) return;
+    try { history.replaceState(null, '', location.pathname + location.search.replace(/([?&])(op|tayidshod_id|order_id|status)=[^&]*/g, '$1').replace(/[?&]+$/, '').replace(/\?&+/, '?')); } catch (e) {}
+    var p = pending(), go = function (r, f, ch) { r.payBack = true; openBag(); done(r, f, ch, true); };
+    if (p && String(p.r.pay.order) === m[1]) { setTimeout(function () { go(p.r, p.f, p.ch ? chan(p.ch) : null); }, 500); return; }
+    fetch('/api/order-status?' + new URLSearchParams({ s: S.slug, o: m[1], k: m[2] }).toString(), { cache: 'no-store' })
+      .then(function (x) { return x.ok ? x.json() : null; })
+      .then(function (j) { if (!j || !j.ok) return; go({ no: j.no, lines: [], total: j.total, fee: 0, mode: '', pay: { tayid: 1, order: +m[1], key: m[2], amount: j.total }, payDone: j.status === 'paid', payClaim: j.status === 'claimed' }, { name: '', phone: '', note: '' }, null); })
+      .catch(function () {});
+  })();
 
   /* ---------- product sheet ---------- */
   var ps = $('psheet'), cur = null, psQ = 1;

@@ -1334,6 +1334,45 @@ div.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;
 .ad-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
 .ad-top b{font-size:15.5px}.ad-top .ad-price{font-weight:800}
 .addon-pick em{font-style:normal;font-size:13px;line-height:1.9;color:var(--muted)}
+/* v20: how the customers pay. Tayid Shod first and biggest, Zarinpal below it, «not now» as a quiet line. */
+.paypick{display:grid;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.pp-q{display:grid;gap:2px;margin:0}.pp-q b{font-size:16px;font-weight:800}.pp-q small{font-size:13px;color:var(--muted)}
+.pp-opt{position:relative;display:block;cursor:pointer}
+.pp-opt input,.pp-none input{position:absolute;opacity:0;pointer-events:none}
+.pp-in{position:relative;display:grid;gap:8px;padding:18px 18px 18px 56px;border:1px solid var(--line2);border-radius:var(--r3);background:var(--field);transition:border-color .2s,background .2s,box-shadow .2s}
+.pp-in::after{content:"";position:absolute;left:18px;top:20px;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line2);background:#fff}
+.pp-opt input:checked+.pp-in{border-color:var(--ink);background:#fff;box-shadow:inset 0 0 0 1px var(--ink),var(--sh2)}
+.pp-opt input:checked+.pp-in::after{border:7px solid var(--ink)}
+.pp-opt input:focus-visible+.pp-in,.pp-none input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
+.pp-best .pp-in{padding:22px 22px 22px 60px;gap:10px}
+.pp-tag{justify-self:start;display:inline-flex;align-items:center;gap:8px;padding:3px 12px;border-radius:999px;background:var(--bg2);font-size:12.5px;font-weight:700;color:var(--ink2)}
+.pp-tag i{width:7px;height:7px;border-radius:50%;background:var(--y);box-shadow:0 0 0 3px rgba(255,204,0,.24)}
+.pp-name{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}.pp-name b{font-size:20px;font-weight:800}.pp-name .lat{font-size:13px;color:var(--muted)}
+.pp-best .pp-name b{font-size:clamp(22px,1rem + 1.6vw,28px)}
+.pp-what{font-size:15px;font-weight:700;color:var(--ink2)}
+.pp-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.pp-price s{font-size:14px;color:var(--faint)}.pp-price b{font-size:17px;font-weight:800;color:var(--good)}
+.pp-fee{font-size:14.5px;line-height:1.9}.pp-fee b{font-weight:800}
+.pp-pts{display:grid;gap:4px;margin-top:2px}
+.pp-pts span{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;line-height:1.9;color:var(--ink2)}
+.pp-pts svg{flex:none;width:17px;height:17px;margin-top:4px;color:var(--good)}
+.pp-fields{display:grid;gap:10px;margin:-2px 0 2px;padding:16px;border-radius:var(--r2);background:#fff;border:1px dashed var(--line2)}
+.pp-zp .pp-in{gap:6px}
+.pp-rows{display:grid;gap:2px}
+.pp-rows>span{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:13.5px;line-height:1.9}
+.pp-rows em{font-style:normal;min-width:64px;color:var(--muted)}.pp-rows b{font-weight:700}
+.pp-zx{font-size:13px;line-height:1.9;color:var(--muted)}
+.pp-none{position:relative;display:inline-flex;align-items:center;gap:8px;justify-self:start;cursor:pointer;font-size:13.5px;color:var(--muted)}
+.pp-none span{display:inline-flex;align-items:center;gap:8px;padding:4px 2px}
+.pp-none span::before{content:"";width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line2);background:#fff;flex:none}
+.pp-none input:checked+span{color:var(--ink);font-weight:600}.pp-none input:checked+span::before{border:5px solid var(--ink)}
+.pp-free{margin:0 0 6px;font-size:14px}.pp-free s{color:var(--faint)}.pp-free b{color:var(--good);font-weight:800}
+.tayid-bale{display:grid;gap:8px;justify-items:start;margin:12px 0;padding:14px 16px;border-radius:var(--r2);background:var(--warnw)}
+.tayid-bale .hint{margin:0}
+.tayid-rows{margin:12px 0}.tayid-rows .row2{padding:8px 0;border-top:1px solid var(--line)}.tayid-rows dt{color:var(--muted);font-size:14px}.tayid-rows dd{margin:0;text-align:end}
+.tayid-card-edit{margin-top:14px}.tayid-card-edit summary{cursor:pointer;font-weight:600;font-size:14px}
+.hint-form{margin:2px 0 14px}
+@media(max-width:520px){.pp-in{padding:16px 16px 16px 50px}.pp-best .pp-in{padding:18px 16px 18px 52px}.pp-in::after{left:14px}}
 .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start;margin-top:16px}
 @media(max-width:960px){.grid-3{grid-template-columns:1fr}}
 .seg-links{display:inline-flex;gap:2px;padding:4px;border-radius:999px;background:var(--bg2)}

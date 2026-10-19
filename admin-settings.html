@@ -1,4 +1,4 @@
-<!doctype html><html lang="fa" dir="rtl" data-v="2026.10.19-15"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="fa" dir="rtl" data-v="2026.10.19-16"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>تیم و تنظیمات | آلفا وب‌سایت</title>
 <meta name="description" content="سایت آماده برای ۲۲ نوع کسب‌وکار با دامنه .ir یا .com به نام خودت، میزبانی داخل ایران و پنل ویرایش با گوشی. بدون هزینه راه‌اندازی؛ همان روز بالا می‌آید.">
 <meta name="robots" content="noindex, nofollow">
@@ -21,12 +21,12 @@
     <div class="tscroll"><table class="tbl plain"><thead><tr><th>نام</th><th>ایمیل</th><th>نقش</th><th>آخرین ورود</th><th><span class="sr">اقدام</span></th></tr></thead><tbody>
     <tr><td><b>ایلیا تبوخی</b></td><td class="lat" dir="ltr">ceo@alphawebsite.ir</td><td>مدیرعامل</td><td class="n">1405/07/27</td>
       <td class="n"><small class="muted">شما</small></td></tr>    </tbody></table></div>
-    <form class="form add-staff" method="post" action="/admin/staff"><input type="hidden" name="csrf" value="6470cb235a8144d08b26df387d179e12"><h3 class="h3">افزودن عضو تیم</h3>
+    <form class="form add-staff" method="post" action="/admin/staff"><input type="hidden" name="csrf" value="d6531a7e19fad0daebb18d7bcd9a3e98"><h3 class="h3">افزودن عضو تیم</h3>
       <div class="grid2"><label class="f">نام<input name="name" required maxlength="60"></label><label class="f">ایمیل<input class="ltr lat" type="email" name="email" required></label>
       <label class="f">نقش<select name="role"><option value="manager">مدیر: مشتری‌ها، مالی، تیکت و دامنه</option><option value="support">پشتیبانی: فقط تیکت و دامنه</option><option value="ceo">مدیرعامل: همه‌چیز</option></select></label></div>
       <button class="btn" type="submit">افزودن و ساخت رمز</button></form>
   </section>
-  <form class="card form" method="post" action="/admin/settings"><input type="hidden" name="csrf" value="6470cb235a8144d08b26df387d179e12"><h2>اعلان‌ها</h2>
+  <form class="card form" method="post" action="/admin/settings"><input type="hidden" name="csrf" value="d6531a7e19fad0daebb18d7bcd9a3e98"><h2>اعلان‌ها</h2>
     <label class="f">ایمیل اعلان تیکت تازه<small>جدا با ویرگول؛ مثلاً info@alphawebsite.ir</small><input class="ltr lat" name="notify_email" value="info@alphawebsite.ir"></label>
     <label class="f">شناسه گفتگوی بله برای اعلان تیکت (اختیاری)<input class="ltr lat" name="admin_bale_chat" value=""></label>
     <h2 class="h2s">خدمات اضافه</h2>
@@ -42,13 +42,13 @@
     </div>
     <button class="btn" type="submit">ذخیره</button></form>
     <section class="card" id="sms"><h2>پیامک (sms.ir)</h2>
-    <p class="muted">کد تأیید موبایل در ساخت سایت و «رمز را فراموش کرده‌ام»، و یادآوری تمدید اشتراک مشتری‌ها (روز −۳، ۰، +۳ و +۷ و وقتی سایت متوقف شد). پرداخت ثبت شد، وصل‌شدن دامنه و «واریز نرسید» آماده‌اند و با گذاشتن شناسه قالبشان فرستاده می‌شوند (پلن رایگان sms.ir فقط دو قالب دارد). خاموش که باشد، همه‌چیز مثل قبل با ایمیل و تیکت کار می‌کند.</p>
+    <p class="muted">کد تأیید موبایل در ساخت سایت و «رمز را فراموش کرده‌ام»، و یادآوری تمدید اشتراک مشتری‌ها (روز −۳، ۰، +۳ و +۷ و وقتی سایت متوقف شد). پرداخت ثبت شد، وصل‌شدن دامنه و «واریز نرسید» آماده‌اند و با گذاشتن شناسه قالبشان فرستاده می‌شوند (پلن رایگان sms.ir فقط دو قالب دارد). در ساخت سایت اگر پیامک کد نرسد، مشتری کد را به ایمیلش می‌گیرد و حساب با ایمیل تأییدشده ساخته می‌شود (در رویدادهای همان مشتری نوشته می‌شود). خاموش که باشد، همه‌چیز مثل قبل با ایمیل و تیکت کار می‌کند.</p>
     <dl class="kv">
       <dt>کلید API</dt><dd><span class="pill warn">تنظیم نشده</span> <small class="muted">در ~/Jarvis/.env با نام ALPHAWEBSITE_SMSIR_API_KEY؛ هرگز این‌جا نوشته نمی‌شود.</small></dd>
       <dt>وضعیت</dt><dd><span class="pill mut">خاموش</span></dd>
             <dt>آخرین ارسال موفق</dt><dd>-</dd>
           </dl>
-    <form class="form" method="post" action="/admin/settings/sms"><input type="hidden" name="csrf" value="6470cb235a8144d08b26df387d179e12"><input type="hidden" name="do" value="save">
+    <form class="form" method="post" action="/admin/settings/sms"><input type="hidden" name="csrf" value="d6531a7e19fad0daebb18d7bcd9a3e98"><input type="hidden" name="do" value="save">
       <label class="check"><input type="checkbox" name="smsir_on" value="1"  disabled> <span>ارسال پیامک روشن باشد <small class="muted">(اول یک پیامک آزمایشی بفرستید و مطمئن شوید رسید)</small></span></label>
       <div class="grid2">
                 <label class="f">قالب «کد تأیید»<small>sms.ir ← قالب‌های ارسال سریع؛ متغیر #CODE#</small><input class="ltr" name="tpl_otp" value="619875" inputmode="numeric"></label>
@@ -60,12 +60,12 @@
       <button class="btn" type="submit">ذخیره</button></form>
       </section>
   <section class="card"><h2>وضعیت سیستم</h2><dl class="kv">
-    <dt>نسخه</dt><dd class="lat" dir="ltr">2026.10.19-15</dd>
+    <dt>نسخه</dt><dd class="lat" dir="ltr">2026.10.19-16</dd>
     <dt>پایگاه داده</dt><dd>336 کیلوبایت</dd>
     <dt>آخرین پشتیبان</dt><dd>روی این سرور پیدا نشد</dd>
     <dt>ارسال ایمیل</dt><dd><span class="pill warn">خاموش</span></dd>
     <dt>روش پرداخت</dt><dd><span class="pill warn">آزمایشی (رایگان)</span> <a class="muted" href="admin-launch.html">تغییر</a></dd>
-    <dt>زمان سرور</dt><dd>1405/07/27 ۱۳:۲۵</dd>
+    <dt>زمان سرور</dt><dd>1405/07/27 ۲۳:۰۲</dd>
   </dl>
     </section>
 </div></div></div><nav class="tabbar" aria-label="مدیریت"><div class="tb-in"><a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>داشبورد</span></a><a href="admin-sites.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span>مشتری‌ها</span></a><a href="admin-tickets.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg><span>تیکت‌ها</span><b class="nb">۱</b></a><a href="admin-invoices.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><path d="M6 14h2"/></svg><span>مالی</span></a><a href="admin-more.html" class="on" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg><span>بیشتر</span></a></div></nav><footer class="foot slim"><div class="wrap">

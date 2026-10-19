@@ -1558,4 +1558,7 @@ pre.sms{margin:8px 0 4px;padding:10px 12px;border-radius:var(--r1);background:va
 .otp-row .btn{flex:none}
 .otp-msg{display:block;margin-top:6px;font-size:13px;line-height:1.8;color:var(--ink2)}
 .otp-msg:empty{display:none}
+/* «پیامک نرسید؟» → the code by e-mail (2026-10-19) */
+.otp-alt{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:10px;font-size:13.5px;color:var(--ink2)}
+.otp-alt .btn svg{width:16px;height:16px}
 .inline-test{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}

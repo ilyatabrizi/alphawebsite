@@ -1656,3 +1656,63 @@ html.menu-open body::after{content:"";position:fixed;inset:0;z-index:49;backgrou
   .in-flow .signup-page{padding-bottom:0}
   .has-dock .foot{padding-bottom:116px}
 }
+
+/* ---------- the client panel as an app (2026-10-21, Ilya: Blu Bank "works and feels just like an app"; nav.js) ----------
+   Pages change without a reload: only #main moves (a slide forward/back, a fade for the tabs), the top bar and the tab
+   bar stay. A thin line shows a slow answer, the page dims a little after 0.3 s. On touch screens: no grey flash on taps,
+   buttons press in, the bars can't be selected or long-pressed, and inputs are 16 px so the iPhone never zooms in.
+   In the installed app: the back swipe from the right edge and pull to refresh. Reduced motion: no movement at all. */
+.area-panel #main{view-transition-name:aw-main}
+.area-panel #main:focus{outline:0}
+.area-panel [id]{scroll-margin-top:84px}
+html:has(> body.area-panel){scroll-padding-top:0}   /* the panel: the 84px above is the whole gap (with the page's 96px too it was 180) */
+::view-transition-old(root),::view-transition-new(root){animation:none}
+::view-transition-group(aw-main){animation:none}
+::view-transition-old(aw-main),::view-transition-new(aw-main){animation-duration:.3s;animation-timing-function:cubic-bezier(.2,.8,.2,1);animation-fill-mode:both}
+html[data-nav=fwd]::view-transition-old(aw-main){animation-name:awOutFwd}
+html[data-nav=fwd]::view-transition-new(aw-main){animation-name:awInFwd}
+html[data-nav=back]::view-transition-old(aw-main){animation-name:awOutBack}
+html[data-nav=back]::view-transition-new(aw-main){animation-name:awInBack}
+html[data-nav=tab]::view-transition-old(aw-main){animation:awFadeOut .14s ease both}
+html[data-nav=tab]::view-transition-new(aw-main){animation:awFadeIn .22s ease both}
+/* right to left: a new page comes in from the left, going back it comes from the right */
+@keyframes awInFwd{from{opacity:0;transform:translateX(-36px)}}
+@keyframes awOutFwd{to{opacity:0;transform:translateX(24px)}}
+@keyframes awInBack{from{opacity:0;transform:translateX(36px)}}
+@keyframes awOutBack{to{opacity:0;transform:translateX(-24px)}}
+@keyframes awFadeIn{from{opacity:0}}
+@keyframes awFadeOut{to{opacity:0}}
+@media(max-width:880px){
+  @keyframes awInFwd{from{opacity:.4;transform:translateX(-30%)}}
+  @keyframes awOutFwd{to{opacity:0;transform:translateX(16%)}}
+  @keyframes awInBack{from{opacity:.4;transform:translateX(30%)}}
+  @keyframes awOutBack{to{opacity:0;transform:translateX(-16%)}}
+}
+/* browsers without view transitions: the new page only slides in */
+.aw-in-fwd{animation:awInFwd .28s cubic-bezier(.2,.8,.2,1)}
+.aw-in-back{animation:awInBack .28s cubic-bezier(.2,.8,.2,1)}
+.aw-in-tab{animation:awFadeIn .2s ease}
+.aw-prog{position:fixed;z-index:200;top:env(safe-area-inset-top,0px);left:0;right:0;height:2.5px;pointer-events:none;background:var(--ink);transform:scaleX(0);transform-origin:right;opacity:0}
+.aw-prog.go{opacity:1;transform:scaleX(.72);transition:transform 2.4s cubic-bezier(.1,.6,.2,1),opacity .2s}
+.aw-prog.done{transform:scaleX(1);opacity:0;transition:transform .2s ease,opacity .3s ease .15s}
+html.aw-wait .area-panel #main,html.aw-wait #main{opacity:.5;transition:opacity .25s}
+form[aria-busy=true] button,form[aria-busy=true] .btn{opacity:.55;pointer-events:none}
+.call-toast.note::before{background:#fff;box-shadow:none}
+.aw-ptr{position:fixed;z-index:130;top:calc(env(safe-area-inset-top,0px) + 8px);left:50%;width:38px;height:38px;margin-top:-46px;border-radius:50%;display:grid;place-items:center;
+  background:#fff;box-shadow:0 6px 18px rgba(19,19,18,.16),0 0 0 1px var(--line);opacity:0;transform:translate(-50%,0);pointer-events:none}
+.aw-ptr svg{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.aw-ptr.show{opacity:1}
+.aw-ptr.ready svg{stroke-width:2.6}
+.aw-ptr.spin{transition:transform .2s ease}.aw-ptr.spin svg{animation:spin .8s linear infinite}
+html.aw-swipe #main{box-shadow:18px 0 32px -18px rgba(19,19,18,.35);background:var(--bg)}
+@media(hover:none) and (pointer:coarse){
+  a,button,summary,label,[role=button]{-webkit-tap-highlight-color:transparent}
+  .tabbar,.side,.top .bar,.btn,.chip,.chips a,.tb-in a,summary,.seg label{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:16px!important}
+  .btn:active{transform:scale(.96)}
+  .tb-in a{transition:transform .18s var(--ease),background .2s}
+  .tb-in a:active{transform:scale(.9)}
+  .side a:active,.chip:active{opacity:.7}
+}
+html.aw-app{-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:reduce){.aw-in-fwd,.aw-in-back,.aw-in-tab{animation:none}.aw-prog.go{transition:none}}

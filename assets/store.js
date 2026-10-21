@@ -1,4 +1,6 @@
-/* Alpha Website: small behaviours for the store, signup, panel and admin. No libraries, no external calls. */
+/* Alpha Website: small behaviours for the store, signup, panel and admin. No libraries, no external calls.
+   What belongs to a page's own content is bound in init(root); the panel's app navigation (nav.js) swaps the content
+   without a reload and calls window.AW.init(newContent) again (2026-10-21). */
 (function () {
   var d = document;
   var $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
@@ -22,15 +24,6 @@
     bbSet(false);
     new IntersectionObserver(function (es) { es.forEach(function (e) { bbSet(!e.isIntersecting); }); }).observe(bcta);
   }
-
-  /* copy buttons */
-  $$('[data-copy]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var t = b.getAttribute('data-copy'), old = b.textContent;
-      var done = function () { b.textContent = 'کپی شد'; setTimeout(function () { b.textContent = old; }, 1600); };
-      if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {}); else { var i = d.createElement('input'); i.value = t; d.body.appendChild(i); i.select(); try { d.execCommand('copy'); done(); } catch (e) {} i.remove(); }
-    });
-  });
 
   /* the card-to-card pay page: ask every few seconds whether the bank's SMS has confirmed the payment, and move on
      once it has. Stops after 45 minutes; a hidden tab asks again as soon as it is shown. */
@@ -237,14 +230,6 @@
     else if (d.readyState === 'complete') idle(start); else window.addEventListener('load', function () { idle(start); });
   }
 
-  /* the owner's live preview in the panel */
-  var pvf = d.getElementById('pvFrame');
-  if (pvf && fine) {
-    var arm = function () { touchify(pvf); };
-    pvf.addEventListener('load', arm);
-    try { if (pvf.contentDocument && pvf.contentDocument.readyState === 'complete') arm(); } catch (e) {}
-  }
-
   /* home: pick a niche; the phone loads its demo */
   var tryer = d.querySelector('.tryer');
   if (tryer && lv) {
@@ -269,39 +254,6 @@
       bt.forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-bill') === k ? 'true' : 'false'); });
       $$('.plan [data-m]').forEach(function (el) { el.textContent = el.getAttribute('data-' + k); });
     });
-  });
-
-  /* admin domain queue: is this name still free? */
-  $$('[data-dcheck]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var out = b.nextElementSibling, words = { free: 'آزاد است', taken: 'ثبت شده', unknown: 'الان قابل بررسی نیست', invalid: 'نام معتبر نیست' };
-      out.className = 'dstate'; out.textContent = 'در حال بررسی…';
-      fetch('/api/domain?l=' + encodeURIComponent(b.getAttribute('data-dcheck')) + '&ext=' + encodeURIComponent(b.getAttribute('data-ext') || 'ir'))
-        .then(function (r) { return r.json(); })
-        .then(function (j) { out.className = 'dstate ' + j.status; out.textContent = words[j.status] || ''; })
-        .catch(function () { out.className = 'dstate unknown'; out.textContent = words.unknown; });
-    });
-  });
-
-  /* show / hide password */
-  $$('.pw-t').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var i = b.parentNode.querySelector('input'), show = i.type === 'password';
-      i.type = show ? 'text' : 'password'; b.setAttribute('aria-pressed', show ? 'true' : 'false'); b.setAttribute('aria-label', show ? 'پنهان کردن رمز' : 'نمایش رمز');
-    });
-  });
-
-  /* ask before deleting */
-  $$('form[data-confirm]').forEach(function (f) { f.addEventListener('submit', function (e) { if (!window.confirm(f.getAttribute('data-confirm'))) e.preventDefault(); }); });
-
-  /* file pickers in Persian, whatever the browser's language */
-  $$('input[type=file]').forEach(function (inp) {
-    var w = d.createElement('span'); w.className = 'attach';
-    inp.parentNode.insertBefore(w, inp); w.appendChild(inp);
-    var btn = d.createElement('span'); btn.className = 'attach-btn'; btn.textContent = 'انتخاب فایل';
-    var nm = d.createElement('span'); nm.className = 'attach-name'; nm.textContent = 'فایلی انتخاب نشده';
-    w.appendChild(btn); w.appendChild(nm);
-    inp.addEventListener('change', function () { nm.textContent = inp.files && inp.files.length ? inp.files[0].name : 'فایلی انتخاب نشده'; });
   });
 
   /* ---------- panel → look: colours (any RGB), shape, text, background and sections, live in the phone before saving ----------
@@ -346,185 +298,244 @@
   }
   window.awLookTheme = lookTheme;   // e2e checks it against the server
 
-  var lf = d.getElementById('lookForm'), pf = d.getElementById('pvFrame');
-  if (lf) (function () {
-    var themes = JSON.parse(lf.getAttribute('data-themes') || '{}'), opts = JSON.parse(lf.getAttribute('data-opts') || '{}');
-    var phone = pf && pf.closest('.phone');
-    var faNum = function (n) { return String(n).replace(/\d/g, function (x) { return '۰۱۲۳۴۵۶۷۸۹'[x]; }).replace('.', '٫'); };
-    var enNum = function (t) { return String(t).replace(/[۰-۹]/g, function (x) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x); }).replace(/[٠-٩]/g, function (x) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(x); }); };
-    var field = function (n) { return lf.elements[n]; };
-    var radio = function (n) { var r = lf.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; };
-    var layout = function () { return radio('layout'); };
-    var pickers = $$('.cp', lf);
-    var state = function () {
-      var s = { accent: hexOk(field('accent').value), bg: hexOk(field('bg').value), surface: hexOk(field('surface').value), ink: hexOk(field('ink').value),
-                radius: radio('radius'), text: radio('text'), weight: radio('weight'), ratio: radio('ratio'), pattern: radio('pattern'),
-                dim: +field('dim').value, hide: [] };
-      $$('.lk-tog input[type=checkbox]', lf).forEach(function (c) { if (!c.checked) s.hide.push(c.name.slice(5, -1)); });
-      return s;
-    };
-    var url = function () { return '/s/' + lf.getAttribute('data-slug') + '?pv=1&layout=' + layout() + '&look=' + encodeURIComponent(JSON.stringify(state())); };
-    var level = function (r, k) {
-      if (k === 'acc') return r >= 3 ? ['good', 'خوب'] : r >= 1.3 ? ['ok', 'کافی'] : ['bad', 'کم‌پیدا'];
-      return r >= 7 ? ['good', 'عالی'] : r >= 4.5 ? ['good', 'خوب'] : r >= 3 ? ['ok', 'کافی'] : ['bad', 'کم'];
-    };
-    var dragging = null;
-    function paintPicker(cp, T, s) {
-      var k = cp.getAttribute('data-key'), v = s[k], shown = v || T.th[k], c = rgbOf(shown);
-      cp.querySelector('.cp-chip').style.background = shown;
-      cp.querySelector('.cp-val .lat').textContent = shown;
-      cp.querySelector('.cp-val em').hidden = !!v;
-      $$('.cp-sw button', cp).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === v ? 'true' : 'false'); });
-      var rgb = { R: 0, G: 1, B: 2 };
-      $$('input[data-ch]', cp).forEach(function (r) {
-        var i = rgb[r.getAttribute('data-ch')], lo = c.slice(), hi = c.slice(); lo[i] = 0; hi[i] = 255;
-        if (r !== dragging) r.value = c[i];
-        r.style.setProperty('--lo', 'rgb(' + lo.join(',') + ')'); r.style.setProperty('--hi', 'rgb(' + hi.join(',') + ')');
-      });
-      $$('input[data-num]', cp).forEach(function (n) { if (n !== d.activeElement) n.value = c[rgb[n.getAttribute('data-num')]]; });
-      var w = cp.querySelector('input[type=color]'); if (w) w.value = shown.toLowerCase();
-    }
-    function refresh(reload) {
-      var s = state(), base = themes[layout()] || {}, T = lookTheme(base, s.accent, s, opts);
-      pickers.forEach(function (cp) { paintPicker(cp, T, s); });
-      var rows = { text: contrast(T.th.ink, T.th.bg), card: contrast(T.th.ink, T.th.surface), btn: contrast(T.th.onaccent, T.th.accent), acc: contrast(T.th.accent, T.th.bg) };
-      $$('#lookCheck li', lf).forEach(function (li) {
-        var k = li.getAttribute('data-k'), r = rows[k], L = level(r, k);
-        li.className = 'lk-' + L[0]; li.querySelector('b').textContent = faNum(r.toFixed(1)) + ' به ۱، ' + L[1];
-      });
-      d.getElementById('lookFix').hidden = !((s.ink && T.th.ink !== s.ink) || (s.surface && T.th.surface !== s.surface));
-      var out = d.getElementById('lkDimOut'); if (out) out.textContent = faNum(s.dim) + '٪';
-      $$('[data-layouts]', lf).forEach(function (el) { el.hidden = (' ' + el.getAttribute('data-layouts') + ' ').indexOf(' ' + layout() + ' ') < 0; });
-      var def = lf.querySelector('.lk-pal[data-pal=""]');
-      if (def) $$('i', def).forEach(function (i, n) { i.style.background = base[['bg', 'surface', 'ink', 'accent'][n]]; });
-      if (phone) setStage(phone, T.th.bg, base.banner ? T.th.ink : '');
-      if (!pf) return;
-      if (reload) { if (/^\/s\//.test(pf.getAttribute('src') || '')) { pf.classList.remove('ready'); pf.src = url(); } return; }
-      paintFrame(T);
-    }
-    function paintFrame(T) {
-      var doc; try { doc = pf.contentDocument; } catch (e) { return; }
-      if (!doc || !doc.body) return;
-      var b = doc.body;
-      Object.keys(T.th).forEach(function (k) { b.style.setProperty('--' + k, String(T.th[k])); });
-      b.className.split(/\s+/).forEach(function (c) { if (/^(pat|no)-/.test(c)) b.classList.remove(c); });
-      T.cls.forEach(function (c) { b.classList.add(c); });
-      if (b.classList.contains('glass')) b.classList.toggle('dark', T.dark);
-      $$('img.alpha-mark', doc).forEach(function (i) { i.src = i.getAttribute('src').replace(/alpha-(white|black)\.png/, 'alpha-' + (T.dark ? 'white' : 'black') + '.png'); });
-    }
-    if (pf) pf.addEventListener('load', function () { refresh(false); });
-    var setColor = function (cp, hex, typing) {
-      var inp = field(cp.getAttribute('data-key'));
-      if (!typing) inp.value = hex;
-      refresh(false);
-    };
-    pickers.forEach(function (cp) {
-      var k = cp.getAttribute('data-key');
-      $$('.cp-sw button', cp).forEach(function (b) { b.addEventListener('click', function () { setColor(cp, b.getAttribute('data-c')); }); });
-      var fromSliders = function () { var c = [0, 0, 0]; $$('input[data-ch]', cp).forEach(function (r) { c[{ R: 0, G: 1, B: 2 }[r.getAttribute('data-ch')]] = Math.max(0, Math.min(255, Math.round(+r.value) || 0)); }); return c; };
-      $$('input[data-ch]', cp).forEach(function (r) {
-        r.addEventListener('input', function () { dragging = r; setColor(cp, toHex(fromSliders())); });
-        r.addEventListener('change', function () { dragging = null; refresh(false); });
-      });
-      $$('input[data-num]', cp).forEach(function (n) {
-        n.addEventListener('input', function () {
-          var v = Math.max(0, Math.min(255, Math.round(+enNum(n.value)) || 0));
-          var c = fromSliders(); c[{ R: 0, G: 1, B: 2 }[n.getAttribute('data-num')]] = v; setColor(cp, toHex(c));
-        });
-        n.addEventListener('blur', function () { refresh(false); });
-      });
-      var hx = field(k);
-      hx.addEventListener('input', function () {
-        var t = enNum(hx.value).replace(/\s/g, '').toUpperCase(); if (t && t[0] !== '#') t = '#' + t;
-        if (t !== hx.value) hx.value = t;
-        if (t === '' || hexOk(t)) setColor(cp, t, true);
-      });
-      hx.addEventListener('blur', function () { if (hx.value && !hexOk(hx.value)) hx.value = ''; refresh(false); });
-      var w = cp.querySelector('input[type=color]');
-      if (w) w.addEventListener('input', function () { setColor(cp, w.value.toUpperCase()); });
-      cp.addEventListener('toggle', function () { if (cp.open) pickers.forEach(function (o) { if (o !== cp) o.open = false; }); });
-    });
-    $$('.lk-pal', lf).forEach(function (b) {
+  /* ---------- a page's own content: bound on load, and again on the new content after an app navigation ---------- */
+  function init(r) {
+    r = r || d;
+    var byId = function (id) { return r.getElementById ? r.getElementById(id) : r.querySelector('#' + id); };
+    d.body.classList.remove('pv-show');   // a page left with the panel's preview open: the next one starts with it closed
+
+    /* copy buttons */
+    $$('[data-copy]', r).forEach(function (b) {
       b.addEventListener('click', function () {
-        field('accent').value = b.getAttribute('data-accent') || ''; field('bg').value = b.getAttribute('data-bg') || '';
-        field('ink').value = b.getAttribute('data-ink') || ''; field('surface').value = '';
+        var t = b.getAttribute('data-copy'), old = b.textContent;
+        var done = function () { b.textContent = 'کپی شد'; setTimeout(function () { b.textContent = old; }, 1600); };
+        if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {}); else { var i = d.createElement('input'); i.value = t; d.body.appendChild(i); i.select(); try { d.execCommand('copy'); done(); } catch (e) {} i.remove(); }
+      });
+    });
+
+    /* the owner's live preview in the panel */
+    var pvf = byId('pvFrame');
+    if (pvf && fine) {
+      var arm = function () { touchify(pvf); };
+      pvf.addEventListener('load', arm);
+      try { if (pvf.contentDocument && pvf.contentDocument.readyState === 'complete') arm(); } catch (e) {}
+    }
+
+    /* admin domain queue: is this name still free? */
+    $$('[data-dcheck]', r).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var out = b.nextElementSibling, words = { free: 'آزاد است', taken: 'ثبت شده', unknown: 'الان قابل بررسی نیست', invalid: 'نام معتبر نیست' };
+        out.className = 'dstate'; out.textContent = 'در حال بررسی…';
+        fetch('/api/domain?l=' + encodeURIComponent(b.getAttribute('data-dcheck')) + '&ext=' + encodeURIComponent(b.getAttribute('data-ext') || 'ir'))
+          .then(function (r) { return r.json(); })
+          .then(function (j) { out.className = 'dstate ' + j.status; out.textContent = words[j.status] || ''; })
+          .catch(function () { out.className = 'dstate unknown'; out.textContent = words.unknown; });
+      });
+    });
+
+    /* show / hide password */
+    $$('.pw-t', r).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var i = b.parentNode.querySelector('input'), show = i.type === 'password';
+        i.type = show ? 'text' : 'password'; b.setAttribute('aria-pressed', show ? 'true' : 'false'); b.setAttribute('aria-label', show ? 'پنهان کردن رمز' : 'نمایش رمز');
+      });
+    });
+
+    /* ask before deleting */
+    $$('form[data-confirm]', r).forEach(function (f) { f.addEventListener('submit', function (e) { if (!window.confirm(f.getAttribute('data-confirm'))) e.preventDefault(); }); });
+
+    /* file pickers in Persian, whatever the browser's language */
+    $$('input[type=file]', r).forEach(function (inp) {
+      var w = d.createElement('span'); w.className = 'attach';
+      inp.parentNode.insertBefore(w, inp); w.appendChild(inp);
+      var btn = d.createElement('span'); btn.className = 'attach-btn'; btn.textContent = 'انتخاب فایل';
+      var nm = d.createElement('span'); nm.className = 'attach-name'; nm.textContent = 'فایلی انتخاب نشده';
+      w.appendChild(btn); w.appendChild(nm);
+      inp.addEventListener('change', function () { nm.textContent = inp.files && inp.files.length ? inp.files[0].name : 'فایلی انتخاب نشده'; });
+    });
+
+    var lf = byId('lookForm'), pf = byId('pvFrame');
+    if (lf) (function () {
+      var themes = JSON.parse(lf.getAttribute('data-themes') || '{}'), opts = JSON.parse(lf.getAttribute('data-opts') || '{}');
+      var phone = pf && pf.closest('.phone');
+      var faNum = function (n) { return String(n).replace(/\d/g, function (x) { return '۰۱۲۳۴۵۶۷۸۹'[x]; }).replace('.', '٫'); };
+      var enNum = function (t) { return String(t).replace(/[۰-۹]/g, function (x) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x); }).replace(/[٠-٩]/g, function (x) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(x); }); };
+      var field = function (n) { return lf.elements[n]; };
+      var radio = function (n) { var r = lf.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; };
+      var layout = function () { return radio('layout'); };
+      var pickers = $$('.cp', lf);
+      var state = function () {
+        var s = { accent: hexOk(field('accent').value), bg: hexOk(field('bg').value), surface: hexOk(field('surface').value), ink: hexOk(field('ink').value),
+                  radius: radio('radius'), text: radio('text'), weight: radio('weight'), ratio: radio('ratio'), pattern: radio('pattern'),
+                  dim: +field('dim').value, hide: [] };
+        $$('.lk-tog input[type=checkbox]', lf).forEach(function (c) { if (!c.checked) s.hide.push(c.name.slice(5, -1)); });
+        return s;
+      };
+      var url = function () { return '/s/' + lf.getAttribute('data-slug') + '?pv=1&layout=' + layout() + '&look=' + encodeURIComponent(JSON.stringify(state())); };
+      var level = function (r, k) {
+        if (k === 'acc') return r >= 3 ? ['good', 'خوب'] : r >= 1.3 ? ['ok', 'کافی'] : ['bad', 'کم‌پیدا'];
+        return r >= 7 ? ['good', 'عالی'] : r >= 4.5 ? ['good', 'خوب'] : r >= 3 ? ['ok', 'کافی'] : ['bad', 'کم'];
+      };
+      var dragging = null;
+      function paintPicker(cp, T, s) {
+        var k = cp.getAttribute('data-key'), v = s[k], shown = v || T.th[k], c = rgbOf(shown);
+        cp.querySelector('.cp-chip').style.background = shown;
+        cp.querySelector('.cp-val .lat').textContent = shown;
+        cp.querySelector('.cp-val em').hidden = !!v;
+        $$('.cp-sw button', cp).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-c') === v ? 'true' : 'false'); });
+        var rgb = { R: 0, G: 1, B: 2 };
+        $$('input[data-ch]', cp).forEach(function (r) {
+          var i = rgb[r.getAttribute('data-ch')], lo = c.slice(), hi = c.slice(); lo[i] = 0; hi[i] = 255;
+          if (r !== dragging) r.value = c[i];
+          r.style.setProperty('--lo', 'rgb(' + lo.join(',') + ')'); r.style.setProperty('--hi', 'rgb(' + hi.join(',') + ')');
+        });
+        $$('input[data-num]', cp).forEach(function (n) { if (n !== d.activeElement) n.value = c[rgb[n.getAttribute('data-num')]]; });
+        var w = cp.querySelector('input[type=color]'); if (w) w.value = shown.toLowerCase();
+      }
+      function refresh(reload) {
+        var s = state(), base = themes[layout()] || {}, T = lookTheme(base, s.accent, s, opts);
+        pickers.forEach(function (cp) { paintPicker(cp, T, s); });
+        var rows = { text: contrast(T.th.ink, T.th.bg), card: contrast(T.th.ink, T.th.surface), btn: contrast(T.th.onaccent, T.th.accent), acc: contrast(T.th.accent, T.th.bg) };
+        $$('#lookCheck li', lf).forEach(function (li) {
+          var k = li.getAttribute('data-k'), r = rows[k], L = level(r, k);
+          li.className = 'lk-' + L[0]; li.querySelector('b').textContent = faNum(r.toFixed(1)) + ' به ۱، ' + L[1];
+        });
+        byId('lookFix').hidden = !((s.ink && T.th.ink !== s.ink) || (s.surface && T.th.surface !== s.surface));
+        var out = byId('lkDimOut'); if (out) out.textContent = faNum(s.dim) + '٪';
+        $$('[data-layouts]', lf).forEach(function (el) { el.hidden = (' ' + el.getAttribute('data-layouts') + ' ').indexOf(' ' + layout() + ' ') < 0; });
+        var def = lf.querySelector('.lk-pal[data-pal=""]');
+        if (def) $$('i', def).forEach(function (i, n) { i.style.background = base[['bg', 'surface', 'ink', 'accent'][n]]; });
+        if (phone) setStage(phone, T.th.bg, base.banner ? T.th.ink : '');
+        if (!pf) return;
+        if (reload) { if (/^\/s\//.test(pf.getAttribute('src') || '')) { pf.classList.remove('ready'); pf.src = url(); } return; }
+        paintFrame(T);
+      }
+      function paintFrame(T) {
+        var doc; try { doc = pf.contentDocument; } catch (e) { return; }
+        if (!doc || !doc.body) return;
+        var b = doc.body;
+        Object.keys(T.th).forEach(function (k) { b.style.setProperty('--' + k, String(T.th[k])); });
+        b.className.split(/\s+/).forEach(function (c) { if (/^(pat|no)-/.test(c)) b.classList.remove(c); });
+        T.cls.forEach(function (c) { b.classList.add(c); });
+        if (b.classList.contains('glass')) b.classList.toggle('dark', T.dark);
+        $$('img.alpha-mark', doc).forEach(function (i) { i.src = i.getAttribute('src').replace(/alpha-(white|black)\.png/, 'alpha-' + (T.dark ? 'white' : 'black') + '.png'); });
+      }
+      if (pf) pf.addEventListener('load', function () { refresh(false); });
+      var setColor = function (cp, hex, typing) {
+        var inp = field(cp.getAttribute('data-key'));
+        if (!typing) inp.value = hex;
+        refresh(false);
+      };
+      pickers.forEach(function (cp) {
+        var k = cp.getAttribute('data-key');
+        $$('.cp-sw button', cp).forEach(function (b) { b.addEventListener('click', function () { setColor(cp, b.getAttribute('data-c')); }); });
+        var fromSliders = function () { var c = [0, 0, 0]; $$('input[data-ch]', cp).forEach(function (r) { c[{ R: 0, G: 1, B: 2 }[r.getAttribute('data-ch')]] = Math.max(0, Math.min(255, Math.round(+r.value) || 0)); }); return c; };
+        $$('input[data-ch]', cp).forEach(function (r) {
+          r.addEventListener('input', function () { dragging = r; setColor(cp, toHex(fromSliders())); });
+          r.addEventListener('change', function () { dragging = null; refresh(false); });
+        });
+        $$('input[data-num]', cp).forEach(function (n) {
+          n.addEventListener('input', function () {
+            var v = Math.max(0, Math.min(255, Math.round(+enNum(n.value)) || 0));
+            var c = fromSliders(); c[{ R: 0, G: 1, B: 2 }[n.getAttribute('data-num')]] = v; setColor(cp, toHex(c));
+          });
+          n.addEventListener('blur', function () { refresh(false); });
+        });
+        var hx = field(k);
+        hx.addEventListener('input', function () {
+          var t = enNum(hx.value).replace(/\s/g, '').toUpperCase(); if (t && t[0] !== '#') t = '#' + t;
+          if (t !== hx.value) hx.value = t;
+          if (t === '' || hexOk(t)) setColor(cp, t, true);
+        });
+        hx.addEventListener('blur', function () { if (hx.value && !hexOk(hx.value)) hx.value = ''; refresh(false); });
+        var w = cp.querySelector('input[type=color]');
+        if (w) w.addEventListener('input', function () { setColor(cp, w.value.toUpperCase()); });
+        cp.addEventListener('toggle', function () { if (cp.open) pickers.forEach(function (o) { if (o !== cp) o.open = false; }); });
+      });
+      $$('.lk-pal', lf).forEach(function (b) {
+        b.addEventListener('click', function () {
+          field('accent').value = b.getAttribute('data-accent') || ''; field('bg').value = b.getAttribute('data-bg') || '';
+          field('ink').value = b.getAttribute('data-ink') || ''; field('surface').value = '';
+          refresh(false);
+        });
+      });
+      var reset = byId('lookReset');
+      if (reset) reset.addEventListener('click', function () {
+        ['accent', 'bg', 'surface', 'ink'].forEach(function (k) { field(k).value = ''; });
+        [['radius', 'normal'], ['text', 'normal'], ['weight', 'bold'], ['ratio', 'square'], ['pattern', 'none']].forEach(function (p) { var r = lf.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]'); if (r) r.checked = true; });
+        field('dim').value = 66;
+        $$('.lk-tog input[type=checkbox]', lf).forEach(function (c) { c.checked = true; });
         refresh(false);
       });
-    });
-    var reset = d.getElementById('lookReset');
-    if (reset) reset.addEventListener('click', function () {
-      ['accent', 'bg', 'surface', 'ink'].forEach(function (k) { field(k).value = ''; });
-      [['radius', 'normal'], ['text', 'normal'], ['weight', 'bold'], ['ratio', 'square'], ['pattern', 'none']].forEach(function (p) { var r = lf.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]'); if (r) r.checked = true; });
-      field('dim').value = 66;
-      $$('.lk-tog input[type=checkbox]', lf).forEach(function (c) { c.checked = true; });
+      lf.addEventListener('change', function (e) { if (e.target.name === 'layout') refresh(true); else if (!e.target.closest('.cp')) refresh(false); });
+      lf.addEventListener('input', function (e) { if (e.target.name === 'dim') refresh(false); });
       refresh(false);
-    });
-    lf.addEventListener('change', function (e) { if (e.target.name === 'layout') refresh(true); else if (!e.target.closest('.cp')) refresh(false); });
-    lf.addEventListener('input', function (e) { if (e.target.name === 'dim') refresh(false); });
-    refresh(false);
 
-    /* phones and tablets: the live phone opens over the page */
-    var show = d.getElementById('pvShow'), pv = d.querySelector('.ed-pv');
-    if (show && pv) {
-      var x = d.createElement('button'); x.type = 'button'; x.className = 'lk-pvx'; x.setAttribute('aria-label', 'بستن پیش‌نمایش'); x.textContent = '×';
-      pv.querySelector('.ed-pv-in').appendChild(x);
-      var fit = function () { if (phone) phone.style.setProperty('--pv-s', String(Math.min(0.9, (window.innerHeight - 130) / 896, (window.innerWidth - 32) / 424))); };
-      var open = function (on) { d.body.classList.toggle('pv-show', on); show.setAttribute('aria-expanded', on ? 'true' : 'false'); if (on) { fit(); x.focus(); } else show.focus(); };
-      show.addEventListener('click', function () { open(true); });
-      x.addEventListener('click', function () { open(false); });
-      pv.addEventListener('click', function (e) { if (e.target === pv) open(false); });
-      d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && d.body.classList.contains('pv-show')) open(false); });
-      window.addEventListener('resize', function () { if (d.body.classList.contains('pv-show')) fit(); });
-    }
-  })();
-
-  /* where orders go (signup + /panel/info): seven messengers, one main. A filled row lights up; the main one must be
-     filled, so choosing an empty row as main moves the focus to it, and emptying the main row passes «main» on. */
-  $$('[data-och]').forEach(function (box) {
-    var rows = $$('.och-row', box);
-    var sync = function () {
-      var main = box.querySelector('input[name=order_channel]:checked');
-      rows.forEach(function (row) { var v = row.querySelector('input.ltr').value.trim(); row.classList.toggle('on', v !== ''); });
-      if (main && !main.closest('.och-row').classList.contains('on')) {
-        var first = rows.filter(function (r) { return r.classList.contains('on'); })[0];
-        if (first && document.activeElement !== main.closest('.och-row').querySelector('input.ltr')) { first.querySelector('input[name=order_channel]').checked = true; main = first.querySelector('input[name=order_channel]'); }
+      /* phones and tablets: the live phone opens over the page */
+      var show = byId('pvShow'), pv = r.querySelector('.ed-pv');
+      if (show && pv) {
+        var x = d.createElement('button'); x.type = 'button'; x.className = 'lk-pvx'; x.setAttribute('aria-label', 'بستن پیش‌نمایش'); x.textContent = '×';
+        pv.querySelector('.ed-pv-in').appendChild(x);
+        var fit = function () { if (phone) phone.style.setProperty('--pv-s', String(Math.min(0.9, (window.innerHeight - 130) / 896, (window.innerWidth - 32) / 424))); };
+        var open = function (on) { d.body.classList.toggle('pv-show', on); show.setAttribute('aria-expanded', on ? 'true' : 'false'); if (on) { fit(); x.focus(); } else show.focus(); };
+        show.addEventListener('click', function () { open(true); });
+        x.addEventListener('click', function () { open(false); });
+        pv.addEventListener('click', function (e) { if (e.target === pv) open(false); });
+        d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && d.body.contains(pv) && d.body.classList.contains('pv-show')) open(false); });
+        window.addEventListener('resize', function () { if (d.body.contains(pv) && d.body.classList.contains('pv-show')) fit(); });
       }
-      var row = main && main.closest('.och-row'), ch = row ? row.getAttribute('data-ch') : 'whatsapp';
-      var name = row ? row.querySelector('.och-name b').textContent : 'واتساپ';
-      $$('[data-och-name]', box).forEach(function (x) { x.textContent = name; });
-      var demo = box.querySelector('.och-demo'); if (demo) { demo.classList.toggle('tg', ch === 'telegram'); demo.classList.toggle('other', ch !== 'telegram' && ch !== 'whatsapp'); }
-    };
-    rows.forEach(function (row) {
-      var inp = row.querySelector('input.ltr'), r = row.querySelector('input[name=order_channel]');
-      inp.addEventListener('input', function () {
-        if (row.getAttribute('data-ch') !== 'whatsapp') inp.value = inp.value.replace(/^\s+/, '');
-        sync();
-      });
-      inp.addEventListener('blur', sync);
-      r.addEventListener('change', function () { if (!inp.value.trim()) inp.focus(); sync(); });
-    });
-    sync();
-  });
+    })();
 
-  /* ready-made replies fill the ticket box */
-  $$('[data-fill]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var t = d.getElementById('replyBody'), s = b.getAttribute('data-fill'); if (!t) return;
-      var v = t.value.trim();   /* never wipe what they typed: each chip adds its line (once), so «still broken» + «screenshot attached» stack */
-      if (v.indexOf(s) < 0) t.value = v ? v + '\n' + s : s; t.focus();
+    /* where orders go (signup + /panel/info): seven messengers, one main. A filled row lights up; the main one must be
+       filled, so choosing an empty row as main moves the focus to it, and emptying the main row passes «main» on. */
+    $$('[data-och]', r).forEach(function (box) {
+      var rows = $$('.och-row', box);
+      var sync = function () {
+        var main = box.querySelector('input[name=order_channel]:checked');
+        rows.forEach(function (row) { var v = row.querySelector('input.ltr').value.trim(); row.classList.toggle('on', v !== ''); });
+        if (main && !main.closest('.och-row').classList.contains('on')) {
+          var first = rows.filter(function (r) { return r.classList.contains('on'); })[0];
+          if (first && document.activeElement !== main.closest('.och-row').querySelector('input.ltr')) { first.querySelector('input[name=order_channel]').checked = true; main = first.querySelector('input[name=order_channel]'); }
+        }
+        var row = main && main.closest('.och-row'), ch = row ? row.getAttribute('data-ch') : 'whatsapp';
+        var name = row ? row.querySelector('.och-name b').textContent : 'واتساپ';
+        $$('[data-och-name]', box).forEach(function (x) { x.textContent = name; });
+        var demo = box.querySelector('.och-demo'); if (demo) { demo.classList.toggle('tg', ch === 'telegram'); demo.classList.toggle('other', ch !== 'telegram' && ch !== 'whatsapp'); }
+      };
+      rows.forEach(function (row) {
+        var inp = row.querySelector('input.ltr'), r = row.querySelector('input[name=order_channel]');
+        inp.addEventListener('input', function () {
+          if (row.getAttribute('data-ch') !== 'whatsapp') inp.value = inp.value.replace(/^\s+/, '');
+          sync();
+        });
+        inp.addEventListener('blur', sync);
+        r.addEventListener('change', function () { if (!inp.value.trim()) inp.focus(); sync(); });
+      });
+      sync();
     });
-  });
-  /* a new ticket's ready messages: topic, title and text, then the cursor on the first «…» to fill in */
-  $$('[data-ready]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var f = b.closest('form'), r; if (!f) return;
-      try { r = JSON.parse(b.getAttribute('data-ready')); } catch (e) { return; }
-      if (f.topic) f.topic.value = r.t; if (f.subject) f.subject.value = r.s;
-      var t = f.body; if (!t) return;
-      var v = t.value.trim(), keep = v && v !== t._ready, at = keep ? v.length + 2 : 0;   /* their own words stay; the ready text goes under them */
-      t.value = keep ? v + '\n\n' + r.b : r.b; t._ready = r.b; t.focus();
-      var i = r.b.indexOf('…'); if (i >= 0) t.setSelectionRange(at + i, at + i + 1);
-      $$('[data-ready]', f).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+
+    /* ready-made replies fill the ticket box */
+    $$('[data-fill]', r).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var t = d.getElementById('replyBody'), s = b.getAttribute('data-fill'); if (!t) return;
+        var v = t.value.trim();   /* never wipe what they typed: each chip adds its line (once), so «still broken» + «screenshot attached» stack */
+        if (v.indexOf(s) < 0) t.value = v ? v + '\n' + s : s; t.focus();
+      });
     });
-  });
+    /* a new ticket's ready messages: topic, title and text, then the cursor on the first «…» to fill in */
+    $$('[data-ready]', r).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = b.closest('form'), r; if (!f) return;
+        try { r = JSON.parse(b.getAttribute('data-ready')); } catch (e) { return; }
+        if (f.topic) f.topic.value = r.t; if (f.subject) f.subject.value = r.s;
+        var t = f.body; if (!t) return;
+        var v = t.value.trim(), keep = v && v !== t._ready, at = keep ? v.length + 2 : 0;   /* their own words stay; the ready text goes under them */
+        t.value = keep ? v + '\n\n' + r.b : r.b; t._ready = r.b; t.focus();
+        var i = r.b.indexOf('…'); if (i >= 0) t.setSelectionRange(at + i, at + i + 1);
+        $$('[data-ready]', f).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      });
+    });
+  }
+  init(d);
+  window.AW = window.AW || {}; window.AW.init = init;
 })();

@@ -49,12 +49,21 @@
     cards.forEach(function (c) { c._q = norm(c.getAttribute('data-q') + ' ' + c.textContent); });
     var run = function () {
       var words = norm(qi.value).split(/\s+/).filter(Boolean), cat = ci.value, n = 0;
-      cards.forEach(function (c) {
-        var ok = (cat === 'all' || c.getAttribute('data-cat') === cat) && words.every(function (w) { return c._q.indexOf(w) > -1; });
-        c.hidden = !ok; if (ok) n++;
+      var tp = box.querySelector('.tpls.clip'); if (tp && (words.length || cat !== 'all')) tp.classList.remove('clip');   // searching shows every card
+      /* every word first; nothing found: any word of three letters or more (2026-10-21: «مانتو تبریز» found nothing) */
+      [function (w) { return true; }, function (w) { return w.length >= 3; }].some(function (keep, pass) {
+        n = 0;
+        cards.forEach(function (c) {
+          var inCat = cat === 'all' || c.getAttribute('data-cat') === cat, hit = function (w) { return c._q.indexOf(w) > -1; };
+          var ok = inCat && (pass === 0 ? words.every(hit) : words.filter(keep).some(hit));
+          c.hidden = !ok; if (ok) n++;
+        });
+        return n > 0 || words.length < 2;
       });
       if (none) none.hidden = n > 0;
     };
+    var more = box.querySelector('[data-tpl-more]');
+    if (more) more.addEventListener('click', function () { var tp = box.querySelector('.tpls.clip'); if (tp) tp.classList.remove('clip'); more.hidden = true; });
     qi.addEventListener('input', run); ci.addEventListener('change', run);
     qi.addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
     if (qi.value || ci.value !== 'all') run();
@@ -313,6 +322,46 @@
       });
     });
 
+    /* «فرستادن لینک سایت»: the phone's share sheet (WhatsApp, Instagram, Telegram…); a computer copies the link */
+    $$('[data-share]', r).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var u = b.getAttribute('data-share'), old = b.innerHTML;
+        var done = function () { b.textContent = 'لینک کپی شد'; setTimeout(function () { b.innerHTML = old; }, 1800); };
+        var copy = function () { if (navigator.clipboard) navigator.clipboard.writeText(u).then(done, function () {}); else { var i = d.createElement('input'); i.value = u; d.body.appendChild(i); i.select(); try { d.execCommand('copy'); done(); } catch (e) {} i.remove(); } };
+        if (navigator.share && matchMedia('(pointer: coarse)').matches) navigator.share({ title: b.getAttribute('data-title') || d.title, url: u }).catch(function () {});
+        else copy();
+      });
+    });
+
+    /* a picture chosen for upload shows at once, beside its field (2026-10-21: the bare «فایلی انتخاب نشده» said nothing) */
+    $$('input[type=file][data-preview]', r).forEach(function (inp) {
+      inp.addEventListener('change', function () {
+        var f = inp.files && inp.files[0], box = inp.parentNode.querySelector('.pick-pv');
+        if (!box) { box = d.createElement('span'); box.className = 'pick-pv'; inp.parentNode.appendChild(box); }
+        box.innerHTML = '';
+        if (!f) return;
+        if (!/^image\//.test(f.type)) { box.textContent = 'این فایل عکس نیست.'; return; }
+        var im = d.createElement('img'); im.alt = ''; im.src = URL.createObjectURL(f); box.appendChild(im);
+        var t = d.createElement('small'); t.textContent = 'عکس انتخاب شد؛ با ذخیره روی سایت می‌رود.'; box.appendChild(t);
+      });
+    });
+
+    /* a long form tells you it has unsaved changes, and asks before you leave it (2026-10-21: edits were lost silently) */
+    $$('form[data-guard]', r).forEach(function (f) {
+      var bar = f.querySelector('.save-bar');
+      var dirty = function () { if (f.hasAttribute('data-dirty')) return; f.setAttribute('data-dirty', '1'); if (bar) bar.classList.add('on'); };
+      f.addEventListener('input', dirty); f.addEventListener('change', dirty);
+      f.addEventListener('submit', function () { f.removeAttribute('data-dirty'); });
+    });
+    /* «سؤال دیگر»: one more question-and-answer row */
+    $$('[data-faq-add]', r).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var box = b.parentNode.querySelector('[data-faq]'), last = box && box.lastElementChild; if (!last) return;
+        var n = last.cloneNode(true); n.querySelectorAll('input, textarea').forEach(function (x) { x.value = ''; });
+        box.appendChild(n); n.querySelector('input').focus();
+      });
+    });
+
     /* the owner's live preview in the panel */
     var pvf = byId('pvFrame');
     if (pvf && fine) {
@@ -398,7 +447,7 @@
         var rows = { text: contrast(T.th.ink, T.th.bg), card: contrast(T.th.ink, T.th.surface), btn: contrast(T.th.onaccent, T.th.accent), acc: contrast(T.th.accent, T.th.bg) };
         $$('#lookCheck li', lf).forEach(function (li) {
           var k = li.getAttribute('data-k'), r = rows[k], L = level(r, k);
-          li.className = 'lk-' + L[0]; li.querySelector('b').textContent = faNum(r.toFixed(1)) + ' به ۱، ' + L[1];
+          li.className = 'lk-' + L[0]; li.querySelector('b').textContent = L[1];   // no ratios on the owner's screen (2026-10-21)
         });
         byId('lookFix').hidden = !((s.ink && T.th.ink !== s.ink) || (s.surface && T.th.surface !== s.surface));
         var out = byId('lkDimOut'); if (out) out.textContent = faNum(s.dim) + '٪';
@@ -538,4 +587,6 @@
   }
   init(d);
   window.AW = window.AW || {}; window.AW.init = init;
+  window.AW.dirty = function () { return !!d.querySelector('form[data-dirty]'); };
+  window.addEventListener('beforeunload', function (e) { if (window.AW.dirty()) { e.preventDefault(); e.returnValue = ''; } });
 })();

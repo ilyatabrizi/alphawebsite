@@ -24,9 +24,23 @@
   var st0 = history.state && history.state.aw ? history.state : null;
   idx = st0 ? st0.idx : 0;
   history.replaceState({ aw: 1, idx: idx, y: st0 ? st0.y || 0 : 0 }, '', location.href);
+  var input = 0, jumps = 0;   // the last time the person touched, scrolled or typed: from then on the page is theirs
+  ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(function (t) { w.addEventListener(t, function () { input = Date.now(); }, { passive: true, capture: true }); });
   function jump(y) {   // page changes land at once: the smooth scrolling of the site's CSS is for jumps inside a page
-    var b = html.style.scrollBehavior; html.style.scrollBehavior = 'auto';
-    try { if (typeof y === 'number') w.scrollTo(0, y); else y.scrollIntoView({ block: 'start' }); } finally { html.style.scrollBehavior = b; }
+    var go = function () {
+      var b = html.style.scrollBehavior; html.style.scrollBehavior = 'auto';
+      try { if (typeof y === 'number') w.scrollTo(0, y); else y.scrollIntoView({ block: 'start' }); } finally { html.style.scrollBehavior = b; }
+    };
+    go(); var k = ++jumps;
+    if (typeof y === 'number') return;
+    // a #part: hold it in place for a moment, so a smooth scroll still running from the page before, or a photo or font
+    // that loads late, can't move it (2026-10-21: a section landed 190px off); the person's own scroll always wins
+    var at = function () { return Math.round(y.getBoundingClientRect().top); }, t0 = Date.now(), want = at();
+    (function hold() {
+      if (k !== jumps || input > t0 || Date.now() - t0 > 600 || !y.isConnected) return;
+      if (Math.abs(at() - want) > 1) { go(); want = at(); }
+      (w.requestAnimationFrame || setTimeout)(hold);
+    })();
   }
   if (st0 && st0.y) jump(st0.y);   // the app reopened or reloaded: back at the same place
 
@@ -219,6 +233,8 @@
       reload(); return;
     }
     e.preventDefault();
+    if (w.AW && w.AW.dirty && w.AW.dirty() && !w.confirm('تغییراتت ذخیره نشده. بدون ذخیره بیرون بروی؟')) return;
+    if (w.AW && w.AW.dirty) Array.prototype.forEach.call(d.querySelectorAll('form[data-dirty]'), function (f) { f.removeAttribute('data-dirty'); });
     if (tab) mark(a);
     nav(u, { dir: tab ? 'tab' : 'fwd' });
   });

@@ -852,7 +852,7 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .bar-p i{display:block;height:100%;border-radius:999px;background:var(--ink)}
 .setup-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
 .setup-list a{display:flex;gap:12px;align-items:flex-start;height:100%;padding:12px 14px;border-radius:var(--r2);border:1px solid var(--line);text-decoration:none}
-.setup-list a span:last-child{display:grid;line-height:1.7}
+.setup-list a>span:nth-child(2){display:grid;line-height:1.7;flex:1}
 .setup-list small{font-size:12.5px;color:var(--muted)}
 .sl-dot{display:grid;place-items:center;flex:none;width:24px;height:24px;margin-top:2px;border-radius:50%;border:1.5px solid var(--line2)}
 .setup-list li.ok .sl-dot{background:var(--good);border-color:var(--good)}
@@ -882,7 +882,7 @@ nav.chips a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .add-item summary{display:flex;align-items:center;gap:12px;padding:18px 22px;list-style:none;cursor:pointer;font-size:16px}
 .add-item summary::-webkit-details-marker{display:none}
 .add-item summary::after{content:"";flex:none;width:30px;height:30px;margin-inline-start:auto;border-radius:50%;background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23131312' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M6 2v8M2 6h8'/%3E%3C/svg%3E") center/12px no-repeat;transition:transform .3s var(--ease)}
-.add-item[open] summary::after{transform:rotate(45deg)}
+.add-item[open]>summary::after,.add-item details[open]>summary::after{transform:rotate(45deg)}   /* each fold turns its own «+» (the choices showed «×» while closed) */
 .add-item summary .ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .add-item[open] summary{border-bottom:1px solid var(--line)}
 .add-item form{padding:20px 22px 22px}
@@ -1662,7 +1662,7 @@ html.menu-open body::after{content:"";position:fixed;inset:0;z-index:49;backgrou
    bar stay. A thin line shows a slow answer, the page dims a little after 0.3 s. On touch screens: no grey flash on taps,
    buttons press in, the bars can't be selected or long-pressed, and inputs are 16 px so the iPhone never zooms in.
    In the installed app: the back swipe from the right edge and pull to refresh. Reduced motion: no movement at all. */
-.area-panel #main{view-transition-name:aw-main}
+html[data-nav] .area-panel #main{view-transition-name:aw-main}   /* only while a page changes: a name makes #main its own layer, and fixed overlays inside it (the look preview) would sit under the top bar */
 .area-panel #main:focus{outline:0}
 .area-panel [id]{scroll-margin-top:84px}
 html:has(> body.area-panel){scroll-padding-top:0}   /* the panel: the 84px above is the whole gap (with the page's 96px too it was 180) */
@@ -1716,3 +1716,155 @@ html.aw-swipe #main{box-shadow:18px 0 32px -18px rgba(19,19,18,.35);background:v
 }
 html.aw-app{-webkit-text-size-adjust:100%}
 @media(prefers-reduced-motion:reduce){.aw-in-fwd,.aw-in-back,.aw-in-tab{animation:none}.aw-prog.go{transition:none}}
+
+/* ===== 2026-10-21 UX round (Ilya: "users can get confused … we need the most understanding and meaningful UI") ===== */
+/* the side menu and «بیشتر» in groups, each row with a one-line hint */
+.side-g{display:block;margin:12px 12px 2px;font-size:12px;font-weight:700;color:var(--muted)}
+.side a.out{color:var(--muted)}
+.more-g{display:grid;gap:8px;margin-bottom:18px}
+.more-g h2{margin:0 6px;font-size:13.5px;font-weight:700;color:var(--muted)}
+.more-list a>span{display:grid;line-height:1.55;flex:1}
+.more-list a small{font-size:13px;font-weight:400;color:var(--muted)}
+.more-list a.out{color:var(--bad,#B3261E)}
+.more-list .nb{margin-inline-start:auto}
+/* the subscription: next renewal first */
+.renew{display:grid;gap:10px}
+.renew h2{font-size:18px}
+.renew.due{background:var(--warnw);border-color:rgba(138,83,0,.18)}
+.renew.bad{background:var(--badw);border-color:rgba(179,38,30,.2)}
+.renew-amt{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0}
+.renew-amt b{font-size:22px;font-weight:800}
+.renew-amt span{color:var(--muted)}
+.renew .btn{justify-self:start}
+.renew details summary,.sub>summary,details.sub summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--ink2)}
+.inv-list{display:grid;gap:8px;margin-bottom:22px}
+.inv{display:grid;gap:6px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r2)}
+.inv-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.inv-m{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.inv-m .n{font-weight:700}
+.inv-a{display:flex;gap:8px;flex-wrap:wrap}
+.notice.calm{background:var(--card);border-color:var(--line)}
+a.card.notice{text-decoration:none;color:inherit}
+.notice svg{width:20px;height:20px;margin-inline-end:6px;vertical-align:-4px;fill:none;stroke:currentColor;stroke-width:1.8}
+/* products: samples, the add form first, a picture shows when chosen */
+.samples{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--warnw);border-color:rgba(138,83,0,.18);margin-bottom:16px}
+.samples>span{display:flex;gap:10px;align-items:flex-start;line-height:1.9}
+.samples svg{flex:none;width:22px;height:22px;margin-top:3px;fill:none;stroke:var(--warn);stroke-width:1.8}
+.mi.smp{border-style:dashed}
+.add-item>summary{list-style:none;display:flex;align-items:center;gap:10px;min-height:52px;cursor:pointer;font-size:16px}
+.add-item>summary::-webkit-details-marker{display:none}
+.add-item>summary .ic{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff}
+.add-item>summary .ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2}
+.add-item[open]>summary{margin-bottom:10px}
+.pic-f input[type=file]{padding:10px;border:1.5px dashed var(--line2);border-radius:var(--r1);background:var(--field);width:100%;font:inherit;font-size:14px}
+.pick-pv{display:flex;align-items:center;gap:12px;margin-top:8px}
+.pick-pv img{width:72px;height:72px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.pick-pv small{font-size:13px;color:var(--good)}
+.pic-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.pic-row .pic-f{flex:1;min-width:220px}
+.pic-acts{display:grid;gap:8px;flex:1;min-width:220px}
+.pic-pair{display:grid;gap:14px}
+.cur-img.sq{width:88px;height:88px}
+.cur-img.wide{width:160px;height:90px}
+.more-opts>summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--ink2);padding:6px 0}
+.svc-line{margin:16px 2px 0}
+.raise-undo.card{border-top:1px solid var(--line);padding:12px 16px;margin-bottom:12px}
+/* the home page: one clear next step */
+.setup-list li.next a{border-color:var(--ink);box-shadow:var(--sh1)}
+.setup-list a>svg{flex:none;width:18px;height:18px;margin:4px auto 0 0;fill:none;stroke:var(--muted);stroke-width:2;transform:scaleX(-1)}
+.setup-list .sl-dot{font-size:12.5px;font-weight:700;color:var(--ink2)}
+.card-hint{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px dashed var(--line2);border-radius:var(--r2)}
+.card-hint svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}
+/* long forms: jump chips, a save bar that appears with the first change */
+.chips.jump{position:sticky;top:76px;z-index:5;padding:8px 0;margin-bottom:10px;background:var(--bg);overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+.chips.jump::-webkit-scrollbar{display:none}
+.area-panel:has(.chips.jump) .fs[id]{scroll-margin-top:142px}   /* a section a chip jumps to starts under the sticky chips, not behind them */
+.chips.jump .chip{white-space:nowrap}
+.save-bar{display:flex;gap:10px;align-items:center}
+.save-bar.on{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:6;justify-content:space-between;padding:10px 12px;margin:0 -8px;border-radius:var(--r2);background:var(--ink);box-shadow:var(--sh2)}
+.save-bar.on::before{content:"تغییراتت ذخیره نشده";color:#fff;font-size:14px;font-weight:600}
+.save-bar.on .btn{background:#fff;color:var(--ink)}
+@media(min-width:900px){.save-bar.on{bottom:16px}}
+.check.big{align-items:flex-start}
+.check.big>span{display:grid;gap:2px;line-height:1.7}
+.check.big small{font-size:13px;color:var(--muted)}
+.faq-rows{display:grid;gap:12px}
+.faq-row{display:grid;gap:8px;padding:12px;border:1px solid var(--line);border-radius:var(--r1)}
+details.sub{display:grid;gap:10px}
+details.fs.sub>summary{padding:6px 0}
+.och-more>summary{cursor:pointer;margin:2px 0;font-weight:600;font-size:14px;color:var(--ink2)}
+.och-more>summary small{font-weight:400;color:var(--muted)}
+.och-more[open]>summary{margin-bottom:8px}
+.step-h{font-size:16px;margin:4px 0 0}
+.chat-sw{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.chat-sw>span{display:grid;gap:2px;line-height:1.75;flex:1;min-width:220px}
+.chat-sw small{color:var(--muted);font-size:13.5px}
+.chat-sw.off{background:var(--warnw);border-color:rgba(138,83,0,.18)}
+/* the look page: plain words first, codes and contrast numbers only when needed */
+.cp-hexv{display:none}
+.cp-adv>summary{cursor:pointer;margin:10px 0 4px;font-size:13.5px;font-weight:600;color:var(--ink2)}
+.lk-check li.lk-good{display:none}
+.lk-check:not(:has(li:not(.lk-good)))::after{content:"✓ نوشته‌ها روی این رنگ‌ها خوانا هستند";font-size:13.5px;color:var(--good)}
+/* reading on a phone: helper text a little larger */
+@media(max-width:720px){.hint{font-size:14px}.f small{font-size:13px}}
+.pp-name small{font-size:13px;color:var(--muted)}
+.pp-later{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--bg2);font-size:13.5px;line-height:1.8;color:var(--ink2)}
+.pp-later svg{flex:none;width:18px;height:18px;margin-top:3px;fill:none;stroke:currentColor;stroke-width:1.8}
+/* the signup: what was chosen, one address, the order once more above the button, a short and kind summary of the terms */
+.chosen{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 6px;padding:10px 12px;border-radius:var(--r1);background:var(--goodw);font-size:14px}
+.chosen>svg{width:18px;height:18px;fill:none;stroke:var(--good);stroke-width:2.2}
+.chosen>span{flex:1}
+.linkish{border:0;background:none;padding:0;font:inherit;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.mini-sum{display:grid;gap:6px;padding:14px 16px;border-radius:var(--r2);background:var(--bg2)}
+.mini-sum:empty{display:none}
+.mini-sum div{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.mini-sum span{color:var(--muted)}
+.mini-sum div:last-child{padding-top:6px;border-top:1px solid var(--line);font-size:15.5px}
+.terms-sum{margin:0;font-size:13.5px;line-height:1.9;color:var(--ink2)}
+.addon-more>summary{cursor:pointer;margin:6px 0;font-weight:600;font-size:14px;color:var(--ink2)}
+/* inside the buying flow: no menu, no wall of footer links (the trust badge and the motto stay) */
+.in-flow .top .nav,.in-flow .menu-btn{display:none}
+.in-flow .foot-cols,.in-flow .foot-brand p,.in-flow .foot-brand .btn{display:none}
+/* call-me-back (2026-10-21) */
+.cb-card{display:grid;gap:14px}
+.cb-t{display:flex;gap:14px;align-items:flex-start}
+.cb-t h2{font-size:18px}
+.cb-ic{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff}
+.cb-ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8}
+.cb-form .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.cb-form.compact .grid2{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.cb-done{display:grid;gap:10px;justify-items:center;text-align:center}
+.cb-done>svg{width:48px;height:48px;padding:12px;border-radius:50%;background:var(--goodw);fill:none;stroke:var(--good);stroke-width:2.2}
+/* the store's first screen and lists (2026-10-21 UX round) */
+.hx-steps{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:center;font-size:14px;color:var(--ink2)}
+.hx-steps li{display:flex;align-items:center;gap:7px}
+.hx-steps b{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px}
+.hx-call{margin:12px 0 0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;color:var(--muted)}
+.hx-call svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+.more-price{margin-top:18px}
+.tpl-more{display:none;text-align:center;margin:14px 0 0}
+@media(max-width:720px){.tpls.clip .tpl:nth-child(n+9){display:none}.tpls.clip~.tpl-more{display:block}}
+.tpl-none .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+@media(max-width:640px){.cmp .tbl th:nth-child(4),.cmp .tbl td:nth-child(4){display:none}.cmp .tbl{min-width:0}}
+.next-steps{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:ns}
+.next-steps li a{display:grid;gap:2px;padding:12px 14px 12px 14px;padding-inline-start:52px;position:relative;border:1px solid var(--line);border-radius:var(--r2);text-decoration:none;color:inherit;line-height:1.75}
+.next-steps li a::before{counter-increment:ns;content:counter(ns,persian);position:absolute;inset-inline-start:14px;top:14px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;font-weight:700}
+.next-steps li:first-child a{border-color:var(--ink)}
+.next-steps span{font-size:13.5px;color:var(--muted)}
+
+/* the plan comparison on a phone (2026-10-21: four columns ran off the screen): one feature at a time, each plan on its own line */
+@media(max-width:640px){
+  .matrix{min-width:0}
+  .matrix thead{display:none}
+  .matrix,.matrix tbody,.matrix tr{display:block;width:100%}
+  .matrix tr{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .matrix tr:last-child{border-bottom:0}
+  .matrix th[scope=row]{display:block;text-align:right;padding:0 0 6px;border:0;font-weight:700;color:var(--ink)}
+  .matrix td{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:5px 0;border:0;text-align:left;background:none}
+  .matrix td::before{content:attr(data-p);flex:none;text-align:right;color:var(--muted);font-size:13px}
+  .matrix td.us::before{color:var(--ink);font-weight:700}
+}
+
+/* an owner coming back finds «ورود» in the top bar on a phone too (2026-10-21; it was only in the menu): a plain word there */
+@media(max-width:600px){.top-acts .top-in{padding-inline:8px;border-color:transparent;background:none;box-shadow:none}}
+@media(max-width:370px){.top-acts .top-in{display:none}}   /* the smallest phones: «ورود» stays in the menu, the name keeps its room */

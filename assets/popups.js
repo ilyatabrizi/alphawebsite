@@ -156,18 +156,23 @@
     card(base);
     send('shown', {});
   }
+  /* the store (2026-10-21): a first-time visitor is not asked to install anything; owners (signed in) and people on their
+     third visit are. Visits are counted once per browser session. */
+  if (!site && sess('aw-visit') !== '1') { sess('aw-visit', '1'); store('aw-visits', String((+(store('aw-visits') || 0)) + 1)); }
   function installDue() {
     if (standalone || quiet || store(IK + '_done') === '1') return false;
     if (site) return sess(IK) !== '1';                              // client sites: every new visit until installed
+    if (!C.owner && +(store('aw-visits') || 0) < 3) return false;
     var last = +(store(IK) || 0); return !last || Date.now() - last > 3 * 86400000;   // the store: every 3 days
   }
 
   /* ---------- order: intro (store home) / splash (client sites) → consent → install ---------- */
   function start() {
+    if (C.demo) return;                                             // a demo site: no consent or install card (it was a second set of cards for the same visitor)
     if (framed || standalone && cookie(CK) !== null) { if (cookie(CK) === '1') track('pv'); return; }
     if (quiet) { if (cookie(CK) === '1') track('pv'); return; }
     var c = cookie(CK);
-    var thenInstall = function () { setTimeout(function () { if (installDue()) installCard(false); }, 900); };
+    var thenInstall = function () { if (!site) return; setTimeout(function () { if (installDue()) installCard(false); }, 900); };   // the store: never right after the consent card
     if (c === '1') { track('pv'); if (installDue()) setTimeout(function () { installCard(false); }, 2500); }
     else if (c === '0') { if (installDue()) setTimeout(function () { installCard(false); }, 2500); }
     else setTimeout(function () { consent(thenInstall); }, site ? 500 : 700);

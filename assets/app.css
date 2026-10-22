@@ -1868,3 +1868,4 @@ details.fs.sub>summary{padding:6px 0}
 /* an owner coming back finds «ورود» in the top bar on a phone too (2026-10-21; it was only in the menu): a plain word there */
 @media(max-width:600px){.top-acts .top-in{padding-inline:8px;border-color:transparent;background:none;box-shadow:none}}
 @media(max-width:370px){.top-acts .top-in{display:none}}   /* the smallest phones: «ورود» stays in the menu, the name keeps its room */
+body.area-panel{overflow-x:clip}   /* nothing in the panel may widen the page sideways: a phone then zooms out and the right-edge back swipe misses */

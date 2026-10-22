@@ -128,7 +128,7 @@
           var yy = text(D.name, W / 2, 900, 84, 800, '#fff', 900, 2, 'center');
           if (D.tagline) yy = text(D.tagline, W / 2, yy + 6, 40, 500, 'rgba(255,255,255,.85)', 860, 2, 'center');
           qr((W - 420) / 2, yy + 60, 420, '#111', '#fff');
-          pill('برای سفارش اسکن کنید', W / 2, yy + 510, 36, T.accent, T.onaccent);
+          pill('برای ' + (D.act || 'سفارش') + ' اسکن کنید', W / 2, yy + 510, 36, T.accent, T.onaccent);
           urlLine('یا بزنید:', 'rgba(255,255,255,.9)', yy + 650);
         } else {
           var y = 1210, R = W - 90;
@@ -136,7 +136,7 @@
           y = text(title, R, y, 92, 800, '#fff', 900, 2);
           if (desc) y = text(desc, R, y + 6, 42, 500, 'rgba(255,255,255,.86)', 900, 2);
           if (price) y += pillRight(price, R, y + 34, 50, T.accent, T.onaccent) + 34;
-          urlLine('سفارش آنلاین:', 'rgba(255,255,255,.9)', y + 92, 'right', R);
+          urlLine((D.act || 'سفارش') + ' آنلاین:', 'rgba(255,255,255,.9)', y + 92, 'right', R);
         }
         sign(true, alpha, 1846);
       } else if (s.style === 'card') {
@@ -149,7 +149,7 @@
           var y2 = text(D.name, W / 2, 650, 72, 800, T.ink, 800, 2, 'center');
           if (D.tagline) y2 = text(D.tagline, W / 2, y2 + 4, 36, 500, T.muted, 780, 2, 'center');
           qr((W - 460) / 2, y2 + 50, 460, T.ink, T.surface);
-          text('برای سفارش اسکن کنید', W / 2, y2 + 540, 40, 700, T.ink, 800, 1, 'center');
+          text('برای ' + (D.act || 'سفارش') + ' اسکن کنید', W / 2, y2 + 540, 40, 700, T.ink, 800, 1, 'center');
         } else {
           if (photo) cover(photo, 130, 370, 820, 820, 44); else { ctx.fillStyle = T.bg; rr(130, 370, 820, 820, 44); ctx.fill(); }
           var y3 = text(title, W - 150, 1210, 62, 800, T.ink, 780, 2);
@@ -166,14 +166,14 @@
           var y4 = text(D.name, W / 2, 710, 80, 800, T.ink, 880, 2, 'center');
           if (D.tagline) y4 = text(D.tagline, W / 2, y4 + 4, 38, 500, T.muted, 860, 2, 'center');
           qr((W - 480) / 2, y4 + 60, 480, T.ink, T.surface);
-          pill('برای سفارش اسکن کنید', W / 2, y4 + 580, 36, T.accent, T.onaccent);
+          pill('برای ' + (D.act || 'سفارش') + ' اسکن کنید', W / 2, y4 + 580, 36, T.accent, T.onaccent);
         } else {
           if (photo) cover(photo, 120, 300, 840, 840, 60); else { ctx.fillStyle = T.surface; rr(120, 300, 840, 840, 60); ctx.fill(); }
           var y5 = text(title, W / 2, 1180, 84, 800, T.ink, 900, 2, 'center');
           if (desc) y5 = text(desc, W / 2, y5 + 4, 40, 500, T.muted, 860, 2, 'center');
           if (price) pill(price, W / 2, y5 + 40, 48, T.accent, T.onaccent);
         }
-        urlLine('سفارش آنلاین:', T.ink, 1700);
+        urlLine((D.act || 'سفارش') + ' آنلاین:', T.ink, 1700);
         sign(is_dark(T.bg), alpha, 1846);
       }
       document.getElementById('storyShare').disabled = false;

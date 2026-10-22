@@ -242,8 +242,9 @@
   var toastT = 0;
   function toast(text) {
     var el = $('bagToast'); if (!el) return;
+    var bl = document.querySelector('.bag-last'); if (bl) bl.remove();   // one note at a time in that place
     $('bagToastT').textContent = text; el.hidden = false; el.classList.remove('out');
-    clearTimeout(toastT); toastT = setTimeout(function () { el.classList.add('out'); setTimeout(function () { el.hidden = true; }, 260); }, 3200);
+    clearTimeout(toastT); toastT = setTimeout(function () { el.classList.add('out'); setTimeout(function () { el.hidden = true; }, 260); }, 5600);
   }
   function add(it, choice, q) {
     q = q || 1;
@@ -348,7 +349,7 @@
     var day = days.filter(function (d) { return d.v === bkDay; })[0];
     if (!day) { var h = document.createElement('p'); h.className = 'bk-pick'; h.textContent = 'اول روز را انتخاب کنید.'; sbox.appendChild(h); return; }
     if (!day.slots.some(function (s) { return s.s === bkSlot; })) bkSlot = '';
-    day.slots.forEach(function (s) { sbox.appendChild(chip('bks', s.s, s.l, '', s.s === bkSlot, function () { bkSlot = s.s; })); });
+    day.slots.forEach(function (s) { sbox.appendChild(chip('bks', s.s, s.l, s.p || '', s.s === bkSlot, function () { bkSlot = s.s; })); });
   }
   /* closed right now: the order still goes in, and the customer knows when it is seen */
   function renderClosed() {
@@ -449,6 +450,12 @@
     b.onclick = function () { done(p.r, p.f, p.ch ? chan(p.ch) : null, true); };
     el.appendChild(t); el.appendChild(b);
   }
+  /* a service that takes people: open the list at its day and time picker */
+  function bookNow() {
+    openBag();
+    if (!BK) return;
+    setTimeout(function () { var bb = $('bagBook'); if (bb && !bkDay) try { bb.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) {} }, 260);
+  }
   function openBag() {
     if (!bagEl) return;
     var ps = $('psheet'); if (ps && ps.open) ps.close();
@@ -469,7 +476,11 @@
     ['name', 'phone', 'address'].forEach(function (k) { if (me[k] && form.elements[k]) form.elements[k].value = me[k]; });
     var lastCh = store('aw-ch-' + S.slug); if (lastCh && form.querySelector('input[name=ch][value="' + lastCh + '"]')) form.querySelector('input[name=ch][value="' + lastCh + '"]').checked = true;
     all('input[name=ch]', form).forEach(function (r) { r.addEventListener('change', renderBag); });
-    bagEl.addEventListener('close', function () { if (pushed) closeBag(false); });
+    bagEl.addEventListener('close', function () {
+      stopAuto();
+      if (!$('bagDone').hidden) { var lp = lastOrder(); if (lp) seen(lp.r.no); }   // they saw it and closed it themselves
+      if (pushed) closeBag(false);
+    });
     bagEl.addEventListener('click', function (e) { if (e.target === bagEl) closeBag(); });
     all('[data-bag-close]', bagEl).forEach(function (b) { b.addEventListener('click', function () { closeBag(); }); });
     all('[data-bag-shop]', bagEl).forEach(function (b) { b.addEventListener('click', function () { closeBag(); setTimeout(function () { var p = $('products'); if (p) p.scrollIntoView({ behavior: 'smooth' }); }, 120); }); });
@@ -480,7 +491,11 @@
   all('[data-bag-open]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); openBag(); }); });
   if (bagEl && !S.demo) (function () {
     if (/[?&]op=/.test(location.search)) return;   // back from Tayid Shod's page: payBack() below
-    var p = pending(); if (!p || p.r.payRef || p.r.payDone || Date.now() - p.at > 3600e3 || /[?&]p=/.test(location.search)) return;
+    var p = pending(); if (!p || p.r.payRef || p.r.payDone || Date.now() - p.at > 3600e3 || /[?&]p=/.test(location.search)) {
+      var later = function () { if (!bagEl.open) lastLine(); };
+      setTimeout(function () { if (document.body.classList.contains('splashing')) document.addEventListener('splash:done', later, { once: true }); else later(); }, 900);
+      return;
+    }
     var go = function () { if (!bagEl.open) resumePay(p); };
     setTimeout(function () { if (document.body.classList.contains('splashing')) document.addEventListener('splash:done', go, { once: true }); else go(); }, 700);
   })();
@@ -550,6 +565,7 @@
     var text = orderMessage(r, f), word = W.order;
     if (!S.demo && !resumed) { bag = []; saveBag(); refresh(); bkDay = ''; bkSlot = ''; bkKey = ''; }
     if (!S.demo && !resumed && r.pay) store(PKEY, { r: r, f: f, ch: c ? c.ch : '', at: Date.now() });
+    if (!S.demo && !resumed) { store(LKEY, { r: r, f: f, ch: c ? c.ch : '', at: Date.now() }); seen(''); }
     /* the order is done: coming back from the messenger must not reopen an empty bag */
     if (pushed) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} pushed = false; }
     $('bagMain').hidden = true; var d = $('bagDone'); d.hidden = false;
@@ -567,7 +583,8 @@
       if (r.pay && r.pay.tayid) $('bdP').textContent = r.payDone ? 'پرداخت شد و ' + S.name + ' آن را تأیید کرد. پیام ' + word + ' را هم' + (c ? ' در ' + c.label : '') + ' بفرستید.'
         : 'دکمه «پرداخت» را بزنید: مبلغ دقیق و کارت ' + S.name + ' را در صفحه امن «تأیید شد» می‌بینید و بعد از واریز به همین‌جا برمی‌گردید. بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
       else if (r.pay) $('bdP').textContent = 'مبلغ را به کارت زیر کارت‌به‌کارت کنید و شماره پیگیری رسید را بنویسید؛ بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
-      else if (c && c.pre) $('bdP').textContent = 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید؛ زمان و پرداخت همان‌جا هماهنگ می‌شود.';
+      else if (c && c.pre) $('bdP').textContent = (resumed ? 'پیام را فرستادید؟ اگر نه، دکمه زیر را بزنید؛ ' : 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید؛ ')
+        + (CAT ? (BK ? S.name + ' زمان را همان‌جا تأیید می‌کند و پرداخت هم همان‌جا هماهنگ می‌شود.' : 'زمان و پرداخت همان‌جا هماهنگ می‌شود.') : (FOOD ? 'پرداخت و تحویل همان‌جا هماهنگ می‌شود.' : 'پرداخت و ارسال همان‌جا هماهنگ می‌شود.'));
       else if (c) $('bdP').textContent = c.label + ' پیام آماده را در لینک نمی‌پذیرد: پیام را کپی می‌کنیم، گفتگوی ما باز می‌شود، آن را بچسبانید (Paste) و بفرستید.';
       else $('bdP').textContent = S.name + ' به‌زودی با شما تماس می‌گیرد.' + (S.tel ? ' عجله دارید؟ تماس بگیرید.' : '');
       if (r.repriced) $('bdP').textContent = 'نرخ طلا از وقتی صفحه را باز کردید تغییر کرده بود؛ قیمت‌ها با نرخ همین لحظه ثبت شد. ' + $('bdP').textContent;
@@ -581,14 +598,57 @@
           if (!c.pre) { copy(text); note.hidden = false; note.textContent = 'پیام کپی شد؛ در گفتگوی ' + c.label + ' نگه دارید و «Paste» یا «چسباندن» را بزنید.'; }
           if (mobile) { e.preventDefault(); location.href = url; }
         };
-        /* phones: WhatsApp and Telegram open right away; the button stays for a second try */
-        if (c.pre && mobile && !r.pay) setTimeout(function () { logTap(0, c.ch); location.href = url; }, 700);   // with card-to-card the customer pays first
+        /* phones: WhatsApp and Telegram open by themselves, after a short count the customer can see (2026-10-22: the
+           number and the time were gone before anyone read them); the button stays for a second try. With
+           card-to-card the customer pays first. */
+        if (c.pre && mobile && !r.pay && !resumed) autoGo(url, c, note);
       } else if (S.tel) { send.textContent = 'تماس با ' + S.name; send.href = 'tel:' + S.tel; send.target = ''; send.onclick = null; }
       else send.hidden = true;
     }
     cp.onclick = function () { if (copy(text)) { cp.lastChild.textContent = 'کپی شد'; setTimeout(function () { cp.lastChild.textContent = 'کپی پیام ' + word; }, 1800); } };
     try { d.focus({ preventScroll: true }); } catch (e) {}
     $('bagBody').scrollTop = 0;
+  }
+
+  var autoT = 0;
+  function stopAuto() { clearTimeout(autoT); autoT = 0; }
+  function autoGo(url, c, note) {
+    stopAuto();
+    var n = 3, t = document.createElement('span'), stay = document.createElement('button');
+    stay.type = 'button'; stay.className = 'bd-stay'; stay.textContent = 'نه، بمانم';
+    note.hidden = false; note.className = 'bd-note bd-auto'; note.innerHTML = ''; note.appendChild(t); note.appendChild(stay);
+    var tick = function () {
+      if (!bagEl.open || $('bagDone').hidden) { stopAuto(); return; }
+      if (n <= 0) {
+        autoT = 0; logTap(0, c.ch);
+        note.className = 'bd-note'; note.textContent = c.label + ' باز نشد؟ دکمه «ارسال پیام در ' + c.label + '» را بزنید.';
+        location.href = url; return;
+      }
+      t.textContent = fa(n) + ' ثانیه دیگر ' + c.label + ' باز می‌شود تا پیام را بفرستید. ';
+      n--; autoT = setTimeout(tick, 1000);
+    };
+    stay.onclick = function () { stopAuto(); note.className = 'bd-note'; note.textContent = 'هر وقت آماده بودید، دکمه بالا را بزنید.'; };
+    tick();
+  }
+  /* The last order is kept a day in this browser: a customer who went to the messenger and came back (the page reloaded)
+     sees «سفارش شماره ۱۰۲ ثبت شد» with «دیدن» until they close it or its done screen (2026-10-22). */
+  var LKEY = 'aw-last-' + S.slug;
+  function seen(no) { try { if (no === '') sessionStorage.removeItem(LKEY); else sessionStorage.setItem(LKEY, String(no)); } catch (e) {} }
+  function seenNo() { try { return sessionStorage.getItem(LKEY) || ''; } catch (e) { return ''; } }
+  function lastOrder() {
+    var p = store(LKEY);
+    if (!p || !p.r || !p.f || Date.now() - (+p.at || 0) > 24 * 3600e3) { if (p) store(LKEY, null); return null; }
+    return p;
+  }
+  function lastLine() {
+    var p = lastOrder(); if (!p || !bagEl || S.demo || seenNo() === String(p.r.no) || Date.now() - p.at > 3 * 3600e3) return;
+    var el = document.createElement('div'); el.className = 'bag-toast bag-last'; el.setAttribute('role', 'status');
+    var t = document.createElement('span'); t.textContent = W.order + ' شماره ' + fa(p.r.no) + ' شما ثبت شده است.';
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = 'دیدن';
+    var x = document.createElement('button'); x.type = 'button'; x.className = 'bl-x'; x.setAttribute('aria-label', 'بستن'); x.textContent = '×';
+    b.onclick = function () { el.remove(); openBag(); done(p.r, p.f, p.ch ? chan(p.ch) : null, true); };
+    x.onclick = function () { el.remove(); seen(p.r.no); };
+    el.appendChild(t); el.appendChild(b); el.appendChild(x); document.body.appendChild(el);
   }
 
   /* v17: the shop's card after a card-to-card order: the exact amount and the card (copy buttons), the Sheba above the
@@ -723,18 +783,24 @@
     try { history.replaceState(history.state, '', '#p' + it.id); } catch (e) {}
   }
   function chosen() {
-    var choice = {}, missing = '';
+    var choice = {}, miss = [];   // every group still to pick, said at once («رنگ و سایز را انتخاب کنید»), and marked
     all('fieldset', $('psOpts')).forEach(function (fs) {
-      var c = fs.querySelector('input:checked'); if (c) choice[fs.dataset.g] = c.value; else if (!missing) missing = fs.dataset.g;
+      var c = fs.querySelector('input:checked'); fs.classList.remove('need');
+      if (c) choice[fs.dataset.g] = c.value; else miss.push(fs);
     });
-    return { choice: choice, missing: missing };
+    return { choice: choice, missing: miss.map(function (fs) { return fs.dataset.g; }).join(' و '), need: miss };
   }
   if (ps) {
     $('psBuy').addEventListener('click', function () {
       if (!cur || cur.off) return;
       var c = chosen();
-      if (c.missing) { $('psErr').hidden = false; $('psErr').textContent = c.missing + ' را انتخاب کنید.'; return; }
-      if (add(cur, c.choice, psQ)) { ps.close(); if (CAT) openBag(); }
+      if (c.missing) {
+        $('psErr').hidden = false; $('psErr').textContent = c.missing + ' را انتخاب کنید.';
+        c.need.forEach(function (fs) { fs.classList.add('need'); fs.addEventListener('change', function () { fs.classList.remove('need'); }, { once: true }); });
+        try { c.need[0].scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) {}
+        return;
+      }
+      if (add(cur, c.choice, psQ)) { ps.close(); if (CAT) bookNow(); }
     });
     if ($('psQty')) $('psQty').addEventListener('click', function (e) { var b = e.target.closest('[data-q]'); if (b) setPsQ(psQ + (+b.dataset.q)); });
     if ($('psAsk')) $('psAsk').addEventListener('click', function () { if (cur) ask(cur, chosen().choice); });
@@ -753,9 +819,9 @@
     if (buy) buy.addEventListener('click', function () {
       var it = ITEMS[+card.dataset.id] || item(card);
       if (it.opts.length) { openSheet(card); return; }
-      if (CAT && qtyOf(it.id)) { openBag(); return; }
+      if (CAT && qtyOf(it.id)) { bookNow(); return; }
       buy.classList.add('pop'); setTimeout(function () { buy.classList.remove('pop'); }, 200);
-      add(it, null, 1);
+      if (add(it, null, 1) && BK) bookNow();   // «رزرو نوبت» goes straight to picking the day and the time (2026-10-22)
     });
   });
   all('[data-buy-general]').forEach(function (b) { b.addEventListener('click', function () { ask(null, null); }); });

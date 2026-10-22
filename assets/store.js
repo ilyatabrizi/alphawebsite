@@ -324,13 +324,7 @@
 
     /* «فرستادن لینک سایت»: the phone's share sheet (WhatsApp, Instagram, Telegram…); a computer copies the link */
     $$('[data-share]', r).forEach(function (b) {
-      b.addEventListener('click', function () {
-        var u = b.getAttribute('data-share'), old = b.innerHTML;
-        var done = function () { b.textContent = 'لینک کپی شد'; setTimeout(function () { b.innerHTML = old; }, 1800); };
-        var copy = function () { if (navigator.clipboard) navigator.clipboard.writeText(u).then(done, function () {}); else { var i = d.createElement('input'); i.value = u; d.body.appendChild(i); i.select(); try { d.execCommand('copy'); done(); } catch (e) {} i.remove(); } };
-        if (navigator.share && matchMedia('(pointer: coarse)').matches) navigator.share({ title: b.getAttribute('data-title') || d.title, url: u }).catch(function () {});
-        else copy();
-      });
+      b.addEventListener('click', function () { shareSheet(b.getAttribute('data-share'), b.getAttribute('data-title') || d.title); });   // 2026-10-22: it did nothing without a share sheet
     });
 
     /* a picture chosen for upload shows at once, beside its field (2026-10-21: the bare «فایلی انتخاب نشده» said nothing) */
@@ -349,7 +343,8 @@
     /* a long form tells you it has unsaved changes, and asks before you leave it (2026-10-21: edits were lost silently) */
     $$('form[data-guard]', r).forEach(function (f) {
       var bar = f.querySelector('.save-bar');
-      var dirty = function () { if (f.hasAttribute('data-dirty')) return; f.setAttribute('data-dirty', '1'); if (bar) bar.classList.add('on'); };
+      var st = f.querySelector('.lk-state');
+      var dirty = function () { if (f.hasAttribute('data-dirty')) return; f.setAttribute('data-dirty', '1'); if (bar) bar.classList.add('on', 'dirty'); if (st) { st.textContent = 'ذخیره نشده'; st.classList.add('dirty'); } };
       f.addEventListener('input', dirty); f.addEventListener('change', dirty);
       f.addEventListener('submit', function () { f.removeAttribute('data-dirty'); });
     });
@@ -390,8 +385,63 @@
       });
     });
 
+    /* «+ دسته تازه…» in the add form: its name field appears right there (2026-10-22) */
+    $$('select[data-newcat]', r).forEach(function (sel) {
+      var box = sel.form && sel.form.querySelector('.new-cat'), inp = box && box.querySelector('input');
+      if (!box || !inp) return;
+      var sync = function () { var on = sel.value === 'new'; box.hidden = !on; inp.disabled = !on; inp.required = on; if (on && d.activeElement === sel) setTimeout(function () { inp.focus(); }, 30); };
+      sel.addEventListener('change', sync); sync();
+    });
+    /* «ترتیب»: the up/down arrows only while ordering, so each row keeps two clear buttons; remembered for this visit */
+    $$('[data-sort-toggle]', r).forEach(function (b) {
+      var box = b.closest('#main') || d.body, on = false;
+      try { on = sessionStorage.getItem('aw-sorting') === '1'; } catch (e) {}
+      var set = function (v) { on = v; box.classList.toggle('sorting', v); b.setAttribute('aria-pressed', v ? 'true' : 'false'); b.classList.toggle('on', v); try { sessionStorage.setItem('aw-sorting', v ? '1' : '0'); } catch (e) {} };
+      set(on); b.addEventListener('click', function () { set(!on); if (on) note('با فلش‌ها جای هر کدام را عوض کن؛ تمام شد، دوباره «ترتیب» را بزن.'); });
+    });
+    /* prices as they are typed: «۴۵۰٬۰۰۰ تومان» right under the field, so the zeros can be checked */
+    $$('input[data-money], .price-fs input[name=price], .price-fs input[name=old_price]', r).forEach(function (inp) {
+      var out = d.createElement('small'); out.className = 'money-say'; out.setAttribute('aria-live', 'polite');
+      inp.insertAdjacentElement('afterend', out);
+      var en = function (v) { return String(v || '').replace(/[۰-۹]/g, function (x) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x); }).replace(/[٠-٩]/g, function (x) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(x); }); };
+      var say = function () { var v = en(inp.value).replace(/[\s,٬،]/g, ''); out.textContent = /^\d+$/.test(v) && +v > 0 ? Number(v).toLocaleString('fa-IR') + ' تومان' : (v === '0' && inp.name === 'price' ? 'روی سایت: «قیمت در گفتگو»' : ''); };
+      inp.addEventListener('input', say); say();
+    });
+    /* a quick price: one open at a time, the field ready to type */
+    $$('details.qp', r).forEach(function (dt) {
+      dt.addEventListener('toggle', function () {
+        if (!dt.open) return;
+        $$('details.qp[open]', r).forEach(function (o) { if (o !== dt) o.open = false; });
+        var i = dt.querySelector('input'); if (i) setTimeout(function () { i.focus(); i.select(); }, 30);
+      });
+    });
+
+    /* a link that asks first (sign out), in the app's own sheet */
+    $$('a[data-ask]', r).forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        ask(a.getAttribute('data-ask'), { yes: a.getAttribute('data-yes') || 'بله' }).then(function (ok) { if (ok) location.href = a.href; });
+      });
+    });
+    /* the sign-in page remembers the mobile on this device (only the number; never a password) */
+    $$('input[data-remember]', r).forEach(function (inp) {
+      var k = inp.getAttribute('data-remember');
+      try { if (!inp.value) inp.value = localStorage.getItem(k) || ''; } catch (e) {}
+      if (inp.form) inp.form.addEventListener('submit', function () { try { localStorage.setItem(k, inp.value.trim()); } catch (e) {} });
+    });
+
     /* ask before deleting */
-    $$('form[data-confirm]', r).forEach(function (f) { f.addEventListener('submit', function (e) { if (!window.confirm(f.getAttribute('data-confirm'))) e.preventDefault(); }); });
+    $$('form[data-confirm]', r).forEach(function (f) {
+      f.addEventListener('submit', function (e) {
+        if (f.getAttribute('data-ok') === '1') { f.removeAttribute('data-ok'); return; }       // asked already: on its way
+        if (!d.body.classList.contains('area-panel')) { if (!window.confirm(f.getAttribute('data-confirm'))) e.preventDefault(); return; }
+        e.preventDefault(); var sub = e.submitter || null;
+        ask(f.getAttribute('data-confirm'), { yes: f.getAttribute('data-yes') || 'بله', danger: f.hasAttribute('data-danger') }).then(function (ok) {
+          if (!ok) return; f.setAttribute('data-ok', '1');
+          if (f.requestSubmit) { try { f.requestSubmit(sub); } catch (er) { f.requestSubmit(); } } else f.submit();
+        });
+      });
+    });
 
     /* file pickers in Persian, whatever the browser's language */
     $$('input[type=file]', r).forEach(function (inp) {
@@ -586,7 +636,68 @@
     });
   }
   init(d);
-  window.AW = window.AW || {}; window.AW.init = init;
+  /* ---------- in-app sheets instead of the browser's boxes (2026-10-22: confirm() looked like an error, not like the app) ---------- */
+  var dlg = null;
+  function sheetEl() {
+    if (dlg) return dlg;
+    dlg = d.createElement('dialog'); dlg.className = 'ask-sheet'; dlg.setAttribute('aria-labelledby', 'askT');
+    dlg.innerHTML = '<div class="ask-in"><p class="ask-t" id="askT"></p><div class="ask-x"></div><div class="ask-acts"><button type="button" class="btn ask-yes"></button><button type="button" class="btn ghost ask-no">نه</button></div></div>';
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close('no'); });
+    d.body.appendChild(dlg); return dlg;
+  }
+  function ask(text, o) {
+    o = o || {};
+    return new Promise(function (res) {
+      var s = sheetEl();
+      if (typeof s.showModal !== 'function') { res(window.confirm(text)); return; }
+      s.querySelector('.ask-t').textContent = text; s.querySelector('.ask-x').innerHTML = o.html || '';
+      var y = s.querySelector('.ask-yes'), n = s.querySelector('.ask-no');
+      y.textContent = o.yes || 'بله'; y.className = 'btn ask-yes' + (o.danger ? ' danger' : ''); n.textContent = o.no || 'نه'; n.hidden = o.no === false;
+      var done = function (v) { y.onclick = n.onclick = null; s.onclose = null; if (s.open) s.close(); res(v); };
+      y.onclick = function () { done(true); }; n.onclick = function () { done(false); }; s.onclose = function () { done(false); };
+      s.showModal(); y.focus();
+    });
+  }
+  function shareSheet(u, title) {
+    var shown = u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    var can = !!navigator.share;
+    var p = ask('لینک سایتت', { yes: can ? 'فرستادن در پیام‌رسان یا اینستاگرام' : 'کپی لینک', no: 'بستن',
+      html: '<p class="ask-link lat" dir="ltr">' + shown.replace(/[<>&"]/g, '') + '</p><p class="hint">این لینک را در بیو اینستاگرامت، استوری و واتساپ بگذار تا مشتری‌ها مستقیم به سایتت بیایند.</p>'
+        + (can ? '<button type="button" class="btn sm ghost ask-copy">کپی لینک</button>' : '') });
+    var cp = sheetEl().querySelector('.ask-copy');
+    var copy = function () {
+      var ok = function () { note('لینک کپی شد؛ حالا هر جا خواستی بچسبان.'); };
+      if (navigator.clipboard) navigator.clipboard.writeText(u).then(ok, function () { note('کپی نشد؛ لینک را نگه دار و دستی کپی کن.'); });
+      else { var i = d.createElement('input'); i.value = u; d.body.appendChild(i); i.select(); try { d.execCommand('copy'); ok(); } catch (e) {} i.remove(); }
+    };
+    if (cp) cp.onclick = function () { copy(); if (sheetEl().open) sheetEl().close(); };
+    p.then(function (yes) { if (!yes) return; if (can) navigator.share({ title: title, url: u }).catch(function () {}); else copy(); });
+  }
+  /* a short line at the bottom of the screen: what just happened */
+  function note(t, ms) {
+    if (!t) return;
+    var n = d.createElement('div'); n.className = 'call-toast note'; n.setAttribute('role', 'status'); n.textContent = t; d.body.appendChild(n);
+    setTimeout(function () { n.classList.add('out'); }, ms || 5200); setTimeout(function () { n.remove(); }, (ms || 5200) + 600);
+  }
+  /* the browser's own «Please fill out this field.» is in English: say it in Persian */
+  d.addEventListener('invalid', function (e) {
+    var el = e.target; if (!el || !el.validity || el.hasAttribute('data-own-msg')) return;
+    var v = el.validity, m = '';
+    if (v.valueMissing) m = el.type === 'checkbox' ? 'برای ادامه این را تیک بزن.' : (el.tagName === 'SELECT' || el.type === 'radio' ? 'یکی را انتخاب کن.' : (el.type === 'file' ? 'یک عکس انتخاب کن.' : 'این را پر کن.'));
+    else if (v.typeMismatch) m = el.type === 'email' ? 'ایمیل را درست بنویس؛ مثل name@gmail.com' : 'این را درست بنویس.';
+    else if (v.tooShort) m = 'دست‌کم ' + el.minLength + ' حرف بنویس.';
+    else if (v.patternMismatch) m = el.getAttribute('title') || 'این را درست بنویس.';
+    else if (v.rangeUnderflow || v.rangeOverflow) m = 'این عدد درست نیست.';
+    if (m) { el.setCustomValidity(m); el.setAttribute('data-aw-cv', ''); var clear = function () { el.setCustomValidity(''); el.removeAttribute('data-aw-cv'); el.removeEventListener('input', clear); el.removeEventListener('change', clear); }; el.addEventListener('input', clear); el.addEventListener('change', clear); }
+  }, true);
+  /* the next press of a submit button checks afresh: a message we set must not outlive what caused it (a field filled in
+     by a script, a rule taken away), or the form could never be sent. The browser fires «invalid» again where needed. */
+  d.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('button[type=submit], button:not([type]), input[type=submit]'); if (!b || !b.form) return;
+    Array.prototype.forEach.call(b.form.querySelectorAll('[data-aw-cv]'), function (x) { x.setCustomValidity(''); x.removeAttribute('data-aw-cv'); });
+  }, true);
+
+  window.AW = window.AW || {}; window.AW.init = init; window.AW.ask = ask; window.AW.note = note; window.AW.share = shareSheet;
   window.AW.dirty = function () { return !!d.querySelector('form[data-dirty]'); };
   window.addEventListener('beforeunload', function (e) { if (window.AW.dirty()) { e.preventDefault(); e.returnValue = ''; } });
 })();

@@ -61,10 +61,18 @@
     if (bar.className.indexOf('go') < 0) { bar.className = 'aw-prog'; return; }
     bar.className = 'aw-prog go done'; barT = setTimeout(function () { bar.className = 'aw-prog'; }, 380);
   }
-  function toast(t) {
+  function toast(t, act) {
     if (!t) return;
-    var n = d.createElement('div'); n.className = 'call-toast note'; n.setAttribute('role', 'status'); n.textContent = t; d.body.appendChild(n);
-    setTimeout(function () { n.classList.add('out'); }, 3800); setTimeout(function () { n.remove(); }, 4400);
+    var n = d.createElement('div'); n.className = 'call-toast note'; n.setAttribute('role', 'status');
+    var sp = d.createElement('span'); sp.textContent = t; n.appendChild(sp);
+    var ms = 5200;
+    if (act && act.form) {   // «برگرداندن»: the same form the page would have, sent the app's way
+      ms = 8000; var b = d.createElement('button'); b.type = 'button'; b.className = 'toast-act'; b.textContent = act.label;
+      b.addEventListener('click', function () { n.remove(); var f = act.form; f.hidden = true; var pg = d.getElementById('pg'); (pg || d.body).appendChild(f); if (f.requestSubmit) f.requestSubmit(); else f.submit(); });
+      n.appendChild(b);
+    }
+    d.body.appendChild(n);
+    setTimeout(function () { n.classList.add('out'); }, ms); setTimeout(function () { n.remove(); }, ms + 600);
   }
 
   /* ---------- asking the server ---------- */
@@ -133,6 +141,7 @@
     var el = d.getElementById(decodeURIComponent(u.hash.slice(1))); if (!el) return false;
     for (var p = el; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true;
     jump(el);
+    if (/^(it|o)-/.test(el.id)) { el.classList.remove('aw-here'); void el.offsetWidth; el.classList.add('aw-here'); setTimeout(function () { el.classList.remove('aw-here'); }, 2400); }   // the item a save landed on glows a moment
     return true;
   }
 
@@ -163,7 +172,12 @@
       var m = main();
       if (!o.pop && m && !o.keep) { if (!m.hasAttribute('tabindex')) m.setAttribute('tabindex', '-1'); try { m.focus({ preventScroll: true }); } catch (e) {} }
       done(runScripts(np));
-      if (o.flash) { var f = np.querySelector('.flash'); if (f) toast(f.textContent.trim()); }
+      if (o.flash) { var f = np.querySelector('.flash'); if (f) {   // said once, at the bottom, not twice
+        var un = f.getAttribute('data-undo'), uf = un ? f.querySelector('form') : null;
+        if (uf) { uf.remove(); toast(f.textContent.trim(), { label: 'برگرداندن', form: uf }); f.remove(); }
+        else if (f.classList.contains('bad')) { var fw = f.parentNode; if (fw && fw.getBoundingClientRect().top < 60) w.scrollTo(0, 0); }   // a problem stays where it is read; no note on top of it
+        else { toast(f.textContent.trim()); if (!f.querySelector('a, button, form')) f.remove(); }
+      } }
     };
     if (dir !== 'none' && d.startViewTransition) {
       html.setAttribute('data-nav', dir);
@@ -233,10 +247,18 @@
       reload(); return;
     }
     e.preventDefault();
-    if (w.AW && w.AW.dirty && w.AW.dirty() && !w.confirm('تغییراتت ذخیره نشده. بدون ذخیره بیرون بروی؟')) return;
-    if (w.AW && w.AW.dirty) Array.prototype.forEach.call(d.querySelectorAll('form[data-dirty]'), function (f) { f.removeAttribute('data-dirty'); });
-    if (tab) mark(a);
-    nav(u, { dir: tab ? 'tab' : 'fwd' });
+    var go = function () {
+      if (w.AW && w.AW.dirty) Array.prototype.forEach.call(d.querySelectorAll('form[data-dirty]'), function (f) { f.removeAttribute('data-dirty'); });
+      if (tab) mark(a);
+      nav(u, { dir: tab ? 'tab' : 'fwd' });
+    };
+    if (w.AW && w.AW.dirty && w.AW.dirty()) {   // unsaved changes: ask in the app's own sheet
+      var q = 'تغییراتت هنوز ذخیره نشده. بدون ذخیره برویم؟';
+      if (w.AW.ask) w.AW.ask(q, { yes: 'برو، ذخیره نکن', no: 'بمان', danger: true }).then(function (ok) { if (ok) go(); });
+      else if (w.confirm(q)) go();
+      return;
+    }
+    go();
   });
   d.addEventListener('touchstart', function (e) { var a = e.target.closest && e.target.closest('a[href]'); if (a) prefetch(a); }, { passive: true });
   var hovT = 0;
@@ -292,6 +314,12 @@
     var ptr = d.createElement('div'); ptr.className = 'aw-ptr'; ptr.setAttribute('aria-hidden', 'true');
     ptr.innerHTML = '<svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>';
     d.body.appendChild(ptr);
+    /* something inside the app to go back to: a page this script opened, or (after a full load, e.g. a tap before this
+       script was ready or a reload) a panel page this one was opened from (2026-10-22: the swipe did nothing then) */
+    var canBack = function () {
+      if (idx > 0) return true;
+      try { var r = new URL(d.referrer); return w.history.length > 1 && r.origin === location.origin && /^\/panel(\/|$)/.test(r.pathname) && r.pathname !== location.pathname; } catch (e) { return false; }
+    };
     var inner = function (n) {   // a finger on something that scrolls by itself: leave it alone
       for (; n && n !== d.body; n = n.parentElement) {
         if (n.matches && n.matches('input, textarea, select, iframe, [contenteditable], .tbl-wrap, .tblwrap, .chips, .convo, .ed-pv')) return true;
@@ -302,7 +330,7 @@
     d.addEventListener('touchstart', function (e) {
       if (e.touches.length !== 1 || d.body.classList.contains('pv-show')) return;
       var t = e.touches[0];
-      if (idx > 0 && w.innerWidth - t.clientX < 22) sw = { x: t.clientX, y: t.clientY, dx: 0, on: false, t: Date.now() };
+      if (canBack() && w.innerWidth - t.clientX < 22) sw = { x: t.clientX, y: t.clientY, dx: 0, on: false, t: Date.now() };
       else if (w.scrollY <= 0 && !inner(e.target)) pull = { y: t.clientY, x: t.clientX, d: 0 };
     }, { passive: true });
     d.addEventListener('touchmove', function (e) {

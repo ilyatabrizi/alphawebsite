@@ -963,7 +963,7 @@ a.kpi{transition:border-color .2s,box-shadow .2s}
 .order header div{display:grid;line-height:1.7}
 .order header small{font-size:12.5px;color:var(--muted)}
 .order.done{opacity:.72}
-.order.done header b{text-decoration:line-through;text-decoration-color:var(--line2)}
+.order.done header b{color:var(--ink2)}   /* no strike-through: it read as «cancelled» (2026-10-22) */
 .o-lines{list-style:none;margin:0;padding:10px 0;border-block:1px solid var(--line);display:grid;gap:4px;font-size:14px}
 .o-lines li{display:flex;justify-content:space-between;gap:10px}
 .o-note{font-size:13.5px;line-height:1.85;color:var(--ink2);padding:8px 12px;border-radius:12px;background:var(--bg)}
@@ -1770,7 +1770,7 @@ a.card.notice{text-decoration:none;color:inherit}
 .svc-line{margin:16px 2px 0}
 .raise-undo.card{border-top:1px solid var(--line);padding:12px 16px;margin-bottom:12px}
 /* the home page: one clear next step */
-.setup-list li.next a{border-color:var(--ink);box-shadow:var(--sh1)}
+.setup-list li.sl-next a{border-color:var(--ink);box-shadow:var(--sh1)}   /* not «.next»: that is the welcome page grid, and it squeezed the first step on computers */
 .setup-list a>svg{flex:none;width:18px;height:18px;margin:4px auto 0 0;fill:none;stroke:var(--muted);stroke-width:2;transform:scaleX(-1)}
 .setup-list .sl-dot{font-size:12.5px;font-weight:700;color:var(--ink2)}
 .card-hint{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px dashed var(--line2);border-radius:var(--r2)}
@@ -1869,3 +1869,124 @@ details.fs.sub>summary{padding:6px 0}
 @media(max-width:600px){.top-acts .top-in{padding-inline:8px;border-color:transparent;background:none;box-shadow:none}}
 @media(max-width:370px){.top-acts .top-in{display:none}}   /* the smallest phones: «ورود» stays in the menu, the name keeps its room */
 body.area-panel{overflow-x:clip}   /* nothing in the panel may widen the page sideways: a phone then zooms out and the right-edge back swipe misses */
+
+/* ---------- 2026-10-22: «راهنما» on every panel page and the first-time tour (help.js, lib/panel_help.php) ---------- */
+.top-help svg{width:18px;height:18px}
+@media(max-width:400px){.top-acts .top-help{padding-inline:12px}}
+.help-sheet{border:0;padding:0;margin:auto auto 0;width:100%;max-width:560px;max-height:min(86vh,720px);border-radius:var(--r4) var(--r4) 0 0;background:var(--card);color:var(--ink);box-shadow:0 -10px 40px rgba(19,19,18,.18);overflow:auto;overscroll-behavior:contain}
+.help-sheet::backdrop{background:rgba(19,19,18,.42)}
+@media(min-width:720px){.help-sheet{margin:auto;border-radius:var(--r4)}}
+.help-sheet[open]{animation:hsIn .26s var(--ease) both}
+@keyframes hsIn{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.help-sheet[open]{animation:none}}
+html.hs-lock{overflow:hidden}
+.hs-in{padding:18px 20px calc(18px + env(safe-area-inset-bottom))}
+.hs-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.hs-top h2{margin:0;font-size:20px;flex:1}
+.hs-ic{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--bg2)}
+.hs-ic svg{width:20px;height:20px}
+.hs-x{display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:var(--bg2);color:var(--ink);cursor:pointer}
+.hs-x svg{width:18px;height:18px}
+.hs-lead{margin:8px 0 12px;color:var(--ink2);font-size:16px;line-height:1.9}
+.hs-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.hs-list li{position:relative;padding:12px 14px 12px 14px;padding-inline-start:34px;border-radius:var(--r2);background:var(--bg);font-size:15px;line-height:1.9;color:var(--ink2)}
+.hs-list li::before{content:"";position:absolute;inset-inline-start:14px;top:22px;width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.hs-list b{color:var(--ink)}
+.hs-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.hs-acts .btn svg{width:16px;height:16px}
+
+.tour{position:fixed;inset:0;z-index:1000}
+.tour.out{opacity:0;transition:opacity .2s}
+.tour-ring{position:fixed;border-radius:18px;box-shadow:0 0 0 3px #fff,0 0 0 9999px rgba(19,19,18,.58);transition:top .3s var(--ease),left .3s var(--ease),width .3s var(--ease),height .3s var(--ease);pointer-events:none}
+.tour-ring[hidden]{display:block;box-shadow:0 0 0 9999px rgba(19,19,18,.58);width:0!important;height:0!important;top:50%!important;left:50%!important}
+.tour-card{position:fixed;width:min(340px,calc(100vw - 24px));padding:16px 18px;border-radius:var(--r3);background:var(--card);color:var(--ink);box-shadow:0 18px 50px rgba(0,0,0,.28);transition:top .3s var(--ease),left .3s var(--ease)}
+.tour-n{margin:0 0 4px;font-size:13px;color:var(--muted)}
+.tour-t{margin:0 0 6px;font-size:19px}
+.tour-d{margin:0 0 14px;font-size:15px;line-height:1.9;color:var(--ink2)}
+.tour-acts{display:flex;align-items:center;gap:8px}
+.tour-skip{margin-inline-start:auto;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;padding:8px 4px}
+@media(prefers-reduced-motion:reduce){.tour-ring,.tour-card{transition:none}}
+html.tour-on{overflow:hidden}
+
+/* notes («ذخیره شد»…) at the bottom, above the tab bar, so they never cover what just changed (2026-10-22) */
+.call-toast.note{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 94px);width:max-content;max-width:calc(100% - 24px);border-radius:18px;text-align:start;line-height:1.7;font-weight:600;animation:noteIn .3s var(--ease)}
+.call-toast.note.out{transform:translate(-50%,8px)}
+@keyframes noteIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+@media(min-width:981px){.call-toast.note{bottom:28px}}
+/* the item a save or an add just landed on glows for a moment */
+.mi:target,.order:target,.aw-here{animation:hereGlow 2.2s var(--ease)}
+@keyframes hereGlow{0%,35%{box-shadow:0 0 0 3px var(--ink)}100%{box-shadow:0 0 0 0 transparent}}
+@media(prefers-reduced-motion:reduce){.mi:target,.order:target,.aw-here{animation:none;outline:2px solid var(--ink)}}
+
+/* the in-app «are you sure?» and share sheets (store.js ask / shareSheet) */
+.ask-sheet{border:0;padding:0;margin:auto auto 0;width:100%;max-width:480px;border-radius:var(--r4) var(--r4) 0 0;background:var(--card);color:var(--ink);box-shadow:0 -10px 40px rgba(19,19,18,.2)}
+.ask-sheet::backdrop{background:rgba(19,19,18,.42)}
+.ask-sheet[open]{animation:hsIn .24s var(--ease) both}
+@media(min-width:720px){.ask-sheet{margin:auto;border-radius:var(--r4)}}
+.ask-in{padding:22px 20px calc(18px + env(safe-area-inset-bottom))}
+.ask-t{margin:0 0 6px;font-size:18px;font-weight:700;line-height:1.8}
+.ask-x:empty{display:none}
+.ask-x{margin:4px 0 6px}
+.ask-link{margin:6px 0 8px;padding:12px 14px;border-radius:var(--r2);background:var(--bg);font-size:16px;word-break:break-all;text-align:left}
+.ask-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.ask-acts .btn{flex:1 1 140px}
+.call-toast.note .toast-act{flex:none;margin-inline-start:6px;padding:6px 14px;border:0;border-radius:999px;background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+
+/* products: two clear buttons a row, the price changed in place, the arrows only in «ترتیب» (2026-10-22) */
+#main:not(.sorting) .mi .mv,#main:not(.sorting) .cathead .mv{display:none}
+#main.sorting .mi{border-style:dashed}
+[data-sort-toggle].on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mi-pic{display:block;line-height:0;border-radius:var(--r1)}
+.mi .noimg{display:grid;place-items:center;color:var(--faint)}
+.mi .noimg svg{width:22px;height:22px}
+.mi h3 a{color:inherit;text-decoration:none}
+.mi h3 a:hover{text-decoration:underline}
+.mi-p{font-size:13.5px;color:var(--muted)}
+.qp>summary{display:inline-flex;align-items:center;gap:6px;cursor:pointer;list-style:none;color:var(--ink2);padding:2px 0}
+.qp>summary::-webkit-details-marker{display:none}
+.qp>summary svg{width:15px;height:15px;color:var(--muted)}
+.qp[open]>summary svg{color:var(--ink)}
+.qp-f{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;margin-top:8px}
+.qp-f input{flex:1 1 140px;min-width:0;height:42px;padding:0 12px;border:1px solid var(--line2);border-radius:12px;background:var(--field);font:inherit;font-size:16px}
+.qp-f .money-say{flex-basis:100%;order:3}
+.money-say{display:block;margin-top:4px;font-size:13px;color:var(--ink2)}
+.money-say:empty{display:none}
+.new-cat[hidden]{display:none}
+.save-bar.keep{justify-content:flex-start;background:var(--card);border:1px solid var(--line)}
+.save-bar.keep::before{content:none}
+.save-bar.keep .btn{background:var(--ink);color:#fff}
+.save-bar.keep .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+.save-bar.keep.dirty{background:var(--ink);border-color:var(--ink)}
+.save-bar.keep.dirty::before{content:"تغییراتت ذخیره نشده";color:#fff;font-size:14px;font-weight:600;margin-inline-end:auto}
+.save-bar.keep.dirty .btn{background:#fff;color:var(--ink)}
+.save-bar.keep.dirty .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.lk-state{display:inline-flex;align-items:center;gap:6px;padding:0 10px;font-size:13.5px;font-weight:600;color:var(--good)}
+.lk-state svg{width:16px;height:16px}
+.lk-state.dirty{color:var(--bad)}
+.setup-list li.ok b{text-decoration:none!important;color:var(--ink2)!important}   /* done reads as done, not as crossed out (2026-10-22) */
+.setup-min>summary{display:flex;align-items:center;gap:10px;flex-wrap:wrap;cursor:pointer;list-style:none}
+.setup-min>summary::-webkit-details-marker{display:none}
+.setup-min .ok-dot{background:var(--good);border-color:var(--good);color:#fff}
+.setup-min[open]>summary{margin-bottom:12px}
+.rr-when{display:block;font-size:12.5px}
+.rows .row2 .pill{flex:none}
+@media(min-width:981px){.back.to-more{display:none}}
+.notice-ok{display:flex;gap:8px;align-items:flex-start;margin:0 0 14px;padding:12px 14px;border-radius:var(--r2);background:var(--goodw);color:var(--good);font-size:14.5px;line-height:1.8}
+.notice-ok svg{flex:none;width:18px;height:18px;margin-top:4px}
+
+/* A short tracker of what is happening now (/panel/payments while the account is being made; 2026-10-22) */
+.track{list-style:none;margin:6px 0 12px;padding:0;display:grid;gap:8px}
+.track li{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--muted)}
+.track li>svg,.track li .n,.track li .spin{flex:none;width:24px;height:24px;margin:0;border-radius:50%;box-sizing:border-box}
+.track li .n{display:grid;place-items:center;border:1.5px solid var(--line2);font-size:12.5px;font-weight:700}
+.track li.ok{color:var(--good)}.track li.ok>svg{background:var(--goodw);padding:4px;stroke-width:2.5}
+.track li.now{color:var(--ink);font-weight:700}
+.pp-off .pp-in{gap:4px;padding-block:14px}.pp-off .pp-name b{font-size:17px}
+.wl-app{display:grid;gap:12px}.wl-app-t{display:flex;gap:14px;align-items:center}.wl-app-t h2{margin:0;font-size:17px}.wl-app-t p{margin:2px 0 0;font-size:13.5px}
+.wl-ic img{display:block;width:44px;height:44px;border-radius:12px;box-shadow:var(--sh1,0 1px 3px rgba(0,0,0,.12))}
+@media (display-mode:standalone){.wl-app{display:none}}
+.flash.bad{border-color:rgba(179,38,30,.35);background:var(--badw)}.flash.bad::before{background:var(--bad)}
+/* the customers table on a phone: name, count and the last visit fit; the mobile and the sum are on each customer's page (2026-10-22) */
+@media (max-width:600px){.crm-tbl th:nth-child(2),.crm-tbl td:nth-child(2),.crm-tbl th:nth-child(4),.crm-tbl td:nth-child(4){display:none}.crm-tbl td,.crm-tbl th{padding-inline:10px}}
+/* the installed panel: the browser's own swipe-to-go-back must not take the edge swipe away from nav.js (2026-10-22) */
+html.aw-app,html.aw-app body{overscroll-behavior-x:none}

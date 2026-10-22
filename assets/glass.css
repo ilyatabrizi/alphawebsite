@@ -457,6 +457,8 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .bk-slots span{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:1px solid var(--line);font-size:calc(14px*var(--fs,1));font-weight:700;transition:background .2s,border-color .2s,color .2s}
 .bk-days input:checked+span,.bk-slots input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--onaccent)}
 .bk-days input:checked+span small{color:inherit;opacity:.85}
+.bk-slots small{margin-inline-start:6px;font-size:12px;font-weight:600;color:var(--muted)}
+.bk-slots input:checked+span small{color:inherit;opacity:.85}
 .bk-days input:focus-visible+span,.bk-slots input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
 .bk-pick{color:var(--muted);font-size:13px}
 
@@ -484,3 +486,12 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .bag-bd select{flex:1;min-height:48px;padding:0 12px;border-radius:calc(14px*var(--rk,1));border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px}
 .bag-earn{display:flex;gap:8px;align-items:flex-start;padding:10px 14px;border-radius:calc(16px*var(--rk,1));background:color-mix(in srgb,var(--accent) 10%,var(--surface));font-size:13.5px;line-height:1.8;font-weight:600}
 .bag-earn svg{flex:none;width:18px;height:18px;margin-top:3px}
+
+/* the done screen's count before the messenger opens, and the «your last order» line after coming back (2026-10-22) */
+.bd-note.bd-auto{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 10px;color:var(--ink);font-weight:600}
+.bd-stay{height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.bag-toast.bag-last{animation:toastIn .32s var(--ease)}
+.bag-toast .bl-x{width:34px;height:34px;padding:0;background:transparent;color:inherit;font-size:20px;font-weight:400;opacity:.75}
+.ps-opts fieldset.need legend,#psOpts fieldset.need legend{color:#B3261E}
+#psOpts fieldset.need label span{border-color:#B3261E}
+.dark #psOpts fieldset.need legend{color:#FF8A80}.dark #psOpts fieldset.need label span{border-color:#FF8A80}

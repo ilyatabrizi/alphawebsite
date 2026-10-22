@@ -160,6 +160,7 @@
      third visit are. Visits are counted once per browser session. */
   if (!site && sess('aw-visit') !== '1') { sess('aw-visit', '1'); store('aw-visits', String((+(store('aw-visits') || 0)) + 1)); }
   function installDue() {
+    if (C.flow) return false;                                       // signup, payment, welcome: nothing on top of the steps (2026-10-22); /welcome has its own card
     if (standalone || quiet || store(IK + '_done') === '1') return false;
     if (site) return sess(IK) !== '1';                              // client sites: every new visit until installed
     if (!C.owner && +(store('aw-visits') || 0) < 3) return false;

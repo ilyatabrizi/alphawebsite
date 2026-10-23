@@ -110,7 +110,7 @@ body.has-island .demo-bar~.scrim{height:calc(env(safe-area-inset-top,0px) + 96px
 .hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,0) 40%,rgba(0,0,0,.18));pointer-events:none}
 .has-cover .hero{padding-top:64px}
-.has-cover .hero-in{grid-template-columns:1fr;position:relative;margin-top:-46px;padding-inline:14px}
+.has-cover .hero-in{grid-template-columns:minmax(0,1fr);position:relative;margin-top:-46px;padding-inline:14px}
 .has-cover .logo{box-shadow:0 0 0 5px var(--bg),0 12px 26px -12px rgba(0,0,0,.4)}
 .has-cover.hero-banner .hero{padding-top:64px}
 .has-cover.hero-banner .logo{box-shadow:0 0 0 5px var(--ink),0 12px 26px -12px rgba(0,0,0,.5)}

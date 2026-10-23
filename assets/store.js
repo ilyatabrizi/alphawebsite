@@ -448,9 +448,9 @@
       var w = d.createElement('span'); w.className = 'attach';
       inp.parentNode.insertBefore(w, inp); w.appendChild(inp);
       var btn = d.createElement('span'); btn.className = 'attach-btn'; btn.textContent = 'انتخاب فایل';
-      var nm = d.createElement('span'); nm.className = 'attach-name'; nm.textContent = 'فایلی انتخاب نشده';
+      var nm = d.createElement('span'); nm.className = 'attach-name'; nm.textContent = 'بدون فایل';
       w.appendChild(btn); w.appendChild(nm);
-      inp.addEventListener('change', function () { nm.textContent = inp.files && inp.files.length ? inp.files[0].name : 'فایلی انتخاب نشده'; });
+      inp.addEventListener('change', function () { nm.textContent = inp.files && inp.files.length ? inp.files[0].name : 'بدون فایل'; });
     });
 
     var lf = byId('lookForm'), pf = byId('pvFrame');

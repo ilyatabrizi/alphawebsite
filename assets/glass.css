@@ -495,3 +495,9 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .ps-opts fieldset.need legend,#psOpts fieldset.need legend{color:#B3261E}
 #psOpts fieldset.need label span{border-color:#B3261E}
 .dark #psOpts fieldset.need legend{color:#FF8A80}.dark #psOpts fieldset.need label span{border-color:#FF8A80}
+/* A long price (a 9-digit tour or car) no longer pushes the button out of its card: it moves under the price, at the end (2026-10-23 sweep) */
+.card .row{flex-wrap:wrap;row-gap:8px}.card .row:not(.wide) .buy{margin-inline-start:auto}
+/* On a card the old price and the saving sit on their own line, so «تومان» stays beside the new price (2026-10-23 sweep) */
+.card .price .was{display:flex;width:fit-content;margin:0 0 3px}
+/* white names stay readable on light photos (a white AC unit hid «سرمایش و گرمایش»; 2026-10-23 sweep) */
+.cat-tile::after{background:linear-gradient(180deg,rgba(0,0,0,.04) 15%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.8))}.cat-tile span{text-shadow:0 1px 8px rgba(0,0,0,.55)}

@@ -113,3 +113,5 @@ body.pat-glow{background-image:radial-gradient(140% 60% at 50% -8%,var(--glow),t
 .demo-acts{display:grid;gap:8px}
 .demo-acts a,.demo-acts button{display:inline-flex;align-items:center;justify-content:center;height:50px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
 .demo-acts a{background:var(--accent);border-color:var(--accent);color:var(--onaccent)}
+/* Handles, e-mails and codes in Latin (an Instagram «@shop_1» drew a Persian «۱»; 2026-10-23 sweep) */
+.lat{font-family:"AW Grotesk Full","IRANYekanX FaNum",system-ui,sans-serif}

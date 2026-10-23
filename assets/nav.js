@@ -11,7 +11,7 @@
   'use strict';
   var d = document, w = window, html = d.documentElement;
   if (!w.fetch || !w.DOMParser || !w.URL || !w.Promise || !history.pushState || !d.getElementById('pg')) return;
-  var SCOPE = /^\/panel(\/|$)/, HARD = /^\/panel\/(logout|exit|login|forgot)(\/|$)/, NOPRE = /^\/panel\/(chat|tickets)\/\d+$/;
+  var SCOPE = /^\/panel(\/|$)/, HARD = /^\/panel\/(logout|exit|login|forgot|wait)(\/|$)/, NOPRE = /^\/panel\/(chat|tickets)\/\d+$/;
   var mq = function (q) { return !!(w.matchMedia && w.matchMedia(q).matches); };
   var calm = mq('(prefers-reduced-motion: reduce)');
   var app = !!(w.navigator.standalone || mq('(display-mode: standalone)'));

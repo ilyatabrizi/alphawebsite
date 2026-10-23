@@ -78,7 +78,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .cv-sec:last-of-type{border-bottom:0}
 .cv-h h2{font-size:clamp(22px,4vw,26px);font-weight:800}
 .cv-h p{margin-top:6px;color:var(--muted);font-size:14.5px}
-@media(min-width:860px){.cv-sec{grid-template-columns:240px minmax(0,1fr);gap:40px;padding:60px 0}.cv-sec.wide{grid-template-columns:1fr}}
+@media(min-width:860px){.cv-sec{grid-template-columns:240px minmax(0,1fr);gap:40px;padding:60px 0}.cv-sec.wide{grid-template-columns:minmax(0,1fr)}}
 .cv-about p{font-size:17px;max-width:68ch}
 .cv-facts{margin:22px 0 0;display:grid;gap:10px}
 .cv-facts div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;font-size:15px}
@@ -164,7 +164,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 
 /* ======================= cv-2 «کلاسیک»: warm, formal ======================= */
 .cv-classic .cv-hero{padding-top:0;display:flow-root}
-.cv-classic .cv-cover{position:absolute;inset:0 -20px auto;height:240px;width:calc(100% + 40px);object-fit:cover;opacity:.9;-webkit-mask-image:linear-gradient(to bottom,#000 30%,transparent);mask-image:linear-gradient(to bottom,#000 30%,transparent)}
+.cv-classic .cv-cover{position:absolute;inset:0 -20px auto;height:240px;width:calc(100% + 40px);max-width:none;object-fit:cover;opacity:.9;-webkit-mask-image:linear-gradient(to bottom,#000 30%,transparent);mask-image:linear-gradient(to bottom,#000 30%,transparent)}
 .cv-classic .cv-hero-in{padding-top:130px}
 .cv-classic .cv-photo{border-radius:50%;aspect-ratio:1;width:min(52vw,220px);box-shadow:0 0 0 6px var(--bg),0 0 0 7px var(--line),0 24px 50px color-mix(in srgb,var(--ink) 16%,transparent)}
 .cv-classic .cv-title{color:var(--accent)}
@@ -228,3 +228,5 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
   .cv-contact{grid-template-columns:1fr!important}
   a{text-decoration:none}
 }
+/* A phone number reads in Persian digits like the rest of the page (2026-10-23 sweep); handles and e-mails stay Latin */
+small.tel[dir=ltr]{font-family:inherit}

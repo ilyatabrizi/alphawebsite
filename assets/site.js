@@ -454,7 +454,13 @@
   function bookNow() {
     openBag();
     if (!BK) return;
-    setTimeout(function () { var bb = $('bagBook'); if (bb && !bkDay) try { bb.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) {} }, 260);
+    /* the day and time come up with the chosen service still in sight above them (it scrolled the service out and the
+       title sat under the header; 2026-10-23 sweep) */
+    setTimeout(function () {
+      var bb = $('bagBook'); if (!bb || bkDay) return;
+      var sc = bb.parentElement; while (sc && sc !== bagEl && !/(auto|scroll)/.test(getComputedStyle(sc).overflowY)) sc = sc.parentElement;
+      try { if (sc) sc.scrollBy({ top: bb.getBoundingClientRect().top - sc.getBoundingClientRect().top - 96, behavior: 'smooth' }); else bb.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) {}
+    }, 260);
   }
   function openBag() {
     if (!bagEl) return;

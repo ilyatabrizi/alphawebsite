@@ -412,7 +412,14 @@
     dl.innerHTML = '';
     rows.forEach(function (r) { var d = document.createElement('div'); if (r[2]) d.className = 'tot'; d.innerHTML = '<dt></dt><dd></dd>'; d.firstChild.textContent = r[0]; d.lastChild.textContent = r[1]; dl.appendChild(d); });
     var unpriced = bag.some(function (l) { return ITEMS[l.id] && !(ITEMS[l.id].p > 0); });
-    var pb = $('bagPayBox'); if (pb) pb.hidden = !(sum > 0 && !unpriced && sum + f <= (S.payMax || 5e8));   // big orders and «قیمت در گفتگو» items: arranged in the conversation
+    var payable = sum > 0 && !unpriced && sum + f <= (S.payMax || 5e8);
+    var pb = $('bagPayBox'); if (pb) pb.hidden = !payable;
+    /* 2026-10-24: the site's own way to pay only; this line says why there is none for this order */
+    var pl = $('bagPayLine');
+    if (pl) {
+      var why = unpriced || (CAT && !(sum > 0)) ? 'unpriced' : (sum + f > (S.payMax || 5e8) ? 'big' : (!pb && sum > 0 ? 'none' : ''));
+      pl.hidden = !why; if (why) pl.lastChild.textContent = pl.getAttribute('data-' + why) || '';
+    }
     var low = mode === 'delivery' && S.del && S.del.min > 0 && sum < S.del.min;
     var err = $('bagErr');
     if (low) { err.hidden = false; err.textContent = 'برای ارسال، حداقل سفارش ' + toman(S.del.min) + ' است؛ ' + toman(S.del.min - sum) + ' دیگر اضافه کنید یا «تحویل حضوری» را انتخاب کنید.'; }
@@ -444,7 +451,7 @@
     if (!p) { if (el) el.hidden = true; return; }
     if (!el) { el = document.createElement('div'); el.id = 'bagResume'; el.className = 'bag-resume'; m.insertBefore(el, m.firstChild); }
     el.hidden = false; el.innerHTML = '';
-    var ty = p.r.pay.tayid, t = document.createElement('span');
+    var ty = p.r.pay.tayid || p.r.pay.zp, t = document.createElement('span');
     t.textContent = W.order + ' شماره ' + fa(p.r.no) + (p.r.payDone ? '؛ پرداخت شد.' : (p.r.payRef || p.r.payClaim ? '؛ واریزش ثبت شده.' : (ty ? '؛ منتظر پرداخت شما.' : '؛ منتظر واریز شما.')));
     var b = document.createElement('button'); b.type = 'button'; b.className = 'bp-copy'; b.textContent = p.r.payRef || p.r.payDone ? 'دیدن ' + W.order : (ty ? 'پرداخت' : 'کارت و ثبت واریز');
     b.onclick = function () { done(p.r, p.f, p.ch ? chan(p.ch) : null, true); };
@@ -490,7 +497,11 @@
     bagEl.addEventListener('click', function (e) { if (e.target === bagEl) closeBag(); });
     all('[data-bag-close]', bagEl).forEach(function (b) { b.addEventListener('click', function () { closeBag(); }); });
     all('[data-bag-shop]', bagEl).forEach(function (b) { b.addEventListener('click', function () { closeBag(); setTimeout(function () { var p = $('products'); if (p) p.scrollIntoView({ behavior: 'smooth' }); }, 120); }); });
-    addEventListener('popstate', function () { if (bagEl.open) { pushed = false; closeBag(true); } });
+    addEventListener('popstate', function () {
+      if (window.__acSkip) return;   // the account sheet stepped back over the bag (its own listener clears the flag)
+      var ac = $('acct'); if (ac && ac.open) return;   // Back closes the account sheet first
+      if (bagEl.open) { pushed = false; closeBag(true); }
+    });
     form.addEventListener('submit', function (e) { e.preventDefault(); submit(); });
     form.addEventListener('input', function () { var err = $('bagErr'); if (err.dataset.kind === 'v') { err.hidden = true; err.dataset.kind = ''; } });
   }
@@ -511,7 +522,7 @@
     if (field && form.elements[field]) { form.elements[field].focus(); form.elements[field].setAttribute('aria-invalid', 'true'); }
     else err.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
-  /* v17: «کارت‌به‌کارت» (to the owner's card, shown after the order) or «هماهنگی در گفتگو» */
+  /* the site's own way to pay (Tayid Shod, Zarinpal or the card), the only one (2026-10-24) */
   function payChoice() { var pb = $('bagPayBox'), p = pb && !pb.hidden ? pb.querySelector('input[name=pay]:checked') : null; return p ? p.value : ''; }
   function orderMessage(r, f) {
     var L = [], word = W.order;
@@ -527,8 +538,8 @@
     if (f.name || f.phone) L.push('نام: ' + [f.name, f.phone].filter(Boolean).join('، '));
     if (f.note) L.push((CAT ? 'زمان و توضیح: ' : 'توضیح: ') + f.note);
     if (r.pay && r.pay.tayid) L.push('پرداخت: کارت‌به‌کارت خودکار' + (r.payDone ? '، پرداخت شد' : (r.payClaim ? '، واریز شد' : '، بعد از ثبت ' + word)));
+    else if (r.pay && r.pay.zp) L.push('پرداخت: زرین‌پال' + (r.payRef ? '، پرداخت شد؛ شماره پیگیری ' + r.payRef : '، بعد از ثبت ' + word));
     else if (r.pay) L.push('پرداخت: کارت‌به‌کارت' + (r.payRef ? '، واریز شد؛ شماره پیگیری ' + r.payRef : '، بعد از ثبت ' + word));
-    else if (f.pay === 'msg') L.push('پرداخت: هماهنگی در گفتگو');
     L.push(siteUrl(0));
     return L.join('\n');
   }
@@ -588,9 +599,11 @@
       $('bdH').textContent = word + ' شماره ' + fa(r.no) + ' ثبت شد';
       if (r.pay && r.pay.tayid) $('bdP').textContent = r.payDone ? 'پرداخت شد و ' + S.name + ' آن را تأیید کرد. پیام ' + word + ' را هم' + (c ? ' در ' + c.label : '') + ' بفرستید.'
         : 'دکمه «پرداخت» را بزنید: مبلغ دقیق و کارت ' + S.name + ' را در صفحه امن «تأیید شد» می‌بینید و بعد از واریز به همین‌جا برمی‌گردید. بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
+      else if (r.pay && r.pay.zp) $('bdP').textContent = r.payRef ? 'پرداختتان ثبت شد؛ ' + S.name + ' آن را بررسی و تأیید می‌کند. پیام ' + word + ' را هم' + (c ? ' در ' + c.label : '') + ' بفرستید.'
+        : 'دکمه «پرداخت در زرین‌پال» را بزنید و همین مبلغ را بپردازید؛ بعد شماره پیگیری را همین‌جا بنویسید و پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
       else if (r.pay) $('bdP').textContent = 'مبلغ را به کارت زیر کارت‌به‌کارت کنید و شماره پیگیری رسید را بنویسید؛ بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
-      else if (c && c.pre) $('bdP').textContent = (resumed ? 'پیام را فرستادید؟ اگر نه، دکمه زیر را بزنید؛ ' : 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید؛ ')
-        + (CAT ? (BK ? S.name + ' زمان را همان‌جا تأیید می‌کند و پرداخت هم همان‌جا هماهنگ می‌شود.' : 'زمان و پرداخت همان‌جا هماهنگ می‌شود.') : (FOOD ? 'پرداخت و تحویل همان‌جا هماهنگ می‌شود.' : 'پرداخت و ارسال همان‌جا هماهنگ می‌شود.'));
+      else if (c && c.pre) $('bdP').textContent = (resumed ? 'پیام را فرستادید؟ اگر نه، دکمه زیر را بزنید.' : 'برای نهایی شدن، پیام آماده را در ' + c.label + ' بفرستید.')
+        + (BK ? ' ' + S.name + ' زمان را همان‌جا تأیید می‌کند.' : (CAT ? ' زمان همان‌جا هماهنگ می‌شود.' : (FOOD ? ' تحویل همان‌جا هماهنگ می‌شود.' : ' ارسال همان‌جا هماهنگ می‌شود.')));
       else if (c) $('bdP').textContent = c.label + ' پیام آماده را در لینک نمی‌پذیرد: پیام را کپی می‌کنیم، گفتگوی ما باز می‌شود، آن را بچسبانید (Paste) و بفرستید.';
       else $('bdP').textContent = S.name + ' به‌زودی با شما تماس می‌گیرد.' + (S.tel ? ' عجله دارید؟ تماس بگیرید.' : '');
       if (r.repriced) $('bdP').textContent = 'نرخ طلا از وقتی صفحه را باز کردید تغییر کرده بود؛ قیمت‌ها با نرخ همین لحظه ثبت شد. ' + $('bdP').textContent;
@@ -665,6 +678,7 @@
     box.innerHTML = ''; box.hidden = !r.pay; if (!r.pay) return;
     var P = r.pay, mk = function (tag, cls, txt) { var x = document.createElement(tag); if (cls) x.className = cls; if (txt !== undefined) x.textContent = txt; return x; };
     if (P.tayid) return tayidBox(r, box, P, mk, again);
+    if (P.zp) return zpBox(r, box, P, mk, again);
     var cbtn = function (val, label) { var b = mk('button', 'bp-copy', label); b.type = 'button'; b.onclick = function () { if (copy(val)) { b.textContent = 'کپی شد'; setTimeout(function () { b.textContent = label; }, 1600); } }; return b; };
     var amt = mk('div', 'bp-amt'); amt.appendChild(mk('span', '', 'مبلغ دقیق واریز')); amt.appendChild(mk('b', '', fa(P.amount) + ' تومان'));
     if (!P.demo) amt.appendChild(cbtn(String(P.amount), 'کپی مبلغ'));
@@ -677,7 +691,7 @@
     card.appendChild(cbtn(String(P.card), 'کپی شماره کارت'));
     box.appendChild(card);
     if (P.iban) { var ib = mk('p', 'bp-iban', ''); ib.appendChild(mk('span', '', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ با پایا به این شبا هم می‌شود: ')); var ibv = mk('b', '', P.iban); ibv.dir = 'ltr'; ib.appendChild(ibv); ib.appendChild(cbtn(P.iban, 'کپی شبا')); box.appendChild(ib); }
-    else if (P.big) box.appendChild(mk('p', 'bp-note', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ می‌توانید در دو روز بفرستید یا در گفتگو هماهنگ کنید.'));
+    else if (P.big) box.appendChild(mk('p', 'bp-note', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ می‌توانید در دو روز بفرستید.'));
     if (r.payRef) { var was = mk('p', 'bp-ok', ''); was.appendChild(mk('b', '', 'واریز ثبت شد')); was.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.')); box.appendChild(was); return; }
     var fm = mk('form', 'bp-form'); fm.noValidate = true;
     fm.innerHTML = '<label class="bf"><span>شماره پیگیری رسید</span><input name="ref" inputmode="numeric" autocomplete="off" maxlength="40" dir="ltr" placeholder="123456"></label>'
@@ -711,7 +725,7 @@
   var payTimer = 0;
   function payStatusText(st) {
     return st === 'paid' ? 'پرداخت شد؛ ' + S.name + ' آن را تأیید کرد.' : (st === 'claimed' ? 'واریز شما اعلام شد؛ ' + S.name + ' به‌زودی تأییدش می‌کند. همین صفحه خودش به‌روز می‌شود.'
-      : (st === 'unpaid' ? S.name + ' هنوز این واریز را ندیده؛ اگر واریز کرده‌اید در گفتگو خبر بدهید، وگرنه دوباره «پرداخت» را بزنید.' : ''));
+      : (st === 'unpaid' ? S.name + ' هنوز این واریز را ندیده؛ اگر واریز کرده‌اید به ' + S.name + ' خبر بدهید، وگرنه دوباره «پرداخت» را بزنید.' : ''));
   }
   function tayidBox(r, box, P, mk, again) {
     var amt = mk('div', 'bp-amt'); amt.appendChild(mk('span', '', 'مبلغ ' + W.order)); amt.appendChild(mk('b', '', fa(P.amount) + ' تومان'));
@@ -743,6 +757,42 @@
         .catch(function () {}).then(function () { if (!r.payDone) payTimer = setTimeout(ask, r.payClaim ? 5000 : 8000); });
     };
     if (r.payBack || r.payClaim) ask(); else payTimer = setTimeout(ask, 8000);
+  }
+  /* 2026-10-24: the shop's Zarinpal page. The exact amount (copy), «پرداخت در زرین‌پال», then «پرداخت کردم» with the tracking
+     number; the owner confirms it in the panel, the claim never marks anything paid by itself. */
+  function zpBox(r, box, P, mk, again) {
+    var amt = mk('div', 'bp-amt'); amt.appendChild(mk('span', '', 'مبلغ ' + W.order)); amt.appendChild(mk('b', '', fa(P.amount) + ' تومان'));
+    var cp = mk('button', 'bp-copy', 'کپی مبلغ'); cp.type = 'button'; cp.onclick = function () { if (copy(String(P.amount))) { cp.textContent = 'کپی شد'; setTimeout(function () { cp.textContent = 'کپی مبلغ'; }, 1600); } };
+    amt.appendChild(cp); box.appendChild(amt);
+    if (r.payRef) { var was = mk('p', 'bp-ok', ''); was.appendChild(mk('b', '', 'پرداخت ثبت شد')); was.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.')); box.appendChild(was); return; }
+    var go = mk('a', 'bag-go bp-pay', ''); go.href = P.url; go.target = '_blank'; go.rel = 'noopener';
+    go.appendChild(document.createTextNode('پرداخت در زرین‌پال'));
+    box.appendChild(go);
+    box.appendChild(mk('p', 'bp-note', 'در درگاه، همین مبلغ (' + fa(P.amount) + ' تومان) را بنویسید و شماره ' + W.order + ' (' + fa(r.no) + ') را در توضیح بگذارید. بعد از پرداخت، شماره پیگیری را این‌جا بنویسید.'));
+    var fm = mk('form', 'bp-form'); fm.noValidate = true;
+    fm.innerHTML = '<label class="bf"><span>شماره پیگیری زرین‌پال</span><input name="ref" inputmode="numeric" autocomplete="off" maxlength="40" dir="ltr" placeholder="123456"></label>'
+      + '<p class="bag-err" role="alert" hidden></p><button class="bag-copy" type="submit"></button>';
+    fm.querySelector('button').textContent = 'پرداخت کردم';
+    var er = fm.querySelector('.bag-err'), btn = fm.querySelector('button'), busy = false;
+    fm.addEventListener('submit', function (e) {
+      e.preventDefault(); if (busy) return;
+      var ref = en(fm.elements.ref.value).replace(/[\s\-_.\/:#]/g, '');
+      if (!/^[0-9A-Za-z]{4,34}$/.test(ref) || (ref.match(/\d/g) || []).length < 4) { er.hidden = false; er.textContent = 'شماره پیگیری پرداخت را بنویسید (دست‌کم ۴ رقم).'; fm.elements.ref.focus(); return; }
+      busy = true; btn.classList.add('busy');
+      fetch('/api/order-pay', { method: 'POST', body: new URLSearchParams({ slug: S.slug, order: P.order, key: P.key, ref: ref }) })
+        .then(function (x) { return x.json().catch(function () { return {}; }).then(function (j) { return { s: x.status, j: j }; }); })
+        .then(function (x) {
+          busy = false; btn.classList.remove('busy');
+          if (!x.j.ok) { er.hidden = false; er.textContent = x.j.error || 'ثبت نشد؛ دوباره امتحان کنید.'; return; }
+          r.payRef = x.j.ref || ref;
+          var kept = pending(); if (kept && kept.r.no === r.no) { kept.r.payRef = r.payRef; store(PKEY, kept); }
+          var ok = mk('p', 'bp-ok', ''); ok.appendChild(mk('b', '', 'پرداخت ثبت شد')); ok.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.'));
+          go.remove(); fm.replaceWith(ok);
+          if (again) again();
+        })
+        .catch(function () { busy = false; btn.classList.remove('busy'); er.hidden = false; er.textContent = 'اینترنت قطع است؛ دوباره امتحان کنید.'; });
+    });
+    box.appendChild(fm);
   }
   /* back from the payment page: the order this browser kept, or (another browser) just its number and amount */
   (function payBack() {
@@ -881,6 +931,116 @@
           .catch(function () { say('اینترنت قطع است؛ دوباره امتحان کنید.'); b.disabled = false; });
       });
     });
+  }
+
+  /* ---------- the customer's account (accounts.php; Ilya, 2026-10-24: "every layout should have sign in and sign up") ----------
+     Optional: a guest still orders. Signed in, the bag is filled, the order shows in «حساب من» with its status and payment,
+     and the site chat is the same conversation on every device (chat.js listens to acct:change). */
+  var acEl = $('acct'), ME = null, acPushed = false;
+  function acApi(a, data) {
+    var get = a === 'me';
+    var url = '/api/acct/' + a + (get ? '?' + new URLSearchParams({ slug: S.slug }).toString() : '');
+    var opt = get ? { cache: 'no-store', credentials: 'same-origin' } : { method: 'POST', credentials: 'same-origin', body: new URLSearchParams(Object.assign({ slug: S.slug }, data || {})) };
+    return fetch(url, opt).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { j.status = r.status; return j; }); });
+  }
+  function firstName(n) { n = String(n || '').trim().split(/\s+/)[0] || ''; return n.length > 10 ? n.slice(0, 9) + '…' : n; }
+  function acOrders(list) {
+    var ul = $('acOrders'); if (!ul) return;
+    ul.innerHTML = ''; $('acNone').hidden = !!(list && list.length);
+    (list || []).forEach(function (o) {
+      var li = document.createElement('li'), mk = function (tag, cls, txt) { var x = document.createElement(tag); if (cls) x.className = cls; if (txt) x.textContent = txt; return x; };
+      var h = mk('div', 'ao-h'); h.appendChild(mk('b', '', W.order + ' شماره ' + fa(o.no))); h.appendChild(mk('span', 'ao-st' + (o.done ? ' done' : ''), o.status)); li.appendChild(h);
+      li.appendChild(mk('small', 'ao-at', o.at));
+      if (o.what) li.appendChild(mk('p', 'ao-what', o.what));
+      if (o.when) li.appendChild(mk('p', 'ao-when', o.when));
+      var f = mk('div', 'ao-f'); f.appendChild(mk('span', 'ao-tot', o.total > 0 ? fa(o.total) + ' تومان' : ''));
+      if (o.pay) f.appendChild(mk('span', 'ao-pay', o.pay));
+      if (o.go) { var g = mk('a', 'bp-copy', 'پرداخت'); g.href = o.go; f.appendChild(g); }
+      li.appendChild(f); ul.appendChild(li);
+    });
+  }
+  function acPaint(j) {
+    if (j && 'user' in j) ME = j.user || null;
+    window.AlphaAcct = { me: ME };
+    all('.hdr-acct').forEach(function (b) { var l = b.querySelector('.acct-l'); if (l) l.textContent = ME ? firstName(ME.name) || 'حساب من' : 'ورود'; b.classList.toggle('in', !!ME); b.setAttribute('aria-label', ME ? 'حساب من' : 'ورود یا ثبت‌نام'); });
+    var out = $('acOut'), meEl = $('acMe');
+    if (out) { out.hidden = !!ME; meEl.hidden = !ME; }
+    if (ME && meEl) {
+      $('acName').textContent = ME.name; $('acMobile').textContent = String(ME.mobile).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); $('acAv').textContent = (ME.name || '؟').trim().charAt(0);
+      var sf = $('acSave'); if (sf) { sf.elements.name.value = ME.name; if (sf.elements.address) sf.elements.address.value = ME.address || ''; sf.elements.pass.value = ''; }
+      acOrders(j && j.orders);
+    }
+    /* the bag: who is ordering */
+    var line = $('bagAcct');
+    if (line) {
+      if (ME) { line.lastChild.innerHTML = ''; line.lastChild.appendChild(document.createTextNode('با حساب ' + ME.name + ' ' + W.order + ' می‌دهید؛ در ')); var lb = document.createElement('button'); lb.type = 'button'; lb.className = 'ac-link'; lb.textContent = '«حساب من»'; lb.onclick = acOpen; line.lastChild.appendChild(lb); line.lastChild.appendChild(document.createTextNode(' دنبالش می‌کنید.')); }
+      else if (line.dataset.out) line.lastChild.innerHTML = line.dataset.out;
+    }
+    if (ME && form) {
+      if (!form.elements.name.value) form.elements.name.value = ME.name;
+      if (!form.elements.phone.value) form.elements.phone.value = ME.mobile;
+      if (form.elements.address && !form.elements.address.value && ME.address) form.elements.address.value = ME.address;
+    }
+    document.dispatchEvent(new CustomEvent('acct:change', { detail: ME }));
+  }
+  function acTab(k) {
+    ['in', 'up', 'forgot'].forEach(function (x) { var f = $({ 'in': 'acIn', up: 'acUp', forgot: 'acForgot' }[x]); if (f) f.hidden = x !== k; });
+    var tabs = acEl.querySelector('.ac-tabs'); if (tabs) tabs.hidden = k === 'forgot';   // the forgotten password is its own step, «بازگشت به ورود» leads back
+    all('[role=tab][data-ac-tab]', acEl).forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-ac-tab') === k ? 'true' : 'false'); });
+    var f = $({ 'in': 'acIn', up: 'acUp', forgot: 'acForgot' }[k]); var i = f && f.querySelector('input'); if (i && !mobile) setTimeout(function () { i.focus(); }, 60);
+  }
+  function acOpen() {
+    if (!acEl) return;
+    if (!acEl.open) { if (acEl.showModal) acEl.showModal(); else acEl.setAttribute('open', ''); }
+    if (!acPushed) { try { history.pushState({ awacct: 1 }, '', '#acct'); acPushed = true; } catch (e) {} }
+    if (!ME) acTab('in');
+    acApi('me').then(acPaint).catch(function () {});
+  }
+  /* the sheet's own history step: closing it steps back once; that step must not close the bag under it */
+  function acClose(fromPop) {
+    if (fromPop) acPushed = false;
+    if (acEl && acEl.open) acEl.close();
+  }
+  if (acEl) {
+    var outLine = $('bagAcct'); if (outLine) outLine.dataset.out = outLine.lastChild.innerHTML;
+    document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-acct-open]'); if (b) { e.preventDefault(); acOpen(); } });   // the header, the footer and the bag's line (redrawn)
+    all('[data-acct-close]', acEl).forEach(function (b) { b.addEventListener('click', function () { acClose(); }); });
+    acEl.addEventListener('click', function (e) { if (e.target === acEl) acClose(); });
+    acEl.addEventListener('close', function () { if (acPushed) { acPushed = false; window.__acSkip = true; try { history.back(); } catch (x) { window.__acSkip = false; } } });
+    addEventListener('popstate', function () { if (window.__acSkip) { window.__acSkip = false; return; } if (acEl.open) acClose(true); });
+    all('[data-ac-tab]', acEl).forEach(function (b) { b.addEventListener('click', function () { acTab(b.getAttribute('data-ac-tab')); }); });
+    all('form[data-ac]', acEl).forEach(function (fm) {
+      fm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var a = fm.getAttribute('data-ac'), er = fm.querySelector('[role=alert]'), btn = fm.querySelector('button[type=submit]');
+        all('[aria-invalid]', fm).forEach(function (i) { i.removeAttribute('aria-invalid'); });
+        var bad = function (msg, field) { er.hidden = false; er.className = 'bag-err'; er.textContent = msg; if (field && fm.elements[field]) { fm.elements[field].setAttribute('aria-invalid', 'true'); fm.elements[field].focus(); } };
+        var data = {}; all('input, textarea', fm).forEach(function (i) { if (i.name) data[i.name] = i.name === 'mobile' ? en(i.value).replace(/\D/g, '').replace(/^98/, '0').replace(/^9/, '09') : i.value; });
+        var codeBox = fm.querySelector('.ac-code');
+        if (a === 'forgot' && codeBox && !codeBox.hidden) a = 'reset';
+        if (data.mobile !== undefined && a !== 'save' && !/^09\d{9}$/.test(data.mobile)) return bad('شماره موبایل را درست بنویسید؛ مثل ۰۹۱۲۱۲۳۴۵۶۷.', 'mobile');
+        if ((a === 'signin' || a === 'signup') && !data.pass) return bad('رمز را بنویسید.', 'pass');
+        if (a === 'signup' && String(data.name || '').trim().length < 2) return bad('نام خود را بنویسید.', 'name');
+        if (a === 'reset' && !data.code) return bad('کد پیامک را بنویسید.', 'code');
+        er.hidden = true; btn.disabled = true; btn.classList.add('busy');
+        acApi(a, data).then(function (j) {
+          btn.disabled = false; btn.classList.remove('busy');
+          if (!j.ok) {
+            if (j.have) { acTab('in'); var mi = $('acIn').elements.mobile; mi.value = data.mobile; var e2 = $('acIn').querySelector('[role=alert]'); e2.className = 'bag-err'; e2.hidden = false; e2.textContent = j.error; $('acIn').elements.pass.focus(); return; }
+            return bad(j.error || 'نشد؛ دوباره امتحان کنید.', j.field);
+          }
+          if (a === 'forgot') { codeBox.hidden = false; btn.lastChild.textContent = 'عوض کردن رمز'; er.hidden = false; er.className = 'bag-hint'; er.textContent = 'اگر با این شماره حساب داشته باشید، کد ۵ رقمی تا یک دقیقه دیگر پیامک می‌شود.'; fm.elements.code.focus(); return; }
+          if (a === 'save') { er.hidden = false; er.className = 'bag-hint'; er.textContent = 'ذخیره شد.'; setTimeout(function () { er.hidden = true; er.className = 'bag-err'; }, 2400); }
+          all('input[type=password]', fm).forEach(function (i) { i.value = ''; });
+          acPaint(j);
+          if ((a === 'signin' || a === 'signup' || a === 'reset') && bagEl && bagEl.open) acClose();   // back to the bag, now filled
+        }).catch(function () { btn.disabled = false; btn.classList.remove('busy'); bad('اینترنت قطع است؛ دوباره امتحان کنید.'); });
+      });
+    });
+    var ob = $('acOutBtn'); if (ob) ob.addEventListener('click', function () { acApi('signout').then(function (j) { acPaint(j); acTab('in'); }).catch(function () {}); });
+    var acHash = function (wait) { if (location.hash !== '#acct' || acEl.open) return; try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} setTimeout(acOpen, wait); };
+    acHash(300); addEventListener('hashchange', function () { acHash(0); });   // a link to …#acct, from another page or this one
+    acApi('me').then(acPaint).catch(function () {});
   }
 
   loadBag(); refresh();

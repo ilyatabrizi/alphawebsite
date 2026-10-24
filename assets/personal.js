@@ -67,6 +67,18 @@
       .catch(function () { btn.disabled = false; err.hidden = false; err.textContent = 'اینترنت قطع است؛ دوباره امتحان کنید.'; });
   });
 
+  /* the site chat (chat.js, 2026-10-24): a sheet opened from the bar; chat.js asks AlphaUI whether it is in view */
+  var cs = $('chatSheet'), csOpen = false;
+  var openChat = function () { if (!cs) return; if (cs.showModal) cs.showModal(); else cs.setAttribute('open', ''); csOpen = true; document.dispatchEvent(new CustomEvent('view:change', { detail: 'chat' })); };
+  if (cs) {
+    $('chatClose').addEventListener('click', function () { if (cs.open) cs.close(); });
+    cs.addEventListener('close', function () { csOpen = false; document.dispatchEvent(new CustomEvent('view:change', { detail: '' })); });
+    cs.addEventListener('click', function (e) { if (e.target === cs) cs.close(); });
+    all('[data-act="chat"]').forEach(function (b) { b.addEventListener('click', openChat); });
+    if (location.hash === '#chat') setTimeout(openChat, 300);
+  }
+  window.AlphaUI = window.AlphaUI || { openChat: openChat, current: function () { return csOpen ? 'chat' : ''; } };
+
   /* a shared link to one piece (?p=12 or #p12) opens it */
   var m = /^#p(\d+)$/.exec(location.hash) || /[?&]p=(\d+)/.exec(location.search);
   if (m) { var c = document.getElementById('p' + m[1]); if (c) { var ob = c.querySelector('[data-open]'); setTimeout(function () { c.scrollIntoView({ block: 'center' }); if (ob) ob.click(); }, 300); } }

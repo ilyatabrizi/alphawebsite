@@ -501,3 +501,50 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .card .price .was{display:flex;width:fit-content;margin:0 0 3px}
 /* white names stay readable on light photos (a white AC unit hid «سرمایش و گرمایش»; 2026-10-23 sweep) */
 .cat-tile::after{background:linear-gradient(180deg,rgba(0,0,0,.04) 15%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.8))}.cat-tile span{text-shadow:0 1px 8px rgba(0,0,0,.55)}
+/* ---- the customer's account (accounts.php, 2026-10-24) ---- */
+.hdr-acct{margin-inline-start:auto;flex:none;display:inline-flex;align-items:center;gap:6px;height:46px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-weight:700;font-size:calc(14px*var(--fs,1));cursor:pointer;transition:transform .25s var(--spring);-webkit-tap-highlight-color:transparent}
+.hdr-acct svg{width:19px;height:19px}
+.hdr-acct:active{transform:scale(.95)}
+.hdr-acct.in{background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:transparent}
+.hdr-acct+.hdr-cta{margin-inline-start:0}
+@media(max-width:420px){.hdr-acct{height:42px;width:42px;padding:0;justify-content:center}.hdr-acct .acct-l{display:none}}
+.bag-acct{display:flex;gap:8px;align-items:flex-start;margin:0 0 4px;padding:10px 12px;border-radius:calc(14px*var(--rk,1));background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--ink2,var(--ink));font-size:calc(13.5px*var(--fs,1));line-height:1.8}
+.bag-acct>svg{flex:none;width:18px;height:18px;margin-top:3px;color:var(--accent)}
+.ac-link{display:inline;padding:0;border:0;background:none;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.acct .bag-body{display:grid;align-content:start;gap:14px;padding-top:16px}
+.ac-out,.ac-me{display:grid;gap:14px}
+.ac-out[hidden],.ac-me[hidden],.ac-form[hidden],.ac-code[hidden]{display:none}
+.ac-lead{color:var(--muted);font-size:calc(14px*var(--fs,1));line-height:1.9}
+.ac-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:999px;background:var(--pill-on,rgba(0,0,0,.06))}
+.ac-tabs button{height:42px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-weight:700;cursor:pointer}
+.ac-tabs button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.ac-form{display:grid;gap:12px}
+.ac-form .ac-link{justify-self:center;margin-top:2px}
+.ac-code{display:grid;gap:12px}
+.ac-fine{color:var(--muted);font-size:12.5px;line-height:1.8}
+.ac-who{display:flex;align-items:center;gap:12px}
+.ac-who>div{display:grid;line-height:1.5}
+.ac-who b{font-size:calc(17px*var(--fs,1));font-weight:800}
+.ac-who small{color:var(--muted);font-size:13px;text-align:end;direction:ltr;justify-self:start}
+.ac-av{width:48px;height:48px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--onaccent);font-size:20px;font-weight:800}
+.ac-h{font-size:calc(15px*var(--fs,1));font-weight:800;margin-top:4px}
+.ac-orders{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ac-orders li{display:grid;gap:4px;padding:12px 14px;border:1px solid var(--line);border-radius:calc(18px*var(--rk,1));background:var(--bg)}
+.ao-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ao-h b{font-weight:800}
+.ao-st{padding:2px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:12px;font-weight:700;white-space:nowrap}
+.ao-st.done{background:color-mix(in srgb,#1E8C4D 14%,transparent);color:#1E6B3E}
+.dark .ao-st.done{color:#5BD08A}
+.ao-at,.ao-when{color:var(--muted);font-size:12.5px}
+.ao-what{font-size:calc(13.5px*var(--fs,1));line-height:1.8}
+.ao-f{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:2px}
+.ao-tot{font-weight:800}
+.ao-pay{color:var(--muted);font-size:12.5px}
+.ao-f .bp-copy{margin-inline-start:auto}
+.ac-none{color:var(--muted);font-size:13.5px;line-height:1.9;padding:12px 14px;border:1px dashed var(--line);border-radius:calc(16px*var(--rk,1))}
+.ac-edit summary{cursor:pointer;font-weight:700;padding:6px 0}
+.ac-edit[open] summary{margin-bottom:10px}
+.ac-acts{display:flex;flex-wrap:wrap;gap:8px}
+.ac-acts .pill{flex:1 1 auto;justify-content:center}
+.bag-pays.one{grid-template-columns:minmax(0,1fr)}
+.bag-pays.one span{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}

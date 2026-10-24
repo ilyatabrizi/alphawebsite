@@ -20,8 +20,9 @@
   }
   function visible() { return !document.hidden && window.AlphaUI && window.AlphaUI.current() === 'chat'; }
   function scrollEnd() {
-    if (S.glass) window.scrollTo(0, document.body.scrollHeight);
-    else { var box = document.querySelector('#chatSheet .sheet-in'); if (box) box.scrollTop = box.scrollHeight; }
+    /* the chat is a sheet over the page: only the sheet scrolls (2026-10-24: the page under it used to jump to its footer) */
+    var box = document.querySelector('#chatSheet .sheet-in');
+    if (box) box.scrollTop = box.scrollHeight; else window.scrollTo(0, document.body.scrollHeight);
   }
   function add(m) {
     if (seen[m.id]) return false;
@@ -98,8 +99,18 @@
     }
   };
 
+  /* the customer's account (site.js): signed in, one conversation on every device (the server links this browser's chat
+     to the account, or gives the account's); signed out, this browser forgets it, so the next person does not see it */
+  var ACC = null;
+  function acctStart() { return api('start', { name: ACC.name, phone: ACC.mobile }).then(function (j) { if (j.token !== token) { reset(); token = j.token; try { localStorage.setItem(KEY, token); } catch (e) {} } ready(); poll(); }); }
+  document.addEventListener('acct:change', function (e) {
+    var was = ACC; ACC = e.detail || null;
+    if (ACC && (token || (!was && visible()))) acctStart().catch(function () {});
+    else if (!ACC && was) reset();
+    var n = $('chName'), p = $('chPhone'); if (ACC) { if (n && !n.value) n.value = ACC.name; if (p && !p.value) p.value = ACC.mobile; }
+  });
   document.addEventListener('view:change', function (e) {
-    if (e.detail === 'chat') { badge(0); if (token) { clearTimeout(timer); poll(); } setTimeout(scrollEnd, 60); }
+    if (e.detail === 'chat') { badge(0); if (!token && ACC) { acctStart().catch(function () {}); return; } if (token) { clearTimeout(timer); poll(); } setTimeout(scrollEnd, 60); }
     else schedule();
   });
   document.addEventListener('visibilitychange', function () { if (!document.hidden && token) { clearTimeout(timer); poll(); } });

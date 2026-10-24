@@ -96,7 +96,7 @@
     var el = document.getElementById(id); if (!el) return;
     el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   }
-  $$('[data-jump]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); jump(a.dataset.jump); try { history.replaceState(null, '', a.dataset.jump === 'top' ? location.pathname + location.search : '#' + a.dataset.jump); } catch (x) {} }); });
+  $$('[data-jump]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); jump(a.dataset.jump); if (a.dataset.jump === 'chat') return; try { history.replaceState(null, '', a.dataset.jump === 'top' ? location.pathname + location.search : '#' + a.dataset.jump); } catch (x) {} }); });
 
   var current = 'top';
   function movePill() {

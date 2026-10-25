@@ -32,6 +32,7 @@
   if (table === '0') table = '';
   try { if (table) sessionStorage.setItem('aw-table-' + S.slug, table); else table = sessionStorage.getItem('aw-table-' + S.slug) || ''; } catch (e) {}
   var tableFa = table ? Number(table).toLocaleString('fa-IR', { useGrouping: false }) : '';
+  var ICON_RECEIPT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17V7"/><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg>';   // Lucide «receipt», for the invoice button
 
   function siteUrl(id) {
     var u = location.origin + location.pathname.replace(/\/+$/, '');
@@ -303,12 +304,16 @@
   function modes() {
     if (CAT || !S.del) return [];
     var m = [];
-    if (table && FOOD) m.push(['table', 'سر میز ' + tableFa, 'سفارش سر میز شما می‌آید.']);
+    /* dine-in (2026-10-26): the owner's choice, S.dine = table (the number is typed, or filled from the table's QR) |
+       plain (no numbers: the customer's name) | off */
+    if (FOOD && S.dine !== 'off') m.push(['table', table ? 'سر میز ' + tableFa : 'سر میز', S.dine === 'plain' && !table ? 'سفارش که آماده شد، با نامتان صدایتان می‌زنند.' : 'سفارش سر میز شما می‌آید.']);
     m.push(['pickup', FOOD ? 'بیرون‌بر، تحویل حضوری' : 'تحویل حضوری', 'سفارش آماده می‌شود و خودتان تحویل می‌گیرید.']);
     if (S.del.on) m.push(['delivery', FOOD ? 'ارسال با پیک' : 'ارسال', (S.del.area ? S.del.area + '؛ ' : '') + 'هزینه ارسال ' + toman(S.del.fee) + (S.del.min > 0 ? '؛ حداقل سفارش ' + toman(S.del.min) : '')]);
     return m;
   }
   function fee() { return mode === 'delivery' && S.del ? S.del.fee : 0; }
+  /* «سر میز» with a number: the owner numbers the tables, or this visit came from a table's QR card */
+  function tableAsked() { return mode === 'table' && (S.dine !== 'plain' || !!table); }
   /* a day and a time window (book_cfg in lib/bootstrap.php; the server checks it again with book_check) */
   var BK = S.book || null, bkDay = '', bkSlot = '';
   function tehranToday() {
@@ -390,7 +395,9 @@
     /* how it is received */
     var ms = modes(), box = $('bagModes');
     if (box) {
-      if (!ms.some(function (m) { return m[0] === mode; })) mode = ms.length ? (ms.some(function (m) { return m[0] === 'table'; }) ? 'table' : (me.mode && ms.some(function (m) { return m[0] === me.mode; }) ? me.mode : ms[0][0])) : '';
+      var has = function (k) { return ms.some(function (m) { return m[0] === k; }); };
+      /* «سر میز» first only from a table's QR card; a visitor at home starts on what they chose last time, else takeaway */
+      if (!has(mode)) mode = !ms.length ? '' : (table && has('table') ? 'table' : (me.mode && me.mode !== 'table' && has(me.mode) ? me.mode : (has('pickup') ? 'pickup' : ms[0][0])));
       box.innerHTML = '';
       ms.forEach(function (m) {
         var lb = document.createElement('label'), r = document.createElement('input'), sp = document.createElement('span');
@@ -402,8 +409,9 @@
       hint.hidden = !cur; if (cur) hint.textContent = cur[2];
     }
     $('bagAddr').hidden = mode !== 'delivery';
-    var opt = mode === 'table';
-    all('.bf input[name=name], .bf input[name=phone]', form).forEach(function (i) { var sp = i.parentNode.querySelector('span'); sp.textContent = sp.textContent.replace(/ \(اختیاری\)$/, '') + (opt ? ' (اختیاری)' : ''); });
+    var tNum = tableAsked(), tb = $('bagTable');
+    if (tb) { tb.hidden = !tNum; if (tNum && table && !form.elements.table.value) form.elements.table.value = table; }
+    all('.bf input[name=name], .bf input[name=phone]', form).forEach(function (i) { var sp = i.parentNode.querySelector('span'), opt = i.name === 'phone' ? mode === 'table' : tNum; sp.textContent = sp.textContent.replace(/ \(اختیاری\)$/, '') + (opt ? ' (اختیاری)' : ''); });
     /* totals */
     var sum = subtotal(), f = fee(), dl = $('bagSum'), rows = [];
     rows.push([(CAT ? 'موارد انتخابی' : 'جمع ' + fa(count()) + ' مورد'), sum > 0 ? fa(sum) + ' تومان' : 'در گفتگو']);
@@ -532,7 +540,7 @@
     if (r.mode === 'delivery') L.push('هزینه ارسال: ' + (r.fee > 0 ? fa(r.fee) + ' تومان' : 'رایگان'));
     if (r.total > 0) L.push('جمع کل: ' + fa(r.total) + ' تومان');
     if (r.when) L.push(r.when);
-    if (r.mode === 'table') L.push('سر میز ' + fa(r.table));
+    if (r.mode === 'table') L.push(r.table ? 'سر میز ' + fa(r.table) : 'سر میز');
     else if (r.mode === 'pickup') L.push('تحویل: حضوری');
     else if (r.mode === 'delivery') L.push('ارسال به: ' + f.address);
     if (f.name || f.phone) L.push('نام: ' + [f.name, f.phone].filter(Boolean).join('، '));
@@ -549,6 +557,11 @@
     var f = { pay: payChoice(), name: form.elements.name.value.trim(), phone: en(form.elements.phone.value).replace(/\D/g, '').replace(/^98/, '0'), address: form.elements.address ? form.elements.address.value.trim() : '', note: form.elements.note.value.trim() };
     if (f.phone && f.phone.charAt(0) === '9') f.phone = '0' + f.phone;
     if (!CAT && !mode) return fail('نحوه تحویل را انتخاب کنید.');
+    var tno = '';
+    if (mode === 'table') {
+      if (tableAsked()) { tno = en(form.elements.table.value).replace(/\D/g, ''); if (!tno || !(+tno > 0) || tno.length > 4) return fail('شماره میزتان را بنویسید.', 'table'); }
+      else if (f.name.length < 2) return fail('نامتان را بنویسید تا ' + W.order + ' را به خودتان بدهند.', 'name');
+    }
     if (mode !== 'table') {
       if (f.name.length < 2) return fail('نام خود را بنویسید.', 'name');
       if (!/^09\d{9}$/.test(f.phone)) return fail('شماره موبایل را درست بنویسید؛ مثل ۰۹۱۲۱۲۳۴۵۶۷.', 'phone');
@@ -558,7 +571,7 @@
     var c = pickedCh();
     sending = true; $('bagGo').disabled = true; $('bagGo').classList.add('busy');
     var body = new URLSearchParams({ slug: S.slug, v: '2', items: JSON.stringify(bag.map(function (l) { var it = ITEMS[l.id]; return { id: l.id, q: l.q, o: l.o || {}, p: it ? it.p : 0 }; })),
-      mode: mode, table: table, name: f.name, phone: f.phone, address: mode === 'delivery' ? f.address : '', note: f.note, channel: c ? c.ch : (B.ch || '') });
+      mode: mode, table: tno, name: f.name, phone: f.phone, address: mode === 'delivery' ? f.address : '', note: f.note, channel: c ? c.ch : (B.ch || '') });
     if (BK) { body.set('bk', '1'); body.set('when_date', bkDay); body.set('when_slot', bkSlot); }
     if (payChoice()) body.set('pay', payChoice());
     if (form.elements.bd_d && form.elements.bd_d.value && form.elements.bd_m.value) { body.set('bd_d', form.elements.bd_d.value); body.set('bd_m', form.elements.bd_m.value); }
@@ -597,7 +610,7 @@
       cp.hidden = true;
     } else {
       $('bdH').textContent = word + ' شماره ' + fa(r.no) + ' ثبت شد';
-      if (r.pay && r.pay.tayid) $('bdP').textContent = r.payDone ? 'پرداخت شد و ' + S.name + ' آن را تأیید کرد. پیام ' + word + ' را هم' + (c ? ' در ' + c.label : '') + ' بفرستید.'
+      if (r.pay && r.pay.tayid) $('bdP').textContent = r.payDone ? 'پرداخت شد و ' + S.name + ' آن را تأیید کرد. فاکتورتان را با دکمه پایین ببینید یا ذخیره کنید' + (c ? '؛ پیام ' + word + ' را هم در ' + c.label + ' بفرستید.' : '.')
         : 'دکمه «پرداخت» را بزنید: مبلغ دقیق و کارت ' + S.name + ' را در صفحه امن «تأیید شد» می‌بینید و بعد از واریز به همین‌جا برمی‌گردید. بعد پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
       else if (r.pay && r.pay.zp) $('bdP').textContent = r.payRef ? 'پرداختتان ثبت شد؛ ' + S.name + ' آن را بررسی و تأیید می‌کند. پیام ' + word + ' را هم' + (c ? ' در ' + c.label : '') + ' بفرستید.'
         : 'دکمه «پرداخت در زرین‌پال» را بزنید و همین مبلغ را بپردازید؛ بعد شماره پیگیری را همین‌جا بنویسید و پیام ' + word + ' را' + (c ? ' در ' + c.label : '') + ' بفرستید.';
@@ -692,7 +705,7 @@
     box.appendChild(card);
     if (P.iban) { var ib = mk('p', 'bp-iban', ''); ib.appendChild(mk('span', '', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ با پایا به این شبا هم می‌شود: ')); var ibv = mk('b', '', P.iban); ibv.dir = 'ltr'; ib.appendChild(ibv); ib.appendChild(cbtn(P.iban, 'کپی شبا')); box.appendChild(ib); }
     else if (P.big) box.appendChild(mk('p', 'bp-note', 'این مبلغ از سقف روزانه کارت‌به‌کارت بیشتر است؛ می‌توانید در دو روز بفرستید.'));
-    if (r.payRef) { var was = mk('p', 'bp-ok', ''); was.appendChild(mk('b', '', 'واریز ثبت شد')); was.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.')); box.appendChild(was); return; }
+    if (r.payRef) { var was = mk('p', 'bp-ok', ''); was.appendChild(mk('b', '', 'واریز ثبت شد')); was.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.')); box.appendChild(was); watchPaid(r, box, P, mk); return; }
     var fm = mk('form', 'bp-form'); fm.noValidate = true;
     fm.innerHTML = '<label class="bf"><span>شماره پیگیری رسید</span><input name="ref" inputmode="numeric" autocomplete="off" maxlength="40" dir="ltr" placeholder="123456"></label>'
       + '<label class="bf"><span>۴ رقم آخر کارت شما (اختیاری)</span><input name="last4" inputmode="numeric" autocomplete="off" maxlength="4" dir="ltr" placeholder="1234"></label>'
@@ -713,6 +726,7 @@
           var kept = pending(); if (kept && kept.r.no === r.no) { kept.r.payRef = r.payRef; store(PKEY, kept); }
           var ok = mk('p', 'bp-ok', ''); ok.appendChild(mk('b', '', 'واریز ثبت شد')); ok.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.'));
           fm.replaceWith(ok);
+          watchPaid(r, box, P, mk);
           if (again) again();
         })
         .catch(function () { busy = false; go.classList.remove('busy'); er.hidden = false; er.textContent = 'اینترنت قطع است؛ دوباره امتحان کنید.'; });
@@ -732,31 +746,60 @@
     box.appendChild(amt);
     if (P.demo) {
       box.insertBefore(mk('p', 'bp-h', 'اگر مشتری «کارت‌به‌کارت» را انتخاب کند:'), amt);
-      box.appendChild(mk('p', 'bp-note', 'در سایت واقعی دکمه «پرداخت» این‌جاست: مشتری در صفحه امن «تأیید شد» مبلغ دقیق و کارت فروشگاه را می‌بیند، واریز می‌کند و «واریز کردم» را می‌زند؛ فروشنده با یک لمس در بله تأیید می‌کند و سفارش خودش «پرداخت شد» می‌شود.'));
+      box.appendChild(mk('p', 'bp-note', 'در سایت واقعی دکمه «پرداخت» این‌جاست: مشتری در صفحه امن «تأیید شد» مبلغ دقیق و کارت فروشگاه را می‌بیند، واریز می‌کند و «واریز کردم» را می‌زند؛ فروشنده با یک لمس در بله تأیید می‌کند، سفارش خودش «پرداخت شد» می‌شود و مشتری فاکتورش را همین‌جا می‌گیرد.'));
+      invLink(box, mk, (S.base || '') + '/f/sample', 'نمونه فاکتور مشتری');
       return;
     }
     var stEl = mk('p', 'bp-ok', ''), go = mk('a', 'bag-go bp-pay', '');
     go.href = '/api/order-go?' + new URLSearchParams({ s: S.slug, o: P.order, k: P.key }).toString();
     go.appendChild(document.createTextNode('پرداخت ' + fa(P.amount) + ' تومان'));
     var how = mk('p', 'bp-note', 'کارت‌به‌کارت خودکار با «تأیید شد»: مبلغ دقیق (با سه رقم کد آخرش) و کارت ' + S.name + ' را با دکمه کپی می‌بینید.');
+    var iv = null;
     function paint(st) {
       if (st === 'paid') r.payDone = true; if (st === 'claimed') r.payClaim = true;
       var tx = payStatusText(st); stEl.hidden = !tx; stEl.textContent = tx; stEl.className = st === 'paid' ? 'bp-ok' : 'bp-note';
       go.hidden = st === 'paid' || st === 'claimed'; how.hidden = go.hidden;
-      var kept = pending(); if (kept && kept.r.no === r.no) { kept.r.payDone = r.payDone; kept.r.payClaim = r.payClaim; store(PKEY, kept); }
+      if (r.payDone && r.inv && !iv) iv = invLink(box, mk, r.inv);
+      keepPay(r);
       if (again) again();
     }
     box.appendChild(go); box.appendChild(how); box.appendChild(stEl);
     paint(r.payDone ? 'paid' : (r.payClaim ? 'claimed' : 'wait'));
     clearTimeout(payTimer);
     var tries = 0, ask = function () {
-      if (!bagEl.open || !document.body.contains(box) || box.hidden || r.payDone || tries++ > 180) return;
+      if (!bagEl.open || !document.body.contains(box) || box.hidden || (r.payDone && r.inv) || tries++ > 180) return;
       if (document.hidden) { payTimer = setTimeout(ask, 5000); return; }
       fetch('/api/order-status?' + new URLSearchParams({ s: S.slug, o: P.order, k: P.key }).toString(), { cache: 'no-store' })
-        .then(function (x) { return x.ok ? x.json() : null; }).then(function (j) { if (j && j.ok) paint(j.status); })
+        .then(function (x) { return x.ok ? x.json() : null; }).then(function (j) { if (j && j.ok) { if (j.invoice) r.inv = j.invoice; paint(j.status); } })
         .catch(function () {}).then(function () { if (!r.payDone) payTimer = setTimeout(ask, r.payClaim ? 5000 : 8000); });
     };
-    if (r.payBack || r.payClaim) ask(); else payTimer = setTimeout(ask, 8000);
+    if (r.payBack || r.payClaim || (r.payDone && !r.inv)) ask(); else payTimer = setTimeout(ask, 8000);
+  }
+  /* The invoice (2026-10-26, invoice.php): once the payment is confirmed, the customer opens, prints or saves it. */
+  function invLink(box, mk, href, label) {
+    var a = mk('a', 'bag-go bp-inv', ''); a.href = href; a.innerHTML = ICON_RECEIPT; a.appendChild(document.createTextNode(label || 'دیدن و ذخیره فاکتور'));
+    box.appendChild(a); return a;
+  }
+  function keepPay(r) { var kept = pending(); if (kept && kept.r.no === r.no) { kept.r.payDone = r.payDone; kept.r.payClaim = r.payClaim; kept.r.payRef = r.payRef; kept.r.inv = r.inv; store(PKEY, kept); } }
+  /* Zarinpal and the card: the owner confirms in the panel; while the bag is open this asks now and then and shows the
+     invoice the moment it is confirmed (a customer who left gets it in «حساب من» or from the shop). */
+  function watchPaid(r, box, P, mk) {
+    var ok = null, iv = null;
+    function show() {
+      if (!ok) { ok = mk('p', 'bp-ok', ''); ok.appendChild(mk('b', '', 'پرداخت تأیید شد')); ok.appendChild(document.createTextNode('؛ ' + S.name + ' پرداخت شما را دید.')); box.appendChild(ok); }
+      if (r.inv && !iv) iv = invLink(box, mk, r.inv);
+    }
+    if (r.payDone && r.inv) { show(); return; }
+    clearTimeout(payTimer);
+    var tries = 0, ask = function () {
+      if (!bagEl.open || !document.body.contains(box) || box.hidden || (r.payDone && r.inv) || tries++ > 180) return;
+      if (document.hidden) { payTimer = setTimeout(ask, 6000); return; }
+      fetch('/api/order-status?' + new URLSearchParams({ s: S.slug, o: P.order, k: P.key }).toString(), { cache: 'no-store' })
+        .then(function (x) { return x.ok ? x.json() : null; })
+        .then(function (j) { if (j && j.ok && j.status === 'paid') { r.payDone = true; if (j.invoice) r.inv = j.invoice; keepPay(r); show(); } })
+        .catch(function () {}).then(function () { if (!(r.payDone && r.inv)) payTimer = setTimeout(ask, 10000); });
+    };
+    ask();
   }
   /* 2026-10-24: the shop's Zarinpal page. The exact amount (copy), «پرداخت در زرین‌پال», then «پرداخت کردم» with the tracking
      number; the owner confirms it in the panel, the claim never marks anything paid by itself. */
@@ -764,7 +807,7 @@
     var amt = mk('div', 'bp-amt'); amt.appendChild(mk('span', '', 'مبلغ ' + W.order)); amt.appendChild(mk('b', '', fa(P.amount) + ' تومان'));
     var cp = mk('button', 'bp-copy', 'کپی مبلغ'); cp.type = 'button'; cp.onclick = function () { if (copy(String(P.amount))) { cp.textContent = 'کپی شد'; setTimeout(function () { cp.textContent = 'کپی مبلغ'; }, 1600); } };
     amt.appendChild(cp); box.appendChild(amt);
-    if (r.payRef) { var was = mk('p', 'bp-ok', ''); was.appendChild(mk('b', '', 'پرداخت ثبت شد')); was.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.')); box.appendChild(was); return; }
+    if (r.payRef) { var was = mk('p', 'bp-ok', ''); was.appendChild(mk('b', '', 'پرداخت ثبت شد')); was.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.')); box.appendChild(was); watchPaid(r, box, P, mk); return; }
     var go = mk('a', 'bag-go bp-pay', ''); go.href = P.url; go.target = '_blank'; go.rel = 'noopener';
     go.appendChild(document.createTextNode('پرداخت در زرین‌پال'));
     box.appendChild(go);
@@ -788,6 +831,7 @@
           var kept = pending(); if (kept && kept.r.no === r.no) { kept.r.payRef = r.payRef; store(PKEY, kept); }
           var ok = mk('p', 'bp-ok', ''); ok.appendChild(mk('b', '', 'پرداخت ثبت شد')); ok.appendChild(document.createTextNode(' (پیگیری ' + r.payRef + ')؛ ' + S.name + ' آن را بررسی و تأیید می‌کند.'));
           go.remove(); fm.replaceWith(ok);
+          watchPaid(r, box, P, mk);
           if (again) again();
         })
         .catch(function () { busy = false; btn.classList.remove('busy'); er.hidden = false; er.textContent = 'اینترنت قطع است؛ دوباره امتحان کنید.'; });
@@ -956,6 +1000,7 @@
       var f = mk('div', 'ao-f'); f.appendChild(mk('span', 'ao-tot', o.total > 0 ? fa(o.total) + ' تومان' : ''));
       if (o.pay) f.appendChild(mk('span', 'ao-pay', o.pay));
       if (o.go) { var g = mk('a', 'bp-copy', 'پرداخت'); g.href = o.go; f.appendChild(g); }
+      if (o.inv) { var iv = mk('a', 'bp-copy', 'فاکتور'); iv.href = o.inv; f.appendChild(iv); }   // paid: the invoice (2026-10-26)
       li.appendChild(f); ul.appendChild(li);
     });
   }

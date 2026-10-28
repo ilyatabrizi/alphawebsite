@@ -1147,6 +1147,9 @@ a.kpi{transition:border-color .2s,box-shadow .2s}
 .checks .pill{flex:none}
 .foot-contact{margin:14px 0 0;font-size:13px;line-height:1.9;color:#B9B7AF}
 .foot-contact a{color:#E9E7E1}
+.foot-ig{display:inline-flex;align-items:center;gap:8px;color:#E9E7E1;font-size:14px;text-decoration:none}
+.foot-ig svg{width:20px;height:20px;stroke-width:1.8}
+.foot-ig:hover{color:#fff}
 /* eNamad's logo is transparent with a dark blue and black drawing: on the black footer it vanished (Ilya, 2026-10-18: "its not
    even visible"). The image itself gets the white tile (the snippet is untouched), at its own size, 125 × 136. */
 .trust img{display:block;width:125px;height:auto;padding:10px 12px;background:#fff;border-radius:20px;box-sizing:content-box;box-shadow:0 6px 20px rgba(0,0,0,.28);transition:transform .2s ease}

@@ -2129,3 +2129,7 @@ html.in-app #wlApp{display:none}
 .push-dev{padding:10px 0;border-top:1px solid var(--line);align-items:center}
 .push-dev small{display:block;font-size:13px}
 .seg-r.col{flex-direction:column;gap:10px}
+
+/* the sign-in page: a newcomer (often inside the app, where the signup now lives on phones) builds a site from here */
+.auth-new{display:grid;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:14px}
+.auth-new .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}

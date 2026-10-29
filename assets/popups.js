@@ -26,7 +26,7 @@
   }
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
   function sess(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
-  var quiet = cookie('awq') === '1';                              // our own tests and screenshots
+  var quiet = cookie('awq') === '1' || !!C.quiet;                 // our own tests and screenshots; /app has its own install buttons
 
   function vid() {
     var v = cookie('awv');
@@ -128,9 +128,9 @@
   var PLUS = '<svg class="awp-i" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>';
   function installCard(force) {
     if (standalone || (!force && store(IK + '_done') === '1')) return;
-    var title = site ? nameFa + ' را روی گوشی‌ات نصب کن' : 'آلفا وب‌سایت را روی گوشی‌ات نصب کن';
+    var title = site ? nameFa + ' را روی گوشی‌ات نصب کن' : 'اپ آلفا وب‌سایت را نصب کن';
     var text = site ? 'دفعه بعد با یک لمس، مثل یک اپ باز می‌شود؛ با نام و لوگوی ' + nameFa + '. بدون اپ‌استور و بدون حجم.'
-                    : 'قالب‌ها، قیمت و پنلت با یک لمس؛ مثل یک اپ، بدون اپ‌استور و بدون حجم.';
+                    : 'پنل سایتت فقط داخل اپ باز می‌شود؛ هر سفارش تازه با اعلان روی گوشی‌ات می‌آید. بدون اپ‌استور و بدون حجم.';
     var base = { icon: C.icon, title: title, text: text, onClose: null };
     var later = function () { if (site) sess(IK, '1'); else store(IK, String(Date.now())); send('later', {}); close(); };
     if (deferred) {
@@ -163,7 +163,7 @@
     if (C.flow) return false;                                       // signup, payment, welcome: nothing on top of the steps (2026-10-22); /welcome has its own card
     if (standalone || quiet || store(IK + '_done') === '1') return false;
     if (site) return sess(IK) !== '1';                              // client sites: every new visit until installed
-    if (!C.owner && +(store('aw-visits') || 0) < 3) return false;
+    if (!C.owner) return false;                                     // the app is the owners' panel (2026-10-29): only someone signed in is asked
     var last = +(store(IK) || 0); return !last || Date.now() - last > 3 * 86400000;   // the store: every 3 days
   }
 

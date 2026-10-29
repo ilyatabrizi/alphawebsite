@@ -2039,3 +2039,93 @@ p svg,li > a > svg,dd svg{width:1.15em;height:1.15em;vertical-align:-.2em;flex:n
 @media(max-width:640px){.matrix td.us{padding:6px 10px;border-radius:10px}}
 /* a zero draws nothing (a 2 px tick read like «۱»; 2026-10-23 sweep) */
 .hbar i[style*="--w:0%"]{min-width:0;visibility:hidden}
+
+/* ---------- the panel lives in the app, like Blu Bank (2026-10-29): the header button, /app, the app card, notifications ---------- */
+.top-acts .top-app svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.top-app .t-s{display:none}
+@media(max-width:980px){.top-acts .top-in{display:none}}                     /* phones and tablets: the panel is in the app */
+@media(max-width:600px){.top-acts .top-app{padding-inline:10px}}
+@media(max-width:420px){.top-app .t-l{display:none}.top-app .t-s{display:inline}}
+html.in-app .top-acts .top-app{display:none}
+html.in-app .top-acts .top-in{display:inline-flex}
+.sheet-acts .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.app-dl{padding:8px 0 72px}
+.app-dl .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.app-gate{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r2);background:var(--card);border:1px solid var(--line2);box-shadow:var(--sh1)}
+.app-gate svg{flex:none;width:22px;height:22px;margin-top:3px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app-gate b{display:block;font-size:15.5px}.app-gate span{display:block;color:var(--ink2);font-size:14px;line-height:1.85}
+.app-hero{display:grid;justify-items:center;gap:12px;padding:18px 0 4px;text-align:center}
+.app-icon{display:grid;place-items:center;width:96px;height:96px;border-radius:26px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh2);overflow:hidden}
+.app-icon img{width:96px;height:96px;display:block}
+.app-hero h1{font-size:clamp(28px,1.3rem + 2vw,40px)}
+.app-hero h1 em{font-style:normal;position:relative;white-space:nowrap}
+.app-hero h1 em::after{content:"";position:absolute;inset-inline:2px;bottom:-.08em;height:.14em;border-radius:99px;background:var(--y)}   /* the spark under the name, never a fill */
+.app-hero .lead{max-width:560px;color:var(--ink2)}
+.app-os{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:6px;border-radius:999px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh1);max-width:440px;width:100%;justify-self:center}
+.app-os button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:4px 14px;border:0;border-radius:999px;background:none;font-size:16px;font-weight:700;cursor:pointer;color:var(--ink2);transition:background .25s var(--ease),color .25s;-webkit-tap-highlight-color:transparent}
+.app-os button small{font-size:12px;font-weight:500;color:var(--muted)}
+.app-os button.on{background:var(--ink);color:#fff}.app-os button.on small{color:rgba(255,255,255,.7)}
+.app-pane{display:grid;gap:16px}
+.app-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-radius:var(--r2);background:var(--bg2);border:1px solid var(--line)}
+.app-row small{display:block;font-size:13px;color:var(--muted);line-height:1.6}.app-row b{font-size:18px}
+.pwa-tag{font-weight:800;font-size:15px;letter-spacing:.06em;padding:4px 10px;border-radius:10px;background:var(--card);border:1px solid var(--line2)}
+.app-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.app-steps li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:2}
+.app-steps .n{flex:none;display:grid;place-items:center;width:30px;height:30px;margin-top:2px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;font-weight:700}
+.app-steps b.lat,.app-inapp .lat{white-space:nowrap}
+.ic-i{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app-done{display:flex;gap:10px;align-items:flex-start;margin:0;padding:12px 14px;border-radius:var(--r2);background:var(--goodw);color:var(--good);font-size:15px}
+.app-done svg{flex:none;width:20px;height:20px;margin-top:4px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn.block svg,.app-pane .btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app-inapp{display:grid;gap:8px;padding:16px;border-radius:var(--r2);background:var(--warnw);color:var(--warn)}
+.app-inapp>b{display:flex;gap:8px;align-items:center;font-size:15.5px}.app-inapp p{color:var(--ink2);font-size:14.5px;line-height:1.9}
+.app-inapp>b svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app-inapp .btn{justify-self:start}
+.app-desk{display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:center}
+.app-desk h2{font-size:19px}
+.app-qr{width:150px;height:150px;border-radius:16px;border:1px solid var(--line);background:#fff;padding:6px}
+.app-qr svg{display:block;width:100%;height:100%}
+@media(max-width:520px){.app-desk{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}}
+.app-have{display:flex;gap:10px;align-items:flex-start;margin:0;font-size:14.5px;color:var(--ink2);line-height:1.9}
+.app-have svg{flex:none;width:18px;height:18px;margin-top:5px;fill:none;stroke:var(--good);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+html.in-app .app-have{display:none}
+.app-why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.app-why>div{display:grid;gap:6px;align-content:start;padding:18px;border-radius:var(--r3);background:var(--card);border:1px solid var(--line);box-shadow:var(--sh1)}
+.app-why span{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--bg2)}
+.app-why span svg{width:21px;height:21px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.app-why b{font-size:16px}.app-why p{font-size:14px;line-height:1.85;color:var(--ink2)}
+@media(max-width:720px){.app-why{grid-template-columns:minmax(0,1fr)}}
+.faq-mini{display:grid;gap:0}
+.faq-mini h2{font-size:19px;margin-bottom:8px}
+.faq-mini details{border-top:1px solid var(--line)}
+.faq-mini summary{padding:14px 0;cursor:pointer;font-weight:600;font-size:15.5px;line-height:1.8;list-style:none}
+.faq-mini summary::-webkit-details-marker{display:none}
+.faq-mini summary::after{content:"+";float:left;font-weight:400;color:var(--muted)}
+.faq-mini details[open] summary::after{content:"−"}
+.faq-mini details p{padding:0 0 14px;color:var(--ink2);font-size:14.5px;line-height:1.95}
+
+/* «قدم اول: اپ را نصب کن» on /welcome; «با تأیید خبرت می‌کنیم» on the wait page */
+.app-card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center}
+.app-card .wl-ic img{display:block;width:52px;height:52px;border-radius:15px;border:1px solid var(--line)}
+.app-card h2{margin:0;font-size:17px}.app-card p{margin:2px 0 0;font-size:14px}
+.app-card .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:560px){.app-card{grid-template-columns:auto minmax(0,1fr)}.app-card .btn{grid-column:1/-1}}
+html.in-app #wlApp{display:none}
+
+/* /panel/notify */
+.push-box{display:grid;gap:16px}
+.push-top{display:flex;gap:14px;align-items:center}
+.push-ic{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:16px;background:var(--bg2)}
+.push-ic svg{width:24px;height:24px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.push-top h2{margin:0;font-size:18px}
+.push-st{margin:2px 0 0;font-size:15px;line-height:1.9;color:var(--ink2)}
+.push-box[data-state="on"] .push-ic{background:var(--goodw)}.push-box[data-state="on"] .push-ic svg{stroke:var(--good)}
+.push-box[data-state="denied"] .push-st,.push-box[data-state="none"] .push-st{color:var(--warn)}
+.push-acts{display:flex;flex-wrap:wrap;gap:10px}
+.push-acts .btn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.push-kinds{display:grid;gap:12px}
+.push-kinds .check span{display:grid}.push-kinds .check small{font-size:13px;line-height:1.7}
+.push-dev{padding:10px 0;border-top:1px solid var(--line);align-items:center}
+.push-dev small{display:block;font-size:13px}
+.seg-r.col{flex-direction:column;gap:10px}

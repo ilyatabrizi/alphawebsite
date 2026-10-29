@@ -2041,13 +2041,6 @@ p svg,li > a > svg,dd svg{width:1.15em;height:1.15em;vertical-align:-.2em;flex:n
 .hbar i[style*="--w:0%"]{min-width:0;visibility:hidden}
 
 /* ---------- the panel lives in the app, like Blu Bank (2026-10-29): the header button, /app, the app card, notifications ---------- */
-.top-acts .top-app svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.top-app .t-s{display:none}
-@media(max-width:980px){.top-acts .top-in{display:none}}                     /* phones and tablets: the panel is in the app */
-@media(max-width:600px){.top-acts .top-app{padding-inline:10px}}
-@media(max-width:420px){.top-app .t-l{display:none}.top-app .t-s{display:inline}}
-html.in-app .top-acts .top-app{display:none}
-html.in-app .top-acts .top-in{display:inline-flex}
 .sheet-acts .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 .app-dl{padding:8px 0 72px}

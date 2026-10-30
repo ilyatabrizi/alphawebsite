@@ -387,8 +387,8 @@
       });
       ul.appendChild(li);
     });
-    var empty = !bag.length;
-    $('bagEmpty').hidden = !empty; form.hidden = empty; ul.hidden = empty;
+    var empty = !bag.length, bar = $('bagBar');
+    $('bagEmpty').hidden = !empty; form.hidden = empty; ul.hidden = empty; if (bar) bar.hidden = empty;
     if ($('bagClosed')) $('bagClosed').hidden = true;
     if (empty) return;
     renderBook();
@@ -419,6 +419,8 @@
     if (!CAT || sum > 0) rows.push(['مبلغ کل', sum > 0 ? fa(sum + f) + ' تومان' : 'در گفتگو', 1]);
     dl.innerHTML = '';
     rows.forEach(function (r) { var d = document.createElement('div'); if (r[2]) d.className = 'tot'; d.innerHTML = '<dt></dt><dd></dd>'; d.firstChild.textContent = r[0]; d.lastChild.textContent = r[1]; dl.appendChild(d); });
+    var last = rows[rows.length - 1], tm = / تومان$/.test(last[1]);   // the bar under the list repeats the total (2026-10-30)
+    if ($('bagBarTot')) { $('bagBarL').textContent = last[0] + (tm ? ' (تومان)' : ''); $('bagBarTot').textContent = tm ? last[1].replace(/ تومان$/, '') : last[1]; }
     var unpriced = bag.some(function (l) { return ITEMS[l.id] && !(ITEMS[l.id].p > 0); });
     var payable = sum > 0 && !unpriced && sum + f <= (S.payMax || 5e8);
     var pb = $('bagPayBox'); if (pb) pb.hidden = !payable;
@@ -598,7 +600,7 @@
     if (!S.demo && !resumed) { store(LKEY, { r: r, f: f, ch: c ? c.ch : '', at: Date.now() }); seen(''); }
     /* the order is done: coming back from the messenger must not reopen an empty bag */
     if (pushed) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} pushed = false; }
-    $('bagMain').hidden = true; var d = $('bagDone'); d.hidden = false;
+    $('bagMain').hidden = true; var d = $('bagDone'); d.hidden = false; if ($('bagBar')) $('bagBar').hidden = true;
     $('bdMsg').textContent = text;
     var send = $('bdSend'), note = $('bdNote'), cp = $('bdCopy');
     payBox(r, function () { text = orderMessage(r, f); $('bdMsg').textContent = text; if (c && c.pre && !S.demo) send.href = link(text, c); });

@@ -2126,3 +2126,30 @@ html.in-app #wlApp{display:none}
 /* the sign-in page: a newcomer (often inside the app, where the signup now lives on phones) builds a site from here */
 .auth-new{display:grid;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:14px}
 .auth-new .btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- inside the installed app (html.in-app, 2026-10-30; Ilya: "the login page of the app is still like a website because
+   of the footer's info"): the store pages that still open in the app (sign-in, forgotten password, the signup, pay, welcome)
+   lose the website's chrome: no menu, no site navigation, no footer columns; only the brand, the page and the small sign. ---------- */
+html.in-app body.area-store .top .nav,html.in-app body.area-store .menu-btn,html.in-app body.area-store .sheet{display:none!important}
+html.in-app body.pg-login .top-acts .top-in{display:none}
+html.in-app body.area-store .foot-top,html.in-app body.area-store .foot-motto,html.in-app body.area-store .foot-note{display:none}   /* the note's links are website routes; only the sign stays */
+html.in-app body.area-store .foot{margin-top:28px}
+html.in-app body.area-store .foot .wrap{padding-block:0}
+html.in-app body.area-store .foot-bottom{border-top:0;padding-block:20px calc(20px + env(safe-area-inset-bottom,0px));justify-content:center;text-align:center;gap:8px}
+html.in-app body.area-store .foot .powered img{height:30px}
+html.in-app body.area-store .foot .powered .pa{font-size:14px}
+html.in-app body.pg-login main{min-height:calc(100dvh - 180px);display:grid;align-content:center}
+html.in-app .auth-aside{display:none}
+html.in-app .signup-page .crumbs{display:none}
+html.in-app .signup-page .ph{padding-top:6px}
+html.in-app .signup-page .ph .lead{font-size:14px;color:var(--muted)}
+/* the business tiles (the signup's first step; Ilya 2026-10-30: "the design is really weak"): a soft icon disc on each tile,
+   the chosen one in ink, an even 3-column grid with room to breathe */
+.type-pick{gap:10px}
+.type-pick span{gap:9px;min-height:104px;padding:14px 8px 12px;border-color:var(--line);border-radius:22px;background:var(--card);box-shadow:var(--sh1);font-size:14px;line-height:1.5;text-align:center}
+.type-pick svg{width:22px;height:22px;stroke-width:1.75}
+.type-pick span::before{content:"";display:none}
+.type-pick label span>svg{box-sizing:content-box;padding:11px;border-radius:50%;background:var(--bg2);transition:background .2s,color .2s}
+.type-pick input:checked+span{border-color:var(--ink);background:var(--ink);color:#fff;box-shadow:0 10px 24px -12px rgba(19,19,18,.55)}
+.type-pick input:checked+span>svg{background:rgba(255,255,255,.14);color:#FFCC00}
+@media(max-width:600px){.type-pick{gap:8px}.type-pick span{min-height:98px;padding:12px 6px 10px;gap:8px;font-size:13.5px}.type-pick label span>svg{padding:10px;width:21px;height:21px}}

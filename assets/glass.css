@@ -555,3 +555,39 @@ a.bag-go{text-decoration:none}.bp-inv{margin-top:10px}   /* the invoice once pai
 .ac-acts .pill{flex:1 1 auto;justify-content:center}
 .bag-pays.one{grid-template-columns:minmax(0,1fr)}
 .bag-pays.one span{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+/* 2026-10-30 (Ilya: "improve the sabade kharid pages in all layouts"): the bag as an app page — numbered steps,
+   each line with its total under the stepper, and a bar with the total and «ثبت سفارش» that stays in view */
+.bl{grid-template-columns:64px minmax(0,1fr) auto;grid-template-areas:"img t x" "img q p";align-items:center;gap:10px 12px;padding:14px 0}
+.bl img,.bl-ph{width:64px;height:64px;border-radius:calc(16px*var(--rk,1))}
+.bl-t{align-self:start;padding-top:2px}
+.bl-t b{line-height:1.5}
+.bl .qty{grid-area:q;height:36px}.bl .qty button{width:36px}
+.bl-p{grid-area:p;justify-self:end;font-size:calc(15px*var(--fs,1))}
+.bl-x{grid-area:x;align-self:start;margin-top:-4px;margin-inline-end:-8px}
+.fam-catalog .bl{grid-template-areas:"img t x" "img p p"}
+.fam-catalog .bl-p{justify-self:start}
+.fam-catalog .bl:has(.bl-p:not(:empty)) .bl-t small{display:none}   /* one price per line when there is no quantity */
+.bag-form{gap:0;counter-reset:step;padding-top:0}
+.bag-sec{padding:18px 0 20px}
+.bag-sec+.bag-sec{border-top:1px solid var(--line)}
+.bag-sec legend{float:inline-start;width:100%;display:flex;align-items:center;gap:9px;margin-bottom:12px;font-size:calc(15.5px*var(--fs,1))}   /* floated: a plain first row, so the border above the step stays above the title */
+.bag-sec legend::before{counter-increment:step;content:counter(step,persian);flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--onaccent);font-size:12.5px;font-weight:800;line-height:24px;text-align:center}
+.bag-sum{margin-top:6px;padding:16px 18px;border-radius:calc(20px*var(--rk,1))}
+.bag-sum div{font-size:calc(14.5px*var(--fs,1))}
+.bag-sum .tot{font-size:calc(17px*var(--fs,1))}
+.bag-earn,.bag-pay,.bag-err{margin-top:12px}
+.bag-body{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.bag-bar{flex:none;display:flex;align-items:center;gap:12px;padding:10px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--surface);box-shadow:0 -8px 24px rgba(0,0,0,.05)}
+.bb-tot{display:grid;gap:0;flex:none;max-width:40%;min-width:0}
+.bb-tot small{color:var(--muted);font-size:12px;font-weight:600;line-height:1.5}
+.bb-tot b{font-size:calc(17px*var(--fs,1));font-weight:800;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bag-bar .bag-go{flex:1;min-width:0;min-height:52px;font-size:calc(15px*var(--fs,1));padding-inline:14px}
+.bag-bar .bag-go span{min-width:0;line-height:1.35}
+.acct .bag-bar{display:none}
+/* 2026-10-30 layout sweep (22 demos on a phone): the snapping rails started 16px in, with the first card cut at the
+   edge; two hero buttons wrapped into unequal rows; a long price left a small «افزودن» alone at the end of its line */
+.rail,.cat-tiles{scroll-padding-inline:16px}
+@media(max-width:600px){.hero-cta .pill{flex:1 1 auto;justify-content:center}}
+.card .row:not(.wide) .price{flex:none}
+.card .row:not(.wide) .buy{flex:1 1 auto;min-width:0}
+@media(max-width:380px){.card .row:not(.wide) .buy{flex:none}}

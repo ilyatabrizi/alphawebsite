@@ -46,6 +46,10 @@
     if (/\/api\/domain/.test(u)) { var l = ''; try { l = new URL(u, location.href).searchParams.get('l') || ''; } catch (e) {}
       return json({ status: /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(l) ? (l.length < 5 ? 'taken' : 'free') : 'invalid' }); }
     if (/\/api\/contact/.test(u)) return json({ ok: true, demo: true });   // the personal site's contact form (v13)
+    /* the customer account (accounts.php) on a static preview: a guest, and the same sample-site answer the real demos give (2026-10-30) */
+    if (/\/api\/acct\/me/.test(u)) return json({ ok: true, user: null, orders: [], sms: false });
+    if (/\/api\/acct\/signout/.test(u)) return json({ ok: true, user: null, orders: [] });
+    if (/\/api\/acct\//.test(u)) return json({ ok: false, demo: true, error: 'این یک سایت نمونه است؛ در سایت واقعی مشتری‌ها همین‌جا ثبت‌نام می‌کنند و سفارش‌هایشان را دنبال می‌کنند.' });
     if (/\/api\/order-pay/.test(u)) { var bp = body(opt); return json({ ok: true, status: 'claimed', ref: (bp.get('ref') || '').replace(/\D/g, '') }); }   // v17 «واریز کردم»
     if (/\/api\/order/.test(u)) {
       /* the bag: answer like the server, from the page's own cards (prices as shown), number 101 and up */

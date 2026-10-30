@@ -591,3 +591,7 @@ a.bag-go{text-decoration:none}.bp-inv{margin-top:10px}   /* the invoice once pai
 .card .row:not(.wide) .price{flex:none}
 .card .row:not(.wide) .buy{flex:1 1 auto;min-width:0}
 @media(max-width:380px){.card .row:not(.wide) .buy{flex:none}}
+/* the shop added to a home screen behaves like an app (2026-10-30): no double-tap zoom, no long-press link preview */
+html.in-app{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+html.in-app :where(*){touch-action:manipulation}
+html.in-app :where(a,img,button){-webkit-touch-callout:none}

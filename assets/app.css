@@ -2153,3 +2153,45 @@ html.in-app .signup-page .ph .lead{font-size:14px;color:var(--muted)}
 .type-pick input:checked+span{border-color:var(--ink);background:var(--ink);color:#fff;box-shadow:0 10px 24px -12px rgba(19,19,18,.55)}
 .type-pick input:checked+span>svg{background:rgba(255,255,255,.14);color:#FFCC00}
 @media(max-width:600px){.type-pick{gap:8px}.type-pick span{min-height:98px;padding:12px 6px 10px;gap:8px;font-size:13.5px}.type-pick label span>svg{padding:10px;width:21px;height:21px}}
+/* inside the installed app the panel feels like an app, not a web page (2026-10-30): no double-tap zoom (pinch is
+   stopped by app_feel_js), no rubber-band on the whole page, no long-press link previews or grey tap flashes, and the
+   chrome (tabs, buttons) is not selectable text; inputs and page text stay selectable */
+html.in-app{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
+html.in-app :where(*){touch-action:manipulation}
+html.in-app :where(a,img,button,.tabbar,.side){-webkit-touch-callout:none}
+html.in-app :where(button,.btn,.tabbar,.side,.top,.pill,.chip,label.check,.type-pick){-webkit-user-select:none;user-select:none}
+/* the first-open «اعلان‌ها را روشن کن» sheet in the app (push_prompt_html, assets/push.js; 2026-10-30): a bottom sheet
+   like the help sheet, one state at a time (data-state ask | wait | on | denied | fail) */
+.np-sheet{border:0;padding:0;margin:auto auto 0;width:100%;max-width:520px;max-height:min(92vh,760px);border-radius:var(--r4) var(--r4) 0 0;background:var(--card);color:var(--ink);box-shadow:0 -10px 40px rgba(19,19,18,.2);overflow:auto;overscroll-behavior:contain}
+.np-sheet::backdrop{background:rgba(19,19,18,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+@media(min-width:720px){.np-sheet{margin:auto;border-radius:var(--r4)}}
+.np-sheet[open]{animation:hsIn .32s var(--ease) both}
+@media(prefers-reduced-motion:reduce){.np-sheet[open]{animation:none}}
+html.np-on{overflow:hidden}
+.np-in{padding:26px 22px calc(18px + env(safe-area-inset-bottom));text-align:center}
+.np-in>div{display:none;flex-direction:column;align-items:center;gap:10px}
+.np-sheet[data-state=ask] .np-ask,.np-sheet[data-state=wait] .np-wait,.np-sheet[data-state=on] .np-done,.np-sheet[data-state=denied] .np-no,.np-sheet[data-state=fail] .np-fail{display:flex}
+.np-in h2{margin:4px 0 0;font-size:22px;line-height:1.5}
+.np-lead{margin:0;color:var(--ink2);font-size:15.5px;line-height:1.9;max-width:400px}
+.np-bell{position:relative;display:grid;place-items:center;width:84px;height:84px;margin-bottom:4px;border-radius:50%;background:var(--ink);color:#fff;box-shadow:0 14px 34px rgba(19,19,18,.22)}
+.np-bell svg{width:38px;height:38px;stroke-width:1.9;transform-origin:50% 8%;animation:npRing 2.8s cubic-bezier(.36,.07,.19,.97) .5s infinite}
+.np-bell i{position:absolute;top:18px;inset-inline-end:20px;width:14px;height:14px;border-radius:50%;background:#E5484D;box-shadow:0 0 0 3px var(--ink)}
+.np-bell.ok{background:#1F8A4C}.np-bell.ok svg,.np-bell.off svg{animation:none}
+.np-bell.off{background:var(--bg2);color:var(--muted);box-shadow:none}
+@keyframes npRing{0%,62%,100%{transform:rotate(0)}66%{transform:rotate(14deg)}72%{transform:rotate(-12deg)}78%{transform:rotate(8deg)}84%{transform:rotate(-5deg)}90%{transform:rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){.np-bell svg{animation:none}}
+.np-list{list-style:none;margin:8px 0 4px;padding:0;display:grid;gap:8px;width:100%;max-width:420px;text-align:start}
+.np-list li{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--r2);background:var(--bg)}
+.np-li{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--card);box-shadow:var(--sh1)}
+.np-li svg{width:19px;height:19px}
+.np-list b{display:block;font-size:15px}
+.np-list small{display:block;color:var(--muted);font-size:13px;line-height:1.7}
+.np-go{width:100%;max-width:420px;margin-top:8px;justify-content:center}
+.np-sheet :focus:not(:focus-visible){outline:none}
+.np-hint{margin:0;color:var(--muted);font-size:13px}
+.np-later{margin-top:2px;padding:10px 18px;border:0;background:none;color:var(--muted);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.np-steps{margin:4px 0;padding-inline-start:22px;text-align:start;color:var(--ink2);font-size:15px;line-height:2.1}
+.np-wait{padding:34px 0 26px}
+.np-wait p{margin:0;color:var(--ink2)}
+.np-spin{width:34px;height:34px;border-radius:50%;border:3px solid var(--line2);border-top-color:var(--ink);animation:npSpin .8s linear infinite}
+@keyframes npSpin{to{transform:rotate(360deg)}}

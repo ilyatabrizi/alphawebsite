@@ -266,3 +266,7 @@ small.tel[dir=ltr]{font-family:inherit}
 .chat-sheet .chat{display:grid;gap:12px}
 .chat-sheet .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border:0;border-radius:999px;background:var(--accent);color:var(--onaccent,#fff);font:inherit;font-weight:700;cursor:pointer}
 @media(min-width:900px){.chat-sheet{margin:auto;border-radius:24px}}
+/* the shop added to a home screen behaves like an app (2026-10-30): no double-tap zoom, no long-press link preview */
+html.in-app{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+html.in-app :where(*){touch-action:manipulation}
+html.in-app :where(a,img,button){-webkit-touch-callout:none}

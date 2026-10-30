@@ -124,7 +124,11 @@
     if (quiet && sess('aw-tour-now') !== '1') return;
     var now = sess('aw-tour-now') === '1'; if (now) sess('aw-tour-now', null);
     if (!now && store('aw-tour') === '1') return;
-    setTimeout(function () { if (!d.hidden && !(sheet && sheet.open)) startTour(now); }, now ? 250 : 900);
+    setTimeout(function () {
+      /* the «اعلان‌ها را روشن کن» sheet (push.js) comes first in the app; the tour follows when it closes (2026-10-30) */
+      if (d.documentElement.classList.contains('np-on')) { d.addEventListener('aw:np-done', function () { setTimeout(function () { if (!d.hidden) startTour(now); }, 350); }, { once: true }); return; }
+      if (!d.hidden && !(sheet && sheet.open)) startTour(now);
+    }, now ? 250 : 900);
   }
   d.addEventListener('aw:page', function () { endTour(false); maybe(); });
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', maybe); else maybe();

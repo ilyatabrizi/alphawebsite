@@ -26,6 +26,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .cv-brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
 .cv-brand b{font-weight:800;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cv-mark{width:36px;height:36px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--onaccent);font-weight:800;font-size:16px}
+img.cv-mark{object-fit:cover;object-position:50% 22%;background:var(--surface);box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px color-mix(in srgb,var(--accent) 55%,transparent)}
 .cv-nav{display:none;gap:4px;margin-inline-start:auto}
 .cv-nav a{padding:6px 12px;border-radius:999px;text-decoration:none;font-size:14.5px;color:var(--muted);transition:color .2s,background .2s}
 .cv-nav a:hover,.cv-nav a.on{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}

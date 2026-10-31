@@ -13,7 +13,7 @@
 (function () {
   var S = window.SITE || {}, B = S.buy || {}, W = S.words || { add: 'افزودن', bag: 'سبد خرید', send: 'ثبت سفارش', order: 'سفارش' };
   var CH = (S.chans && S.chans.length) ? S.chans : (B.ch && B.ch !== 'chat' && B.ch !== 'call' ? [B] : []);
-  var CAT = S.fam === 'catalog', FOOD = S.fam === 'food';
+  var CAT = S.fam === 'catalog', FOOD = S.fam === 'food', VIEW = !!S.view;   // VIEW: gold and cars show, they don't sell online (2026-10-31)
   var $ = function (id) { return document.getElementById(id); };
   var all = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
   var fa = function (n) { return Number(n).toLocaleString('fa-IR'); };
@@ -221,6 +221,16 @@
     if (c && c.ch && !c.pre && c.ch !== 'call') copy(text);
     open(link(text, c));
   }
+  /* «پرسیدن»: the site chat with the item's question ready (it works on Iran's domestic network too); without the chat,
+     the shop's main messenger as above (2026-10-31, gold and cars) */
+  function askChat(it, choice) {
+    if (!window.AlphaUI || !$('chatSheet')) { ask(it, choice); return; }
+    var text = askMessage(it, choice).replace(/\s*\n+\s*/g, ' ');   // the chat box is one line: «…سؤال دارم. قیمت در سایت: …», never «دارم.قیمت»
+    if (!S.demo) logTap(it && it.id, 'chat');
+    var ps = $('psheet'); if (ps && ps.open) ps.close();
+    window.AlphaUI.openChat();
+    setTimeout(function () { var t = $('chText'), f = $('chatForm'); if (t) t.value = text; var el = f && !f.hidden ? t : $('chName'); if (el) el.focus(); }, 160);
+  }
 
   /* ---------- the bag (kept per site in this browser) ---------- */
   var KEY = 'aw-bag-' + S.slug;
@@ -414,9 +424,12 @@
     all('.bf input[name=name], .bf input[name=phone]', form).forEach(function (i) { var sp = i.parentNode.querySelector('span'), opt = i.name === 'phone' ? mode === 'table' : tNum; sp.textContent = sp.textContent.replace(/ \(اختیاری\)$/, '') + (opt ? ' (اختیاری)' : ''); });
     /* totals */
     var sum = subtotal(), f = fee(), dl = $('bagSum'), rows = [];
-    rows.push([(CAT ? 'موارد انتخابی' : 'جمع ' + fa(count()) + ' مورد'), sum > 0 ? fa(sum) + ' تومان' : 'در گفتگو']);
-    if (mode === 'delivery') rows.push(['هزینه ارسال', toman(f)]);
-    if (!CAT || sum > 0) rows.push(['مبلغ کل', sum > 0 ? fa(sum + f) + ' تومان' : 'در گفتگو', 1]);
+    if (S.noSum) rows.push(['موارد انتخابی', fa(count()) + ' ' + (S.unit || 'مورد'), 1]);   // real estate: how many files, no price sum (2026-10-31)
+    else {
+      rows.push([(CAT ? 'موارد انتخابی' : 'جمع ' + fa(count()) + ' مورد'), sum > 0 ? fa(sum) + ' تومان' : 'در گفتگو']);
+      if (mode === 'delivery') rows.push(['هزینه ارسال', toman(f)]);
+      if (!CAT || sum > 0) rows.push(['مبلغ کل', sum > 0 ? fa(sum + f) + ' تومان' : 'در گفتگو', 1]);
+    }
     dl.innerHTML = '';
     rows.forEach(function (r) { var d = document.createElement('div'); if (r[2]) d.className = 'tot'; d.innerHTML = '<dt></dt><dd></dd>'; d.firstChild.textContent = r[0]; d.lastChild.textContent = r[1]; dl.appendChild(d); });
     var last = rows[rows.length - 1], tm = / تومان$/.test(last[1]);   // the bar under the list repeats the total (2026-10-30)
@@ -879,7 +892,7 @@
       fs.appendChild(row); box.appendChild(fs);
     });
     setPsQ(1);
-    $('psBuy').disabled = it.off; $('psBuy').hidden = it.off;
+    if ($('psBuy')) { $('psBuy').disabled = it.off; $('psBuy').hidden = it.off; }
     if ($('psQty')) $('psQty').hidden = it.off;
     if (ps.showModal) ps.showModal(); else ps.setAttribute('open', '');
     try { history.replaceState(history.state, '', '#p' + it.id); } catch (e) {}
@@ -893,7 +906,8 @@
     return { choice: choice, missing: miss.map(function (fs) { return fs.dataset.g; }).join(' و '), need: miss };
   }
   if (ps) {
-    $('psBuy').addEventListener('click', function () {
+    if ($('psChat')) $('psChat').addEventListener('click', function () { if (cur) askChat(cur, chosen().choice); });
+    if ($('psBuy')) $('psBuy').addEventListener('click', function () {
       if (!cur || cur.off) return;
       var c = chosen();
       if (c.missing) {
@@ -916,8 +930,9 @@
     ps.addEventListener('close', function () { try { if (/^#p\d+$/.test(location.hash)) history.replaceState(history.state, '', location.pathname + location.search.replace(/([?&])p=\d+&?/, '$1').replace(/[?&]$/, '')); } catch (e) {} });
   }
   all('.card').forEach(function (card) {
-    var openBtn = card.querySelector('.card-open'), buy = card.querySelector('[data-buy]');
+    var openBtn = card.querySelector('.card-open'), buy = card.querySelector('[data-buy]'), askB = card.querySelector('[data-ask-item]');
     if (openBtn) openBtn.addEventListener('click', function () { openSheet(card); });
+    if (askB) askB.addEventListener('click', function () { askChat(ITEMS[+card.dataset.id] || item(card), null); });
     if (buy) buy.addEventListener('click', function () {
       var it = ITEMS[+card.dataset.id] || item(card);
       if (it.opts.length) { openSheet(card); return; }

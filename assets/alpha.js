@@ -134,12 +134,14 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(movePill);
     current = ''; setOn('top');
   }
+  var gch = $('.g-chips'), gTop = gch ? parseFloat(getComputedStyle(gch).top) || 0 : 0;
+  function stick() { if (gch) gch.classList.toggle('stuck', window.scrollY > 24 && gch.getBoundingClientRect().top <= gTop + 1); }   // the chips' band (glass.css)
   var ticking = false;
   window.addEventListener('scroll', function () {
     if (ticking) return; ticking = true;
-    requestAnimationFrame(function () { ticking = false; spy(); document.documentElement.classList.toggle('scrolled', window.scrollY > 24); });
+    requestAnimationFrame(function () { ticking = false; spy(); document.documentElement.classList.toggle('scrolled', window.scrollY > 24); stick(); });
   }, { passive: true });
-  spy();
+  spy(); stick();
 
   /* ---------- category chips follow the products (RTL-safe horizontal centring) ---------- */
   var chips = $$('.g-chips a');

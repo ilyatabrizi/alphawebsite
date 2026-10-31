@@ -21,6 +21,10 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 
 /* ---------- header: a glass bar that stays on top ---------- */
 .hdr{position:sticky;top:0;z-index:60;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 0;pointer-events:none}
+/* once the page scrolls, a fade of the page colour behind the floating bar: text and prices scrolling up no longer show
+   cut in half above and around it (2026-10-31 design pass) */
+.hdr::before{content:"";position:absolute;inset:0 0 -14px;z-index:-1;pointer-events:none;opacity:0;transition:opacity .25s;background:linear-gradient(to bottom,var(--bg) 0,var(--bg) calc(env(safe-area-inset-top,0px) + 16px),transparent)}
+html.scrolled .hdr::before{opacity:1}
 .hdr-in{pointer-events:auto;max-width:1120px;margin:0 auto;height:60px;display:flex;align-items:center;gap:8px;padding:6px 6px 6px 8px;border-radius:calc(22px*var(--rk,1));background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--glass-shadow);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
 .hdr-brand{display:flex;align-items:center;gap:10px;min-width:0;padding-inline:4px 6px;text-decoration:none}
 .hdr-brand b{font-size:calc(16.5px*var(--fs,1));font-weight:var(--hw,800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -113,6 +117,7 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .card-img{display:block;overflow:hidden;background:var(--line)}
 .card-img img{width:100%;height:auto;aspect-ratio:var(--ar,1/1);object-fit:cover;transition:transform .7s var(--ease)}
 @media(hover:hover){.card:hover .card-img img{transform:scale(1.04)}}
+@media(hover:none){.card:has(.card-open:active){transform:scale(.985);transition-duration:.15s}}   /* a phone: the card answers the finger (2026-10-31 design pass) */
 .card-b{padding:11px 12px 12px;display:flex;flex-direction:column;gap:2px;flex:1}
 .card-b .smp{align-self:flex-start;margin-bottom:2px;padding:1px 8px;border-radius:99px;background:var(--ink,#141413);color:var(--bg,#fff);font-size:11px;font-weight:700;opacity:.72}   /* a starter item the owner has not replaced yet (2026-10-21) */
 .card h3{font-size:calc(15px*var(--fs,1));font-weight:700;line-height:1.5}
@@ -132,7 +137,11 @@ svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-l
 .g-search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 16px;margin-bottom:6px;color:var(--muted)}
 .g-search svg{width:19px;height:19px;flex:none}
 .g-search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:16px;color:var(--ink);padding:12px 0;outline:none}
-.g-chips{position:sticky;z-index:20;top:calc(env(safe-area-inset-top,0px) + 74px);margin:0 -16px 6px;padding:8px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.g-chips{position:sticky;z-index:20;top:calc(env(safe-area-inset-top,0px) + 74px);margin:0 -16px;padding:8px 16px 14px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;transition:background-color .2s}
+/* 2026-10-31 design pass: once the chips stick under the header (alpha.js adds .stuck) they sit on a band of the page colour
+   that fades out below, so cards and prices never show between and through them; in the flow the band is off, so a
+   dotted or squared page background stays whole. Same height either way: nothing jumps. */
+.g-chips.stuck{background:linear-gradient(to bottom,var(--bg) 0,var(--bg) calc(100% - 14px),transparent)}
 .g-chips::-webkit-scrollbar{display:none}
 .g-chips a{flex:none;height:38px;display:inline-flex;align-items:center;padding:0 17px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-line);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);text-decoration:none;font-size:calc(14px*var(--fs,1));font-weight:500;transition:background .3s,color .3s}
 .g-chips a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
